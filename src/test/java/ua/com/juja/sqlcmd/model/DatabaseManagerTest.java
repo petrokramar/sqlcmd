@@ -34,6 +34,15 @@ public abstract class DatabaseManagerTest {
     }
 
     @Test
+    public void testGetTableColumnNames() throws SQLException, ClassNotFoundException {
+        List<String> testColumns = new ArrayList<>();
+        testColumns.add("id");
+        testColumns.add("name");
+        testColumns.add("password");
+        List<String> columns = manager.getTableColumns("users");
+        assertEquals(testColumns,columns);
+    }
+    @Test
     public void testGetTableData(){
         manager.clear("users");
 

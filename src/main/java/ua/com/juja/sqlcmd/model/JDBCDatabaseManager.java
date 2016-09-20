@@ -149,4 +149,23 @@ public class JDBCDatabaseManager implements DatabaseManager {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public List<String> getTableColumns(String tableName) {
+        List<String> columns = new ArrayList<>();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT column_name FROM information_schema.columns" +
+                    " WHERE  table_schema = 'public' and table_name = '" + tableName + "'");
+            while ((rs.next())) {
+                columns.add(rs.getString("column_name"));
+            }
+            rs.close();
+            statement.close();
+            return columns;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return columns;
+        }
+    }
 }
