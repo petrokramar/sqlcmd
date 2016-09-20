@@ -72,6 +72,15 @@ public class InMemoryDatabaseManager implements DatabaseManager {
         data[id-1].updateFrom(newValue);
     }
 
+    @Override
+    public List<String> getTableColumns(String tableName) {
+        List<String> list = new ArrayList<>();
+        list.add("id");
+        list.add("name");
+        list.add("password");
+        return list;
+    }
+
 //    @Override
 //    public String[] getTableNames(String tableName) {
 //        return new String[] {"name", "password", "id"};
