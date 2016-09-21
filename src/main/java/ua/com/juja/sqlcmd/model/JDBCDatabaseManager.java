@@ -168,4 +168,9 @@ public class JDBCDatabaseManager implements DatabaseManager {
             return columns;
         }
     }
+
+    @Override
+    public boolean isConnected() {
+        return connection != null;
+    }
 }
