@@ -11,6 +11,8 @@ public class Connect implements Command {
     private View view;
     private DatabaseManager manager;
 
+    private static final String COMMAND_SAMPLE = "connect|sqlcmd|postgres|123456";
+
     public Connect(View view, DatabaseManager manager) {
         this.view = view;
         this.manager = manager;
@@ -25,8 +27,10 @@ public class Connect implements Command {
     public void process(String command) {
         try {
             String[] data = command.split("\\|");
-            if (data.length != 4) { //TODO refactor
-                throw new IllegalArgumentException("Неверно количество параметров разделенных знаком '|', ожидается 4, но есть: " + data.length);
+            if (data.length != count()) {
+                throw new IllegalArgumentException(
+                    String.format("Неверно количество параметров разделенных знаком " +
+                    "'|', ожидается %s, но есть: %s", count(), data.length));
             }
             String databaseName = data[1];
             String userName = data[2];
@@ -36,6 +40,10 @@ public class Connect implements Command {
         }catch (Exception e){
             printError(e);
         }
+    }
+
+    private int count() {
+        return COMMAND_SAMPLE.split("\\|").length;
     }
 
     private void printError(Exception e) {

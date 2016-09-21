@@ -1,5 +1,6 @@
 package ua.com.juja.sqlcmd.view;
 
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /**
@@ -13,11 +14,14 @@ public class Console implements View {
 
     @Override
     public String read() {
-        Scanner scanner = new Scanner(System.in);
-//        System.out.println("**********************************");
-//        String line = scanner.nextLine();
-//        scanner.close();
-//        return line;
-        return scanner.nextLine();
+        try {
+            Scanner scanner = new Scanner(System.in);
+//            String line = scanner.nextLine();
+//            scanner.close();
+//            return line;
+            return scanner.nextLine();
+        }catch (NoSuchElementException e){
+            return "";
+        }
     }
 }

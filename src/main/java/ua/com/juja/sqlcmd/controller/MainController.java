@@ -30,6 +30,9 @@ public class MainController {
         view.write("Введите имя базы данных, имя пользователя и пароль в формате databaseName|userName|password.");
         while(true){
             String input = view.read();
+            if(input == null){
+                new Exit(view).process("");
+            }
             for(Command command: commands){
                 if(command.canProcess(input)){
                     command.process(input);

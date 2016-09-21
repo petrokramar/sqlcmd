@@ -83,5 +83,10 @@ public abstract class DatabaseManagerTest {
         assertEquals("[1, John2, pass2]",Arrays.toString(user.getValues()));
     }
 
+    @Test
+    public void testDatabaseManagerIsConnected(){
+        assertEquals(true, manager.isConnected());
+    }
+
 
 }
