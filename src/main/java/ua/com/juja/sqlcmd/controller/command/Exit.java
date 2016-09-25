@@ -22,7 +22,5 @@ public class Exit implements Command{
     public void process(String command) {
         view.write("До встречи!");
         throw new ExitException();
-//        System.exit(0);
-
     }
 }

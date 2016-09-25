@@ -26,6 +26,14 @@ public class MainController {
     }
 
     public void run(){
+        try {
+            doWork();
+        }catch (ExitException e){
+
+        }
+    }
+
+    private void doWork() {
         view.write("Привет!");
         view.write("Введите имя базы данных, имя пользователя и пароль в формате databaseName|userName|password.");
         while(true){

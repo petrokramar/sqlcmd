@@ -12,6 +12,12 @@ public class ConfigurableInputStream extends InputStream{
     private boolean endLine = false;
 
     @Override
+    public synchronized void reset() throws IOException {
+        line = null;
+        endLine = false;
+    }
+
+    @Override
     public int read() throws IOException {
         if(line.length() == 0){
             return -1;
