@@ -1,5 +1,6 @@
 package ua.com.juja.sqlcmd.view;
 
+import java.io.UnsupportedEncodingException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -9,7 +10,9 @@ import java.util.Scanner;
 public class Console implements View {
     @Override
     public void write(String message) {
+//        System.out.println("abcd");
         System.out.println(message);
+//            System.out.println(message.getBytes());
     }
 
     @Override
@@ -21,7 +24,7 @@ public class Console implements View {
 //            return line;
             return scanner.nextLine();
         }catch (NoSuchElementException e){
-            return "";
+            return null;
         }
     }
 }
