@@ -19,6 +19,8 @@ public class MainController {
             new Help(view),
             new Exit(view),
             new IsConnected(view, manager),
+            new Clear(view, manager),
+            new Create(view, manager),
             new List(view, manager),
             new Find(view, manager),
             new Unsupported(view)
@@ -29,7 +31,6 @@ public class MainController {
         try {
             doWork();
         }catch (ExitException e){
-
         }
     }
 
@@ -38,17 +39,36 @@ public class MainController {
         view.write("Введите имя базы данных, имя пользователя и пароль в формате databaseName|userName|password.");
         while(true){
             String input = view.read();
-            if(input == null){
-                new Exit(view).process("");
-            }
+//            if(input == null){
+//                new Exit(view).process("");
+//                break;
+//            }
             for(Command command: commands){
-                if(command.canProcess(input)){
-                    command.process(input);
+                try {
+                    if(command.canProcess(input)){
+                        command.process(input);
+                        break;
+                    }
+                }catch (Exception e){
+                    if(e instanceof ExitException){
+                        throw e;
+                    }
+                    printError(e);
                     break;
                 };
             }
             view.write("Введите команду (help - помощь)");
         }
+    }
+
+    private void printError(Exception e) {
+        String message = e.getMessage();
+        final Throwable cause = e.getCause();
+        if(cause !=null){
+            message += " " + cause.getMessage();
+        }
+        view.write("Неудача. Причина: " + message);
+        view.write("Повторите попытку.");
     }
 
 }

@@ -83,9 +83,6 @@ public class DataSet {
 
     @Override
     public String toString() {
-        return "DataSet{\n" +
-                "names: " + Arrays.toString(getNames()) +
-                "\nvalues: " + Arrays.toString(getValues()) +
-                "\n}";
+        return "{names: " + Arrays.toString(getNames()) + ", values: " + Arrays.toString(getValues()) + "}";
     }
 }
