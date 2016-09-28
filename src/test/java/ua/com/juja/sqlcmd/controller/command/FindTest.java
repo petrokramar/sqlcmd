@@ -7,6 +7,7 @@ import ua.com.juja.sqlcmd.model.DataSet;
 import ua.com.juja.sqlcmd.model.DatabaseManager;
 import ua.com.juja.sqlcmd.view.View;
 
+import java.sql.SQLException;
 import java.util.*;
 
 import static org.junit.Assert.assertEquals;
@@ -31,7 +32,7 @@ public class FindTest {
     }
 
     @Test
-    public void testPrintTableData(){
+    public void testPrintTableData() throws SQLException {
         java.util.List<String> list = new ArrayList<>();
         list.add("id");
         list.add("name");
@@ -61,7 +62,7 @@ public class FindTest {
     }
 
     @Test
-    public void testPrintTableDataOneColumn(){
+    public void testPrintTableDataOneColumn() throws SQLException {
         java.util.List<String> list = new ArrayList<>();
         list.add("id");
         when(manager.getTableColumns("users")).thenReturn(list);
@@ -100,7 +101,7 @@ public class FindTest {
     }
 
     @Test
-    public void printEmptyTableData(){
+    public void printEmptyTableData() throws SQLException {
         java.util.List<String> list = new ArrayList<>();
         list.add("id");
         list.add("name");

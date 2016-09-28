@@ -3,6 +3,8 @@ package ua.com.juja.sqlcmd.controller.command;
 import ua.com.juja.sqlcmd.model.DatabaseManager;
 import ua.com.juja.sqlcmd.view.View;
 
+import java.sql.SQLException;
+
 /**
  * Created by Peter on 25.09.2016.
  */
@@ -30,7 +32,11 @@ public class Clear implements Command {
                     "а Вы ввели " + command);
         }
         String tableName = data[1];
-        manager.clear(tableName);
-        view.write(String.format("Таблица '%s' очищена", tableName));
+        try {
+            manager.clear(tableName);
+            view.write(String.format("Таблица '%s' очищена", tableName));
+        } catch (SQLException e) {
+            view.write(String.format("Ошибка очистки таблицы '%s' по причине: %", tableName, e.getMessage()));
+        }
     }
 }

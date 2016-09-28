@@ -9,24 +9,25 @@ import java.util.List;
  */
 public class JDBCDatabaseManager implements DatabaseManager {
 
+    public static final String DATABASE_URL = "jdbc:postgresql://localhost:8757/";
     private Connection connection;
 
     @Override
-    public void connect(String database, String userName, String password){
+    public void connect(String database, String userName, String password) throws SQLException {
         try {
             Class.forName("org.postgresql.Driver");
         } catch (ClassNotFoundException e) {
-            throw new RuntimeException("Please add jdbc to project", e);
+            throw new SQLException("Не найден драйвер PostgreSQL", e);
         }
         try {
             if(connection != null){
                 connection.close();
             }
             connection = DriverManager.getConnection(
-                        "jdbc:postgresql://localhost:8757/" + database, userName, password);
+                        DATABASE_URL + database, userName, password);
         } catch (SQLException e) {
             connection = null;
-            throw new RuntimeException(String.format("Can't get connection to model: %s, user: %s",database, userName), e);
+            throw new SQLException(String.format("Не удалось подключиться к базе данных: %s, пользователь: %s",database, userName), e);
         }
     }
 
@@ -86,11 +87,11 @@ public class JDBCDatabaseManager implements DatabaseManager {
     }
 
     @Override
-    public void clear(String tableName) {
+    public void clear(String tableName) throws SQLException{
         try(Statement statement = connection.createStatement()) {
             statement.executeUpdate("DELETE FROM " + tableName);
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new SQLException();
         }
     }
 

@@ -7,6 +7,7 @@ import ua.com.juja.sqlcmd.model.DataSet;
 import ua.com.juja.sqlcmd.model.DatabaseManager;
 import ua.com.juja.sqlcmd.view.View;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
@@ -29,7 +30,7 @@ public class ClearTest {
     }
 
     @Test
-    public void testClearTable(){
+    public void testClearTable() throws SQLException {
         command.process("clear|users");
         verify(manager).clear("users");
         verify(view).write("Таблица 'users' очищена");

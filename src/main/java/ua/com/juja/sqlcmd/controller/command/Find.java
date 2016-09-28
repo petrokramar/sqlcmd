@@ -4,6 +4,7 @@ import ua.com.juja.sqlcmd.model.DataSet;
 import ua.com.juja.sqlcmd.model.DatabaseManager;
 import ua.com.juja.sqlcmd.view.View;
 
+import java.sql.SQLException;
 import java.util.*;
 import java.util.List;
 
@@ -27,11 +28,15 @@ public class Find implements Command{
     @Override
     public void process(String command) {
         String[] data = command.split("\\|");
-        String tableName = data[1];// TODO for wrong number of parameters
-        java.util.List<String> tableColumns = manager.getTableColumns(tableName);
-        printHeader(tableColumns);
-        DataSet[] tableData = manager.getTableData(tableName);
-        printTable(tableData);
+        String tableName = data[1];
+        try {
+            List<String> tableColumns = manager.getTableColumns(tableName);
+            printHeader(tableColumns);
+            DataSet[] tableData = manager.getTableData(tableName);
+            printTable(tableData);
+        } catch (SQLException e) {
+            view.write(String.format("Ошибка чтения данных из таблицы '%s' по причине: %", tableName, e.getMessage()));
+        }
     }
 
     private void printTable(DataSet[] tableData) {

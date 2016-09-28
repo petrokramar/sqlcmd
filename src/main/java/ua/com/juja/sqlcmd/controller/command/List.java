@@ -3,6 +3,8 @@ package ua.com.juja.sqlcmd.controller.command;
 import ua.com.juja.sqlcmd.model.DatabaseManager;
 import ua.com.juja.sqlcmd.view.View;
 
+import java.sql.SQLException;
+
 /**
  * Created by Peter on 20.09.2016.
  */
@@ -22,7 +24,12 @@ public class List implements Command{
 
     @Override
     public void process(String command) {
-        java.util.List<String> tableNames = manager.getTableNames();
-        view.write(tableNames.toString());
+        java.util.List<String> tableNames = null;
+        try {
+            tableNames = manager.getTableNames();
+            view.write(tableNames.toString());
+        } catch (SQLException e) {
+            view.write(String.format("Ошибка получения списка таблиц по причине: %", e.getMessage()));
+        }
     }
 }

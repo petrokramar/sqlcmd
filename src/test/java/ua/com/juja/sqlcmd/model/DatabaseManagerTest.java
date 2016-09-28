@@ -18,7 +18,7 @@ public abstract class DatabaseManagerTest {
     private DatabaseManager manager;
 
     @Before
-    public void setup(){
+    public void setup() throws SQLException {
         manager = getDatabaseManager();
         manager.connect("sqlcmd", "postgres", "123456");
     }
@@ -43,7 +43,7 @@ public abstract class DatabaseManagerTest {
         assertEquals(testColumns,columns);
     }
     @Test
-    public void testGetTableData(){
+    public void testGetTableData() throws SQLException {
         manager.clear("users");
 
         DataSet input = new DataSet();
@@ -61,7 +61,7 @@ public abstract class DatabaseManagerTest {
     }
 
     @Test
-    public void testUpdateTableData(){
+    public void testUpdateTableData() throws SQLException {
         manager.clear("users");
 
         DataSet input = new DataSet();

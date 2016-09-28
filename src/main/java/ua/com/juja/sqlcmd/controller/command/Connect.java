@@ -3,6 +3,8 @@ package ua.com.juja.sqlcmd.controller.command;
 import ua.com.juja.sqlcmd.model.DatabaseManager;
 import ua.com.juja.sqlcmd.view.View;
 
+import java.sql.SQLException;
+
 /**
  * Created by Peter on 20.09.2016.
  */
@@ -34,8 +36,12 @@ public class Connect implements Command {
         String databaseName = data[1];
         String userName = data[2];
         String password = data[3];
-        manager.connect(databaseName, userName, password);
-        view.write("Подключились.");
+        try {
+            manager.connect(databaseName, userName, password);
+            view.write("Подключились.");
+        } catch (SQLException e) {
+            view.write(String.format("Ошибка подключения к базе данных '%s' по причине: %", databaseName, e.getMessage()));
+        }
     }
 
     private int count() {

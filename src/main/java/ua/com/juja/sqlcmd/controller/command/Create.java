@@ -4,6 +4,8 @@ import ua.com.juja.sqlcmd.model.DataSet;
 import ua.com.juja.sqlcmd.model.DatabaseManager;
 import ua.com.juja.sqlcmd.view.View;
 
+import java.sql.SQLException;
+
 /**
  * Created by Peter on 25.09.2016.
  */
@@ -37,7 +39,11 @@ public class Create implements Command {
             String value = data[i+1];
             dataSet.put(columnName, value);
         }
-        manager.create(tableName, dataSet);
-        view.write(String.format("Запись %s добавлена в таблицу '%s'", dataSet, tableName));
+        try {
+            manager.create(tableName, dataSet);
+            view.write(String.format("Запись %s добавлена в таблицу '%s'", dataSet, tableName));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

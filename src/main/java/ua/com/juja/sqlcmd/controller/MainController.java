@@ -35,14 +35,17 @@ public class MainController {
     }
 
     private void doWork() {
+        view.write("     _____    ____    _         _____   __  __   _____");
+        view.write("    / ____|  / __ \\  | |       / ____| |  \\/  | |  __ \\");
+        view.write("   | (___   | |  | | | |      | |      | \\  / | | |  | |");
+        view.write("    \\___ \\  | |  | | | |      | |      | |\\/| | | |  | |");
+        view.write("    ____) | | |__| | | |____  | |____  | |  | | | |__| |");
+        view.write("   |_____/   \\___\\_\\ |______|  \\_____| |_|  |_| |_____/");
+
         view.write("Привет!");
         view.write("Введите имя базы данных, имя пользователя и пароль в формате databaseName|userName|password.");
         while(true){
             String input = view.read();
-//            if(input == null){
-//                new Exit(view).process("");
-//                break;
-//            }
             for(Command command: commands){
                 try {
                     if(command.canProcess(input)){
