@@ -19,7 +19,6 @@ public class Create implements Command {
         this.manager = manager;
     }
 
-
     @Override
     public boolean canProcess(String command) {
         return command.startsWith("create|");

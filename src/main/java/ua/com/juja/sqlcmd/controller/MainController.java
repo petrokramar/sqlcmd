@@ -21,8 +21,9 @@ public class MainController {
             new IsConnected(view, manager),
             new Clear(view, manager),
             new Create(view, manager),
-            new List(view, manager),
+            new GetTableNames(view, manager),
             new Find(view, manager),
+            new Query(view, manager),
             new Unsupported(view)
         };
     }
@@ -35,15 +36,16 @@ public class MainController {
     }
 
     private void doWork() {
-        view.write("     _____    ____    _         _____   __  __   _____");
-        view.write("    / ____|  / __ \\  | |       / ____| |  \\/  | |  __ \\");
-        view.write("   | (___   | |  | | | |      | |      | \\  / | | |  | |");
-        view.write("    \\___ \\  | |  | | | |      | |      | |\\/| | | |  | |");
-        view.write("    ____) | | |__| | | |____  | |____  | |  | | | |__| |");
-        view.write("   |_____/   \\___\\_\\ |______|  \\_____| |_|  |_| |_____/");
+//        view.write("     _____    ____    _         _____   __  __   _____");
+//        view.write("    / ____|  / __ \\  | |       / ____| |  \\/  | |  __ \\");
+//        view.write("   | (___   | |  | | | |      | |      | \\  / | | |  | |");
+//        view.write("    \\___ \\  | |  | | | |      | |      | |\\/| | | |  | |");
+//        view.write("    ____) | | |__| | | |____  | |____  | |  | | | |__| |");
+//        view.write("   |_____/   \\___\\_\\ |______|  \\_____| |_|  |_| |_____/");
 
         view.write("Привет!");
         view.write("Введите имя базы данных, имя пользователя и пароль в формате databaseName|userName|password.");
+        view.write("(Полный список команд - help).");
         while(true){
             String input = view.read();
             for(Command command: commands){
@@ -60,7 +62,7 @@ public class MainController {
                     break;
                 };
             }
-            view.write("Введите команду (help - помощь)");
+            view.write("Введите команду (help - помощь):");
         }
     }
 

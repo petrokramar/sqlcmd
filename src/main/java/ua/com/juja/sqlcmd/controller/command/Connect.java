@@ -40,7 +40,8 @@ public class Connect implements Command {
             manager.connect(databaseName, userName, password);
             view.write("Подключились.");
         } catch (SQLException e) {
-            view.write(String.format("Ошибка подключения к базе данных '%s' по причине: %", databaseName, e.getMessage()));
+            view.write(String.format("Ошибка подключения к базе данных '%s' по причине: %",
+                databaseName, e.getMessage()));
         }
     }
 

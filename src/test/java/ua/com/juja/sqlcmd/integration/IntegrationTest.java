@@ -40,6 +40,7 @@ public class IntegrationTest {
         Main.main(new String[0]);
         assertEquals("Привет!\n" +
                 "Введите имя базы данных, имя пользователя и пароль в формате databaseName|userName|password.\n" +
+                "(Полный список команд - help).\n" +
                 "До встречи!\n", getData());
     }
 
@@ -50,15 +51,21 @@ public class IntegrationTest {
         Main.main(new String[0]);
         assertEquals("Привет!\n" +
                 "Введите имя базы данных, имя пользователя и пароль в формате databaseName|userName|password.\n" +
-                "Список команд\n" +
-                "connect|databaseName|userName|password - подключение к базе данных\n" +
-                "list - вывести список таблиц\n" +
-                "clear|tableName - очистка таблицы tableName\n" +
-                "create|tableName|column1|value1|....columnN|valueN - создание записей таблицы tableName\n" +
-                "find|tableName - вывести содержимое таблицы tableName\n" +
-                "help - помощь\n" +
-                "exit - выход\n" +
-                "Введите команду (help - помощь)\n" +
+                "(Полный список команд - help).\n" +
+                "                                       Список команд\n" +
+                "+---------------------------------------------------+--------------------------------------+\n" +
+                "|                     команда                       |               описание               |\n" +
+                "+---------------------------------------------------+--------------------------------------+\n" +
+                "| connect|databaseName|userName|password            | подключение к базе данных            |\n" +
+                "| list                                              | вывести список таблиц                |\n" +
+                "| clear|tableName                                   | очистка таблицы tableName            |\n" +
+                "| create|tableName|column1|value1|...columnN|valueN | создание записей таблицы tableName   |\n" +
+                "| find|tableName                                    | вывести содержимое таблицы tableName |\n" +
+                "| query|text...                                     | произвольный SQL запрос              |\n" +
+                "| help                                              | помощь                               |\n" +
+                "| exit                                              | выход                                |\n" +
+                "+---------------------------------------------------+--------------------------------------+\n" +
+                "Введите команду (help - помощь):\n" +
                 "До встречи!\n", getData());
     }
 
@@ -69,8 +76,9 @@ public class IntegrationTest {
         Main.main(new String[0]);
         assertEquals("Привет!\n" +
                 "Введите имя базы данных, имя пользователя и пароль в формате databaseName|userName|password.\n" +
+                "(Полный список команд - help).\n" +
                 "Команда list не активна. Подключитесь к базе.\n" +
-                "Введите команду (help - помощь)\n" +
+                "Введите команду (help - помощь):\n" +
                 "До встречи!\n", getData());
     }
 
@@ -81,8 +89,9 @@ public class IntegrationTest {
         Main.main(new String[0]);
         assertEquals("Привет!\n" +
                 "Введите имя базы данных, имя пользователя и пароль в формате databaseName|userName|password.\n" +
+                "(Полный список команд - help).\n" +
                 "Команда find|users не активна. Подключитесь к базе.\n" +
-                "Введите команду (help - помощь)\n" +
+                "Введите команду (help - помощь):\n" +
                 "До встречи!\n", getData());
     }
 
@@ -93,8 +102,9 @@ public class IntegrationTest {
         Main.main(new String[0]);
         assertEquals("Привет!\n" +
                 "Введите имя базы данных, имя пользователя и пароль в формате databaseName|userName|password.\n" +
+                "(Полный список команд - help).\n" +
                 "Команда zzz не активна. Подключитесь к базе.\n" +
-                "Введите команду (help - помощь)\n" +
+                "Введите команду (help - помощь):\n" +
                 "До встречи!\n", getData());
     }
 
@@ -106,10 +116,11 @@ public class IntegrationTest {
         Main.main(new String[0]);
         assertEquals("Привет!\n" +
                 "Введите имя базы данных, имя пользователя и пароль в формате databaseName|userName|password.\n" +
+                "(Полный список команд - help).\n" +
                 "Подключились.\n" +
-                "Введите команду (help - помощь)\n" +
+                "Введите команду (help - помощь):\n" +
                 "Несуществующая команда: zzz\n" +
-                "Введите команду (help - помощь)\n" +
+                "Введите команду (help - помощь):\n" +
                 "До встречи!\n", getData());
     }
 
@@ -121,15 +132,16 @@ public class IntegrationTest {
         Main.main(new String[0]);
         assertEquals("Привет!\n" +
                 "Введите имя базы данных, имя пользователя и пароль в формате databaseName|userName|password.\n" +
+                "(Полный список команд - help).\n" +
                 "Подключились.\n" +
-                "Введите команду (help - помощь)\n" +
+                "Введите команду (help - помощь):\n" +
                 "[users]\n" +
-                "Введите команду (help - помощь)\n" +
+                "Введите команду (help - помощь):\n" +
                 "До встречи!\n", getData());
     }
 
     @Test
-    public void testConnectAfterConnect() {
+    public void testConnectAfterConnect() {//TODO
         in.add("connect|sqlcmd|postgres|123456");
         in.add("list");
         in.add("connect|sqlcmd|postgres|123456");
@@ -138,14 +150,15 @@ public class IntegrationTest {
         Main.main(new String[0]);
         assertEquals("Привет!\n" +
                 "Введите имя базы данных, имя пользователя и пароль в формате databaseName|userName|password.\n" +
+                "(Полный список команд - help).\n" +
                 "Подключились.\n" +
-                "Введите команду (help - помощь)\n" +
+                "Введите команду (help - помощь):\n" +
                 "[users]\n" +
-                "Введите команду (help - помощь)\n" +
+                "Введите команду (help - помощь):\n" +
                 "Подключились.\n" +
-                "Введите команду (help - помощь)\n" +
+                "Введите команду (help - помощь):\n" +
                 "[users]\n" +
-                "Введите команду (help - помощь)\n" +
+                "Введите команду (help - помощь):\n" +
                 "До встречи!\n", getData());
     }
 
@@ -156,9 +169,10 @@ public class IntegrationTest {
         Main.main(new String[0]);
         assertEquals("Привет!\n" +
                 "Введите имя базы данных, имя пользователя и пароль в формате databaseName|userName|password.\n" +
+                "(Полный список команд - help).\n" +
                 "Неудача. Причина: Неверно количество параметров разделенных знаком '|', ожидается 4, но есть: 2\n" +
                 "Повторите попытку.\n" +
-                "Введите команду (help - помощь)\n" +
+                "Введите команду (help - помощь):\n" +
                 "До встречи!\n", getData());
     }
 
@@ -171,14 +185,15 @@ public class IntegrationTest {
         Main.main(new String[0]);
         assertEquals("Привет!\n" +
                 "Введите имя базы данных, имя пользователя и пароль в формате databaseName|userName|password.\n" +
+                "(Полный список команд - help).\n" +
                 "Подключились.\n" +
-                "Введите команду (help - помощь)\n" +
+                "Введите команду (help - помощь):\n" +
                 "Таблица 'users' очищена\n" +
-                "Введите команду (help - помощь)\n" +
+                "Введите команду (help - помощь):\n" +
                 "----------------------------\n" +
                 "|id|name|password|\n" +
                 "----------------------------\n" +
-                "Введите команду (help - помощь)\n" +
+                "Введите команду (help - помощь):\n" +
                 "До встречи!\n", getData());
     }
 
@@ -194,20 +209,21 @@ public class IntegrationTest {
 
         assertEquals("Привет!\n" +
                 "Введите имя базы данных, имя пользователя и пароль в формате databaseName|userName|password.\n" +
+                "(Полный список команд - help).\n" +
                 "Подключились.\n" +
-                "Введите команду (help - помощь)\n" +
+                "Введите команду (help - помощь):\n" +
                 "Таблица 'users' очищена\n" +
-                "Введите команду (help - помощь)\n" +
+                "Введите команду (help - помощь):\n" +
                 "Запись {names: [id, name, password], values: [10, Peter, 1111]} добавлена в таблицу 'users'\n" +
-                "Введите команду (help - помощь)\n" +
+                "Введите команду (help - помощь):\n" +
                 "Запись {names: [id, name, password], values: [11, Victor, 2222]} добавлена в таблицу 'users'\n" +
-                "Введите команду (help - помощь)\n" +
+                "Введите команду (help - помощь):\n" +
                 "----------------------------\n" +
                 "|id|name|password|\n" +
                 "----------------------------\n" +
                 "|10|Peter|1111|\n" +
                 "|11|Victor|2222|\n" +
-                "Введите команду (help - помощь)\n" +
+                "Введите команду (help - помощь):\n" +
                 "До встречи!\n", getData());
     }
 
@@ -220,12 +236,13 @@ public class IntegrationTest {
 
         assertEquals("Привет!\n" +
                 "Введите имя базы данных, имя пользователя и пароль в формате databaseName|userName|password.\n" +
+                "(Полный список команд - help).\n" +
                 "Подключились.\n" +
-                "Введите команду (help - помощь)\n" +
+                "Введите команду (help - помощь):\n" +
                 "Неудача. Причина: Необходимо четное число параметров в формате\n" +
                 "'create|tableName|column1|value1|...columnN|valueN'. Получено 'create|users|id|15|name'.\n" +
                 "Повторите попытку.\n" +
-                "Введите команду (help - помощь)\n" +
+                "Введите команду (help - помощь):\n" +
                 "До встречи!\n", getData());
     }
 
@@ -238,12 +255,13 @@ public class IntegrationTest {
 
         assertEquals("Привет!\n" +
                 "Введите имя базы данных, имя пользователя и пароль в формате databaseName|userName|password.\n" +
+                "(Полный список команд - help).\n" +
                 "Подключились.\n" +
-                "Введите команду (help - помощь)\n" +
+                "Введите команду (help - помощь):\n" +
                 "Неудача. Причина: Неправильный формат команды. Должно быть 'clear|tableName',\n" +
                 "а Вы ввели clear|zzz|xxx\n" +
                 "Повторите попытку.\n" +
-                "Введите команду (help - помощь)\n" +
+                "Введите команду (help - помощь):\n" +
                 "До встречи!\n", getData());
     }
 
