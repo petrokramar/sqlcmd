@@ -7,7 +7,6 @@ import ua.com.juja.sqlcmd.view.View;
  * Created by kramar on 11.10.16.
  */
 public class Query implements Command {
-
     private View view;
     private DatabaseManager manager;
 
@@ -24,6 +23,6 @@ public class Query implements Command {
     @Override
     public void process(String command) {
         //TODO
-        view.write("Пока ничего не делаем");
+        view.write("Пока ничего не делаем. Только для SQL.");
     }
 }
