@@ -44,4 +44,8 @@ public class Clear implements Command {
             view.write(String.format("Очистка таблицы '%s' отменена.", tableName));
         }
     }
+
+
+
+
 }

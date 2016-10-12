@@ -1,6 +1,9 @@
 package ua.com.juja.sqlcmd.model;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Peter on 18.09.2016.
@@ -25,53 +28,40 @@ public class DataSet {
         }
     }
 
-    public Data[] data = new Data[100];//TODO
-    public int freeIndex = 0;
+    public Map<String, Object> data = new LinkedHashMap<>();
 
     public void put(String name, Object value) {
-        for(int index = 0; index < freeIndex; index++){
-            if(data[index].getName().equals(name)){
-                data[index].value = value;
-                return;
-            }
-        }
-        data[freeIndex++] = new Data(name, value);
+        data.put(name, value);
     }
 
-    public Object[] getValues(){
-        Object[] result = new Object[freeIndex];
-            for(int i = 0; i < freeIndex; i++){
-                result[i] = data[i].getValue();
-            }
+    public List<Object> getValues(){
+        List<Object> result = new ArrayList<>();
+        for(Map.Entry<String, Object> entry: data.entrySet()){
+            result.add(entry.getValue());
+        }
         return result;
     }
 
-    public String[] getNames(){
-        String[] result = new String[freeIndex];
-        for(int i = 0; i < freeIndex; i++){
-            result[i] = data[i].getName();
+    public List<String> getNames(){
+        List<String> result = new ArrayList<>();
+        for(Map.Entry<String, Object> entry: data.entrySet()){
+            result.add(entry.getKey());
         }
         return result;
     }
 
     public Object get(String name) {
-        for (int i = 0; i < freeIndex; i++) {
-            if (data[i].getName().equals(name)) {
-                return data[i].getValue();
-            }
-        }
-        return null;
+        return data.get(name);
     }
 
     public void updateFrom(DataSet newValue) {
-        for (int index = 0; index < newValue.freeIndex; index++) {
-            Data data = newValue.data[index];
-            this.put(data.name, data.value);
+        for(Map.Entry<String, Object> entry: data.entrySet()){
+            this.put(entry.getKey(), entry.getValue());
         }
     }
 
     @Override
     public String toString() {
-        return "{names: " + Arrays.toString(getNames()) + ", values: " + Arrays.toString(getValues()) + "}";
+        return "{names: " + getNames() + ", values: " + getValues() + "}";
     }
 }
