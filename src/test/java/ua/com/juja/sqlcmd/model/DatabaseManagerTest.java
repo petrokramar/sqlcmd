@@ -4,9 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 
@@ -27,19 +25,19 @@ public abstract class DatabaseManagerTest {
 
     @Test
     public void testGetTableNames() throws SQLException, ClassNotFoundException {
-        List<String> testTables = new ArrayList<>();
+        Set<String> testTables = new LinkedHashSet<>();
         testTables.add("users");
-        List<String> tables = manager.getTableNames();
+        Set<String> tables = manager.getTableNames();
         assertEquals(testTables,tables);
     }
 
     @Test
     public void testGetTableColumnNames() throws SQLException, ClassNotFoundException {
-        List<String> testColumns = new ArrayList<>();
+        Set<String> testColumns = new LinkedHashSet<>();
         testColumns.add("id");
         testColumns.add("name");
         testColumns.add("password");
-        List<String> columns = manager.getTableColumns("users");
+        Set<String> columns = manager.getTableColumns("users");
         assertEquals(testColumns,columns);
     }
     @Test

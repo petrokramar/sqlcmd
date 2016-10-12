@@ -33,7 +33,7 @@ public class FindTest {
 
     @Test
     public void testPrintTableData() throws SQLException {
-        java.util.List<String> list = new ArrayList<>();
+        Set<String> list = new LinkedHashSet<>();
         list.add("id");
         list.add("name");
         list.add("password");
@@ -63,7 +63,7 @@ public class FindTest {
 
     @Test
     public void testPrintTableDataOneColumn() throws SQLException {
-        java.util.List<String> list = new ArrayList<>();
+        Set<String> list = new LinkedHashSet<>();
         list.add("id");
         when(manager.getTableColumns("users")).thenReturn(list);
 
@@ -102,7 +102,7 @@ public class FindTest {
 
     @Test
     public void printEmptyTableData() throws SQLException {
-        java.util.List<String> list = new ArrayList<>();
+        Set<String> list = new LinkedHashSet<>();
         list.add("id");
         list.add("name");
         list.add("password");

@@ -1,8 +1,6 @@
 package ua.com.juja.sqlcmd.model;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by indigo on 25.08.2015.
@@ -33,8 +31,8 @@ public class InMemoryDatabaseManager implements DatabaseManager {
     }
 
     @Override
-    public List getTableNames() {
-        List<String> list = new ArrayList<>();
+    public Set<String> getTableNames() {
+        Set<String> list = new LinkedHashSet<>();
         list.add(TABLE_NAME);
         return list;
     }
@@ -73,8 +71,8 @@ public class InMemoryDatabaseManager implements DatabaseManager {
     }
 
     @Override
-    public List<String> getTableColumns(String tableName) {
-        List<String> list = new ArrayList<>();
+    public Set<String> getTableColumns(String tableName) {
+        Set<String> list = new LinkedHashSet<>();
         list.add("id");
         list.add("name");
         list.add("password");
@@ -86,8 +84,4 @@ public class InMemoryDatabaseManager implements DatabaseManager {
         return true;
     }
 
-//    @Override
-//    public String[] getTableNames(String tableName) {
-//        return new String[] {"name", "password", "id"};
-//    }
 }

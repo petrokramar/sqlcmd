@@ -4,7 +4,7 @@ import ua.com.juja.sqlcmd.model.DatabaseManager;
 import ua.com.juja.sqlcmd.view.View;
 
 import java.sql.SQLException;
-import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Peter on 20.09.2016.
@@ -26,7 +26,7 @@ public class GetTableNames implements Command{
     @Override
     public void process(String command) {
         try {
-            List<String> tableNames = manager.getTableNames();
+            Set<String> tableNames = manager.getTableNames();
             view.write(tableNames.toString());
         } catch (SQLException e) {
             view.write(String.format("Ошибка получения списка таблиц по причине: %", e.getMessage()));

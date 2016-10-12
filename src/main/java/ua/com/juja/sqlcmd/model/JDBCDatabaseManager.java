@@ -1,8 +1,7 @@
 package ua.com.juja.sqlcmd.model;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Peter on 17.09.2016.
@@ -70,8 +69,8 @@ public class JDBCDatabaseManager implements DatabaseManager {
     }
 
     @Override
-    public List getTableNames(){
-        List<String> tables = new ArrayList<>();
+    public Set<String> getTableNames(){
+        Set<String> tables = new LinkedHashSet<>();
         try(Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("SELECT table_name FROM information_schema.tables" +
                 " WHERE table_schema = 'public' AND table_type = 'BASE TABLE'"))
@@ -134,8 +133,8 @@ public class JDBCDatabaseManager implements DatabaseManager {
     }
 
     @Override
-    public List<String> getTableColumns(String tableName) {
-        List<String> columns = new ArrayList<>();
+    public Set<String> getTableColumns(String tableName) {
+        Set<String> columns = new LinkedHashSet<>();
         try(Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("SELECT column_name FROM information_schema.columns" +
                 " WHERE  table_schema = 'public' and table_name = '" + tableName + "'")){

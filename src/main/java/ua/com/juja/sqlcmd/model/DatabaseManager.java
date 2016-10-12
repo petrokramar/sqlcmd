@@ -1,7 +1,7 @@
 package ua.com.juja.sqlcmd.model;
 
 import java.sql.SQLException;
-import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Peter on 19.09.2016.
@@ -13,7 +13,7 @@ public interface DatabaseManager {
 
     int getSize(String tableName) throws SQLException;
 
-    List getTableNames() throws SQLException;
+    Set<String> getTableNames() throws SQLException;
 
     void clear(String tableName) throws SQLException; //TODO переспросить пользователя
 
@@ -21,7 +21,7 @@ public interface DatabaseManager {
 
     void update(String tableName, int id, DataSet input) throws SQLException;
 
-    List<String> getTableColumns(String tableName) throws SQLException;
+    Set<String> getTableColumns(String tableName) throws SQLException;
 
     boolean isConnected();
 }

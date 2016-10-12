@@ -30,7 +30,7 @@ public class Find implements Command{
         String[] data = command.split("\\|");
         String tableName = data[1];
         try {
-            List<String> tableColumns = manager.getTableColumns(tableName);
+            Set<String> tableColumns = manager.getTableColumns(tableName);
             printHeader(tableColumns);
             DataSet[] tableData = manager.getTableData(tableName);
             printTable(tableData);
@@ -54,7 +54,7 @@ public class Find implements Command{
         view.write(result);
     }
 
-    private void printHeader(List<String> tableColumns) {
+    private void printHeader(Set<String> tableColumns) {
         String result = "|";
         for (String name: tableColumns) {
             result += name + "|";
