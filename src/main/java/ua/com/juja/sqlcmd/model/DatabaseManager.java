@@ -15,7 +15,7 @@ public interface DatabaseManager {
 
     Set<String> getTableNames() throws SQLException;
 
-    void clear(String tableName) throws SQLException; //TODO переспросить пользователя
+    void clear(String tableName) throws SQLException;
 
     void create(String tableName, DataSet input) throws SQLException;
 

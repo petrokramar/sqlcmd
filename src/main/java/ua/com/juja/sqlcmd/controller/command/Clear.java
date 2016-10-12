@@ -32,11 +32,16 @@ public class Clear implements Command {
                     "а Вы ввели " + command);
         }
         String tableName = data[1];
-        try {
-            manager.clear(tableName);
-            view.write(String.format("Таблица '%s' очищена", tableName));
-        } catch (SQLException e) {
-            view.write(String.format("Ошибка очистки таблицы '%s' по причине: %", tableName, e.getMessage()));
+        view.write(String.format("Для подтверждения очистки таблицы '%s' наберите 'yes'.", tableName));
+        if("yes".equals(view.read().trim())){
+            try {
+                manager.clear(tableName);
+                view.write(String.format("Таблица '%s' очищена", tableName));
+            } catch (SQLException e) {
+                view.write(String.format("Ошибка очистки таблицы '%s' по причине: %", tableName, e.getMessage()));
+            }
+        }else{
+            view.write(String.format("Очистка таблицы '%s' отменена.", tableName));
         }
     }
 }

@@ -96,7 +96,7 @@ public class IntegrationTest {
     }
 
     @Test
-    public void testUnsupported() {//TODO
+    public void testUnsupported() {
         in.add("zzz");
         in.add("exit");
         Main.main(new String[0]);
@@ -109,7 +109,7 @@ public class IntegrationTest {
     }
 
     @Test
-    public void testUnsupportedAfterConnect() {//TODO
+    public void testUnsupportedAfterConnect() {
         in.add("connect|sqlcmd|postgres|123456");
         in.add("zzz");
         in.add("exit");
@@ -141,7 +141,7 @@ public class IntegrationTest {
     }
 
     @Test
-    public void testConnectAfterConnect() {//TODO
+    public void testConnectAfterConnect() {
         in.add("connect|sqlcmd|postgres|123456");
         in.add("list");
         in.add("connect|sqlcmd|postgres|123456");
@@ -177,9 +177,10 @@ public class IntegrationTest {
     }
 
     @Test
-    public void testFindUsersAfterConnect() {//TODO
+    public void testFindUsersAfterConnect() {
         in.add("connect|sqlcmd|postgres|123456");
         in.add("clear|users");
+        in.add("yes");
         in.add("find|users");
         in.add("exit");
         Main.main(new String[0]);
@@ -188,6 +189,7 @@ public class IntegrationTest {
                 "(Полный список команд - help).\n" +
                 "Подключились.\n" +
                 "Введите команду (help - помощь):\n" +
+                "Для подтверждения очистки таблицы 'users' наберите 'yes'.\n" +
                 "Таблица 'users' очищена\n" +
                 "Введите команду (help - помощь):\n" +
                 "----------------------------\n" +
@@ -201,6 +203,7 @@ public class IntegrationTest {
     public void testFindAfterConnectWithData() {
         in.add("connect|sqlcmd|postgres|123456");
         in.add("clear|users");
+        in.add("yes");
         in.add("create|users|id|10|name|Peter|password|1111");
         in.add("create|users|id|11|name|Victor|password|2222");
         in.add("find|users");
@@ -212,6 +215,7 @@ public class IntegrationTest {
                 "(Полный список команд - help).\n" +
                 "Подключились.\n" +
                 "Введите команду (help - помощь):\n" +
+                "Для подтверждения очистки таблицы 'users' наберите 'yes'.\n" +
                 "Таблица 'users' очищена\n" +
                 "Введите команду (help - помощь):\n" +
                 "Запись {names: [id, name, password], values: [10, Peter, 1111]} добавлена в таблицу 'users'\n" +
@@ -265,8 +269,8 @@ public class IntegrationTest {
                 "До встречи!\n", getData());
     }
 
-    @Test
-    public void testClearWrongTable() {//TODO
+//    @Test//TODO
+//    public void testClearWrongTable() {
 //        in.add("connect|sqlcmd|postgres|123456");
 //        in.add("clear|zzz");
 //        in.add("exit");
@@ -287,22 +291,25 @@ public class IntegrationTest {
 //                "Несуществующая команда: exit\n" +
 //                "Введите команду (help - помощь)\n" +
 //                "До встречи!\n", getData());
-    }
+//    }
 
-    @Test
-    public void testFindNotExistAfterConnect() {//TODO
+//    @Test//TODO
+//    public void testFindNotExistAfterConnect() {
 //        in.add("connect|sqlcmd|postgres|123456");
 //        in.add("find|notexist");
 //        in.add("exit");
 //        Main.main(new String[0]);
 //        assertEquals("Привет!\n" +
 //                "Введите имя базы данных, имя пользователя и пароль в формате databaseName|userName|password.\n" +
+//                "(Полный список команд - help).\n" +
 //                "Подключились.\n" +
-//                "Введите команду (help - помощь)\n" +
-//                "[users]\n" +
-//                "Введите команду (help - помощь)\n" +
+//                "Введите команду (help - помощь):\n" +
+//                "----------------------------\n" +
+//                "|\n" +
+//                "----------------------------\n" +
+//                "Введите команду (help - помощь):\n" +
 //                "До встречи!\n", getData());
-    }
+//    }
 
     public String getData() {
         try {

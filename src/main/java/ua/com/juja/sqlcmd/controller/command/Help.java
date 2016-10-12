@@ -27,7 +27,7 @@ public class Help implements Command{
         view.write("+---------------------------------------------------+--------------------------------------+");
         view.write("| connect|databaseName|userName|password            | подключение к базе данных            |");
         view.write("| list                                              | вывести список таблиц                |");
-        view.write("| clear|tableName                                   | очистка таблицы tableName            |"); //TODO переспросить пользователя
+        view.write("| clear|tableName                                   | очистка таблицы tableName            |");
         view.write("| create|tableName|column1|value1|...columnN|valueN | создание записей таблицы tableName   |");
         view.write("| find|tableName                                    | вывести содержимое таблицы tableName |");
         view.write("| query|text...                                     | произвольный SQL запрос              |");

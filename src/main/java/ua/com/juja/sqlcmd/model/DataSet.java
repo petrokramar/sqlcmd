@@ -25,17 +25,6 @@ public class DataSet {
         }
     }
 
-//    static class Data2{
-//    }
-//
-//    class Data3{
-//    }
-//
-//    Data2 data2 = new Data2();
-//    Data3 data3 = new Data3();
-//    Data2 data22 = new Data2();
-//    Data3 data33 = new Data3();
-
     public Data[] data = new Data[100];//TODO
     public int freeIndex = 0;
 
