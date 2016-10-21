@@ -1,6 +1,7 @@
 package ua.com.juja.sqlcmd.model;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -9,7 +10,7 @@ import java.util.Set;
 public interface DatabaseManager {
     void connect(String database, String userName, String password) throws SQLException;
 
-    DataSet[] getTableData(String tableName) throws SQLException;
+    List<DataSet> getTableData(String tableName) throws SQLException;
 
     int getSize(String tableName) throws SQLException;
 

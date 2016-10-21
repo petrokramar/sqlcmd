@@ -8,6 +8,8 @@ import ua.com.juja.sqlcmd.view.View;
 public class Help implements Command{
 
     private View view;
+    private static final String ANSI_BLUE = "\u001B[34m";
+    private static final String ANSI_RESET = "\u001B[0m";
 
     public Help(View view) {
         this.view = view;

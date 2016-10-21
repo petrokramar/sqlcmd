@@ -31,25 +31,23 @@ public class JDBCDatabaseManager implements DatabaseManager {
     }
 
     @Override
-    public DataSet[] getTableData(String tableName) {
+    public List<DataSet> getTableData(String tableName) {
+        List<DataSet> result = new ArrayList<>();
         try(Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM " + tableName))
         {
-            int size = getSize(tableName);
-            DataSet[] result = new DataSet[size];
             ResultSetMetaData rsmd = rs.getMetaData();
-            int index = 0;
             while ((rs.next())) {
                 DataSet dataSet = new DataSet();
                 for (int i = 1; i <= rsmd.getColumnCount(); i++) {
                     dataSet.put(rsmd.getColumnName(i), rs.getObject(i));
                 }
-                result[index++] = dataSet;
+                result.add(dataSet);
             }
             return result;
         } catch (SQLException e) {
             e.printStackTrace();
-            return  new DataSet[0];
+            return result;
         }
     }
 

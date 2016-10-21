@@ -2,6 +2,7 @@ package ua.com.juja.sqlcmd.controller.command;
 
 import ua.com.juja.sqlcmd.model.DataSet;
 import ua.com.juja.sqlcmd.model.DatabaseManager;
+import ua.com.juja.sqlcmd.view.TableConstructor;
 import ua.com.juja.sqlcmd.view.View;
 
 import java.sql.SQLException;
@@ -32,14 +33,25 @@ public class Find implements Command{
         try {
             Set<String> tableColumns = manager.getTableColumns(tableName);
             printHeader(tableColumns);
-            DataSet[] tableData = manager.getTableData(tableName);
+            List<DataSet> tableData = manager.getTableData(tableName);
+
+
             printTable(tableData);
+//TODO table constructor
+
+
+            TableConstructor constructor = new TableConstructor(tableColumns, tableData.);
+            view.write(constructor.getTableString());
+
+
+
+
         } catch (SQLException e) {
             view.write(String.format("Ошибка чтения данных из таблицы '%s' по причине: %", tableName, e.getMessage()));
         }
     }
 
-    private void printTable(DataSet[] tableData) {
+    private void printTable(List<DataSet> tableData) {
         for(DataSet row: tableData){
             printRow(row);
         }

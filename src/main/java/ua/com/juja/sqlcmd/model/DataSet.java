@@ -10,25 +10,7 @@ import java.util.Map;
  */
 public class DataSet {
 
-    static class Data{//TODO почему статик?
-        private String name;
-        private Object value;
-
-        public Data(String name, Object value) {
-            this.name = name;
-            this.value = value;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public Object getValue() {
-            return value;
-        }
-    }
-
-    public Map<String, Object> data = new LinkedHashMap<>();
+    private Map<String, Object> data = new LinkedHashMap<>();
 
     public void put(String name, Object value) {
         data.put(name, value);
