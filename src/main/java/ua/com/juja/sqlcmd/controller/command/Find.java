@@ -9,9 +9,6 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Set;
 
-/**
- * Created by Peter on 20.09.2016.
- */
 public class Find implements Command{
     private View view;
     private DatabaseManager manager;
@@ -32,48 +29,12 @@ public class Find implements Command{
         String tableName = data[1];
         try {
             Set<String> tableColumns = manager.getTableColumns(tableName);
-            printHeader(tableColumns);
             List<DataSet> tableData = manager.getTableData(tableName);
-
-
-            printTable(tableData);
-//TODO table constructor
-
-
-            TableConstructor constructor = new TableConstructor(tableColumns, tableData.);
+            TableConstructor constructor = new TableConstructor(tableColumns, tableData);
             view.write(constructor.getTableString());
-
-
-
-
         } catch (SQLException e) {
             view.write(String.format("Ошибка чтения данных из таблицы '%s' по причине: %", tableName, e.getMessage()));
         }
-    }
-
-    private void printTable(List<DataSet> tableData) {
-        for(DataSet row: tableData){
-            printRow(row);
-        }
-    }
-
-    private void printRow(DataSet row) {
-        List<Object> values = row.getValues();
-        String result = "|";
-        for (Object value: values) {
-            result += value + "|";
-        }
-        view.write(result);
-    }
-
-    private void printHeader(Set<String> tableColumns) {
-        String result = "|";
-        for (String name: tableColumns) {
-            result += name + "|";
-        }
-        view.write("----------------------------");
-        view.write(result);
-        view.write("----------------------------");
     }
 
 }

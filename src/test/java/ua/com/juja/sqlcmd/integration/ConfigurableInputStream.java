@@ -3,9 +3,6 @@ package ua.com.juja.sqlcmd.integration;
 import java.io.IOException;
 import java.io.InputStream;
 
-/**
- * Created by Peter on 21.09.2016.
- */
 public class ConfigurableInputStream extends InputStream{
 
     private String line;

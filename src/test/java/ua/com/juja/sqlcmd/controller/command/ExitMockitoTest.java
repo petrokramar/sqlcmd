@@ -6,9 +6,6 @@ import ua.com.juja.sqlcmd.view.View;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by Peter on 26.09.2016.
- */
 public class ExitMockitoTest {
 
     private View view = Mockito.mock(View.class);

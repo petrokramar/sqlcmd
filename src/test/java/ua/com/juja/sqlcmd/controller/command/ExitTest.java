@@ -4,9 +4,6 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by Peter on 26.09.2016.
- */
 public class ExitTest {
 
     FakeView view = new FakeView();

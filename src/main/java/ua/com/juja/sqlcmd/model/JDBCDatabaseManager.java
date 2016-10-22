@@ -3,9 +3,6 @@ package ua.com.juja.sqlcmd.model;
 import java.sql.*;
 import java.util.*;
 
-/**
- * Created by Peter on 17.09.2016.
- */
 public class JDBCDatabaseManager implements DatabaseManager {
 
     public static final String DATABASE_URL = "jdbc:postgresql://localhost:8757/";

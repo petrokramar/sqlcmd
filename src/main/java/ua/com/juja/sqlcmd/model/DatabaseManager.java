@@ -4,9 +4,6 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Set;
 
-/**
- * Created by Peter on 19.09.2016.
- */
 public interface DatabaseManager {
     void connect(String database, String userName, String password) throws SQLException;
 

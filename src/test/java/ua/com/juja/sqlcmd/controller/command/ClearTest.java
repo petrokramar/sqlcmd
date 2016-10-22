@@ -13,9 +13,6 @@ import java.util.ArrayList;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
-/**
- * Created by Peter on 26.09.2016.
- */
 public class ClearTest {
 
     private DatabaseManager manager;

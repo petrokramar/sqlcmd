@@ -2,9 +2,6 @@ package ua.com.juja.sqlcmd.controller.command;
 
 import ua.com.juja.sqlcmd.view.View;
 
-/**
- * Created by Peter on 20.09.2016.
- */
 public class Exit implements Command{
 
     private View view;

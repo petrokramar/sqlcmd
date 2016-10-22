@@ -13,9 +13,6 @@ import java.io.UnsupportedEncodingException;
 
 import static org.junit.Assert.assertEquals;
 
-/**
- * Created by Peter on 21.09.2016.
- */
 public class IntegrationTest {
 
     private static ConfigurableInputStream in;//TODO может убрать статику?
@@ -192,9 +189,9 @@ public class IntegrationTest {
                 "Для подтверждения очистки таблицы 'users' наберите 'yes'.\n" +
                 "Таблица 'users' очищена\n" +
                 "Введите команду (help - помощь):\n" +
-                "----------------------------\n" +
+                "+--+----+--------+\n" +
                 "|id|name|password|\n" +
-                "----------------------------\n" +
+                "+--+----+--------+\n" +
                 "Введите команду (help - помощь):\n" +
                 "До встречи!\n", getData());
     }
@@ -222,11 +219,13 @@ public class IntegrationTest {
                 "Введите команду (help - помощь):\n" +
                 "Запись {names: [id, name, password], values: [11, Victor, 2222]} добавлена в таблицу 'users'\n" +
                 "Введите команду (help - помощь):\n" +
-                "----------------------------\n" +
-                "|id|name|password|\n" +
-                "----------------------------\n" +
-                "|10|Peter|1111|\n" +
-                "|11|Victor|2222|\n" +
+                "+--+------+--------+\n" +
+                "|id|name  |password|\n" +
+                "+--+------+--------+\n" +
+                "|10|Peter |1111    |\n" +
+                "+--+------+--------+\n" +
+                "|11|Victor|2222    |\n" +
+                "+--+------+--------+\n" +
                 "Введите команду (help - помощь):\n" +
                 "До встречи!\n", getData());
     }

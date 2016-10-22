@@ -2,9 +2,6 @@ package ua.com.juja.sqlcmd.controller.command;
 
 import ua.com.juja.sqlcmd.view.View;
 
-/**
- * Created by Peter on 26.09.2016.
- */
 public class FakeView implements View {
 
     private String messages = "";

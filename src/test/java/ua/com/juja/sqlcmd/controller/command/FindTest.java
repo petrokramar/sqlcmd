@@ -15,9 +15,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
-/**
- * Created by Peter on 26.09.2016.
- */
 public class FindTest {
 
     private DatabaseManager manager;
@@ -42,22 +39,24 @@ public class FindTest {
         DataSet user1 = new DataSet();
         user1.put("id", 11);
         user1.put("name", "Petro");
-        user1.put("password", "1111");
+        user1.put("password", "111122223333");
 
         DataSet user2 = new DataSet();
         user2.put("id", 12);
         user2.put("name", "Victor");
-        user2.put("password", "2222");
+        user2.put("password", "22223333");
 
-        DataSet[] users = new DataSet[]{user1, user2};
+        List<DataSet> users = new ArrayList<>(Arrays.asList(user1, user2));
         when(manager.getTableData("users")).thenReturn(users);
 
         command.process("find|users");
-        String expected = "[----------------------------, " +
-                "|id|name|password|, " +
-                "----------------------------, " +
-                "|11|Petro|1111|, " +
-                "|12|Victor|2222|]";
+        String expected = "[+--+------+------------+\n" +
+                "|id|name  |password    |\n" +
+                "+--+------+------------+\n" +
+                "|11|Petro |111122223333|\n" +
+                "+--+------+------------+\n" +
+                "|12|Victor|22223333    |\n" +
+                "+--+------+------------+]";
         print(expected);
     }
 
@@ -73,15 +72,17 @@ public class FindTest {
         DataSet user2 = new DataSet();
         user2.put("id", 12);
 
-        DataSet[] users = new DataSet[]{user1, user2};
+        List<DataSet> users = new ArrayList<>(Arrays.asList(user1, user2));
         when(manager.getTableData("users")).thenReturn(users);
 
         command.process("find|users");
-        String expected = "[----------------------------, " +
-                "|id|, " +
-                "----------------------------, " +
-                "|11|, " +
-                "|12|]";
+        String expected = "[+--+\n" +
+                "|id|\n" +
+                "+--+\n" +
+                "|11|\n" +
+                "+--+\n" +
+                "|12|\n" +
+                "+--+]";
         print(expected);
     }
 
@@ -108,11 +109,13 @@ public class FindTest {
         list.add("password");
         when(manager.getTableColumns("users")).thenReturn(list);
 
-        DataSet[] users = new DataSet[0];
+        List<DataSet> users = new ArrayList<>();
         when(manager.getTableData("users")).thenReturn(users);
 
         command.process("find|users");
-        String expected = "[----------------------------, |id|name|password|, ----------------------------]";
+        String expected = "[+--+----+--------+\n" +
+                "|id|name|password|\n" +
+                "+--+----+--------+]";
         print(expected);
 
     }

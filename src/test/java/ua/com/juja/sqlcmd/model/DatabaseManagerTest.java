@@ -8,9 +8,6 @@ import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 
-/**
- * Created by Peter on 17.09.2016.
- */
 public abstract class DatabaseManagerTest {
 
     private DatabaseManager manager;
@@ -50,10 +47,10 @@ public abstract class DatabaseManagerTest {
         input.put("password", "pass");
         manager.create("users", input);
 
-        DataSet[] users = manager.getTableData("users");
-        assertEquals(1, users.length);
+        List<DataSet> users = manager.getTableData("users");
+        assertEquals(1, users.size());
 
-        DataSet user = users[0];
+        DataSet user = users.get(0);
         assertEquals("[id, name, password]", user.getNames().toString());
         assertEquals("[1, John, pass]",user.getValues().toString());
     }
@@ -73,10 +70,10 @@ public abstract class DatabaseManagerTest {
         newValue.put("password", "pass2");
         manager.update("users", 1, newValue);
 
-        DataSet[] users = manager.getTableData("users");
-        assertEquals(1, users.length);
+        List<DataSet> users = manager.getTableData("users");
+        assertEquals(1, users.size());
 
-        DataSet user = users[0];
+        DataSet user = users.get(0);
         assertEquals("[id, name, password]", user.getNames().toString());
         assertEquals("[1, John2, pass2]", user.getValues().toString());
     }

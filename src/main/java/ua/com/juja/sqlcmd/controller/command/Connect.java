@@ -5,9 +5,6 @@ import ua.com.juja.sqlcmd.view.View;
 
 import java.sql.SQLException;
 
-/**
- * Created by Peter on 20.09.2016.
- */
 public class Connect implements Command {
 
     private View view;

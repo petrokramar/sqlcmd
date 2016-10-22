@@ -1,12 +1,9 @@
 package ua.com.juja.sqlcmd.view;
 
-/**
- * Created by kramar on 21.10.16.
- */
-
 import org.nocrala.tools.texttablefmt.BorderStyle;
 import org.nocrala.tools.texttablefmt.ShownBorders;
 import org.nocrala.tools.texttablefmt.Table;
+import ua.com.juja.sqlcmd.model.DataSet;
 
 import java.util.List;
 import java.util.Map;
@@ -16,12 +13,12 @@ public class TableConstructor {
 
     private final Set<String> columns;
     private final Table table;
-    private final List<Map<String, Object>> tableData;
+    private final List<DataSet> tableData;
 
-    public TableConstructor(Set<String> columns, List<Map<String, Object>> tableData) {
+    public TableConstructor(Set<String> columns, List<DataSet> tableData) {
         this.columns = columns;
-        this.tableData = tableData;
         table = new Table(columns.size(), BorderStyle.CLASSIC, ShownBorders.ALL);
+        this.tableData = tableData;
     }
 
     public String getTableString() {
@@ -41,8 +38,8 @@ public class TableConstructor {
     }
 
     private void buildRows() {
-        for (Map<String, Object> row : tableData) {
-            for (Object value : row.values()) {
+        for (DataSet row : tableData) {
+            for (Object value : row.getValues()) {
                 table.addCell(value.toString());
             }
         }

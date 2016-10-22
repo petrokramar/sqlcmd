@@ -6,9 +6,6 @@ import ua.com.juja.sqlcmd.view.View;
 import java.sql.SQLException;
 import java.util.Set;
 
-/**
- * Created by Peter on 20.09.2016.
- */
 public class GetTableNames implements Command{
     private View view;
     private DatabaseManager manager;
