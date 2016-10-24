@@ -1,11 +1,15 @@
 package ua.com.juja.sqlcmd.model;
 
+import ua.com.juja.sqlcmd.controller.PropertiesLoader;
+
 import java.sql.*;
 import java.util.*;
 
 public class JDBCDatabaseManager implements DatabaseManager {
 
-    public static final String DATABASE_URL = "jdbc:postgresql://localhost:8757/";
+    private static final PropertiesLoader propertiesLoader = new PropertiesLoader();
+    private static final String DATABASE_URL = String.format(
+        "jdbc:postgresql://%s:%s/", propertiesLoader.getServerName(), propertiesLoader.getDatabasePort());
     private Connection connection;
 
     @Override
