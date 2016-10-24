@@ -29,7 +29,7 @@ public class JDBCDatabaseManager implements DatabaseManager {
     }
 
     @Override
-    public List<DataSet> getTableData(String tableName) {
+    public List<DataSet> getTableData(String tableName) throws SQLException{
         List<DataSet> result = new ArrayList<>();
         try(Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(String.format("SELECT * FROM %s", tableName)))
@@ -43,14 +43,11 @@ public class JDBCDatabaseManager implements DatabaseManager {
                 result.add(dataSet);
             }
             return result;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return result;
         }
     }
 
     @Override
-    public int getSize(String tableName) {
+    public int getSize(String tableName) throws SQLException{
         int size = 0;
         try(Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(String.format("SELECT COUNT(*) FROM %s", tableName)))
@@ -58,14 +55,11 @@ public class JDBCDatabaseManager implements DatabaseManager {
             rs.next();
             size = rs.getInt(1);
             return size;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return size;
         }
     }
 
     @Override
-    public Set<String> getTableNames(){
+    public Set<String> getTableNames() throws SQLException{
         Set<String> tables = new LinkedHashSet<>();
         try(Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("SELECT table_name FROM information_schema.tables" +
@@ -75,9 +69,6 @@ public class JDBCDatabaseManager implements DatabaseManager {
                 tables.add(rs.getString("table_name"));
             }
             return tables;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return tables;
         }
     }
 
@@ -85,13 +76,11 @@ public class JDBCDatabaseManager implements DatabaseManager {
     public void clear(String tableName) throws SQLException{
         try(Statement statement = connection.createStatement()) {
             statement.executeUpdate(String.format("DELETE FROM %s", tableName));
-        } catch (SQLException e) {
-            throw new SQLException();
         }
     }
 
     @Override
-    public void create(String tableName, DataSet input) {
+    public void create(String tableName, DataSet input) throws SQLException{
         try(Statement statement = connection.createStatement()) {
             String columns = "";
             for(String name: input.getNames()){
@@ -104,13 +93,11 @@ public class JDBCDatabaseManager implements DatabaseManager {
             }
             values = values.substring(0,values.length() - 1);
             statement.executeUpdate(String.format("INSERT INTO %s (%s) VALUES (%s)", tableName, columns, values));
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 
     @Override
-    public void update(String tableName, int id, DataSet input) {
+    public void update(String tableName, int id, DataSet input) throws SQLException{
         String fields = "";
         for(String name: input.getNames()){
             fields += String.format("%s =? ", name) + ",";
@@ -124,13 +111,11 @@ public class JDBCDatabaseManager implements DatabaseManager {
             }
             preparedStatement.setInt(index, id);
             preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 
     @Override
-    public Set<String> getTableColumns(String tableName) {
+    public Set<String> getTableColumns(String tableName) throws SQLException{
         Set<String> columns = new LinkedHashSet<>();
         try(Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(
@@ -140,9 +125,23 @@ public class JDBCDatabaseManager implements DatabaseManager {
                 columns.add(rs.getString("column_name"));
             }
             return columns;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return columns;
+        }
+    }
+
+    @Override
+    public List<DataSet> executeQuery(String query) throws SQLException {//fix UPDATE
+        List<DataSet> result = new ArrayList<>();
+        try(Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(query)){
+            ResultSetMetaData rsmd = rs.getMetaData();
+            while ((rs.next())) {
+                DataSet dataSet = new DataSet();
+                for (int i = 1; i <= rsmd.getColumnCount(); i++) {
+                    dataSet.put(rsmd.getColumnName(i), rs.getObject(i));
+                }
+                result.add(dataSet);
+            }
+            return result;
         }
     }
 

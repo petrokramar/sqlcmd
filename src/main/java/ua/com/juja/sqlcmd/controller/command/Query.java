@@ -1,7 +1,14 @@
 package ua.com.juja.sqlcmd.controller.command;
 
+import ua.com.juja.sqlcmd.model.DataSet;
 import ua.com.juja.sqlcmd.model.DatabaseManager;
+import ua.com.juja.sqlcmd.view.TableConstructor;
 import ua.com.juja.sqlcmd.view.View;
+
+import java.sql.SQLException;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
 public class Query implements Command {
     private View view;
@@ -19,9 +26,21 @@ public class Query implements Command {
 
     @Override
     public void process(String command) {
-        //TODO
-        view.write("Пока ничего не делаем. Только для SQL.");
-    }
+        String[] data = command.split("\\|");
+        String query = data[1];
+        try {
+            List<DataSet> tableData = manager.executeQuery(query);
+            if(!tableData.isEmpty()){
+                Set<String> tableColumns = new LinkedHashSet<>(tableData.get(0).getNames());
+                TableConstructor constructor = new TableConstructor(tableColumns, tableData);
+                view.write(constructor.getTableString());
+            }else{
+                view.write("Query executed.");
+            }
+        } catch (SQLException e) {
+            view.write(String.format("Error execute query '%s' by reason: %s", query, e.getMessage()));
+        }
+   }
 
     @Override
     public String format() {
@@ -32,5 +51,4 @@ public class Query implements Command {
     public String description() {
         return "custom SQL query";
     }
-
 }
