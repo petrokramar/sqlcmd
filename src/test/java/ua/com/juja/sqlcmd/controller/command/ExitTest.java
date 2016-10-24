@@ -29,6 +29,6 @@ public class ExitTest {
         }catch (ExitException e){
 
         }
-        assertEquals("До встречи!\n",view.getContent());
+        assertEquals("Good luck!\n",view.getContent());
     }
 }

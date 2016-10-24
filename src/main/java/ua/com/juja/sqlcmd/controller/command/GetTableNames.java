@@ -26,7 +26,7 @@ public class GetTableNames implements Command{
             Set<String> tableNames = manager.getTableNames();
             view.write(tableNames.toString());
         } catch (SQLException e) {
-            view.write(String.format("Ошибка получения списка таблиц по причине: %", e.getMessage()));
+            view.write(String.format("Error getting the list of tables by reason: %", e.getMessage()));
         }
     }
 
@@ -37,7 +37,7 @@ public class GetTableNames implements Command{
 
     @Override
     public String description() {
-        return "вывести список таблиц";
+        return "display list of tables";
     }
 
 }

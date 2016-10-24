@@ -25,20 +25,20 @@ public class Clear implements Command {
     public void process(String command) {
         String[] data = command.split("\\|");
         if(data.length !=2){
-            throw new IllegalArgumentException(String.format("Неправильный формат команды. Должно быть 'clear|tableName',\n" +
-                    "а Вы ввели %s", command));
+            throw new IllegalArgumentException(String.format("Incorrect command format. The correct format: 'clear|tableName',\n" +
+                    "your command: %s", command));
         }
         String tableName = data[1];
-        view.write(String.format("Для подтверждения очистки таблицы '%s' наберите 'yes'.", tableName));
+        view.write(String.format("To confirm clearing table '%s' type 'yes'.", tableName));
         if("yes".equals(view.read().trim())){
             try {
                 manager.clear(tableName);
-                view.write(String.format("Таблица '%s' очищена", tableName));
+                view.write(String.format("Table '%s' is cleared", tableName));
             } catch (SQLException e) {
-                view.write(String.format("Ошибка очистки таблицы '%s' по причине: %", tableName, e.getMessage()));
+                view.write(String.format("Table clear error '%s' by reason: %s", tableName, e.getMessage()));
             }
         }else{
-            view.write(String.format("Очистка таблицы '%s' отменена.", tableName));
+            view.write(String.format("Clearing table '%s' cancelled.", tableName));
         }
     }
 
@@ -49,7 +49,7 @@ public class Clear implements Command {
 
     @Override
     public String description() {
-        return "очистка таблицы tableName";
+        return "clearing table tableName";
     }
 
 }

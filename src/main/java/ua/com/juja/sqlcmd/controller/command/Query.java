@@ -30,7 +30,7 @@ public class Query implements Command {
 
     @Override
     public String description() {
-        return "произвольный SQL запрос";
+        return "custom SQL query";
     }
 
 }

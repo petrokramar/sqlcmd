@@ -42,9 +42,9 @@ public class MainController {
 //        view.write("    ____) | | |__| | | |____  | |____  | |  | | | |__| |");
 //        view.write("   |_____/   \\___\\_\\ |______|  \\_____| |_|  |_| |_____/");
 
-        view.write("Привет!");
-        view.write("Введите имя базы данных, имя пользователя и пароль в формате connect|databaseName|userName|password.");
-        view.write("(Полный список команд - help).");
+        view.write("Hello!");
+        view.write("Enter the database name, user name and password in format connect|databaseName|userName|password.");
+        view.write("(Full list of commands - help).");
         while(true){
             String input = view.read();
             for(Command command: commands){
@@ -61,7 +61,7 @@ public class MainController {
                     break;
                 };
             }
-            view.write("Введите команду (help - помощь):");
+            view.write("Enter a command (help - list of commands):");
         }
     }
 
@@ -71,8 +71,8 @@ public class MainController {
         if(cause !=null){
             message += " " + cause.getMessage();
         }
-        view.write(String.format("Неудача. Причина: %s", message));
-        view.write("Повторите попытку.");
+        view.write(String.format("Failure. Reason: %s", message));
+        view.write("Try again.");
     }
 
 }

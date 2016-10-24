@@ -13,7 +13,7 @@ public class JDBCDatabaseManager implements DatabaseManager {
         try {
             Class.forName("org.postgresql.Driver");
         } catch (ClassNotFoundException e) {
-            throw new SQLException("Не найден драйвер PostgreSQL", e);
+            throw new SQLException("PostgreSQL driver not found", e);
         }
         try {
             if(connection != null){
@@ -23,7 +23,8 @@ public class JDBCDatabaseManager implements DatabaseManager {
                         DATABASE_URL + database, userName, password);
         } catch (SQLException e) {
             connection = null;
-            throw new SQLException(String.format("Не удалось подключиться к базе данных: %s, пользователь: %s",database, userName), e);
+            throw new SQLException(
+                String.format("Failed to connect to database: %s, user: %s",database, userName), e);
         }
     }
 

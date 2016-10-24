@@ -20,7 +20,7 @@ public class IsConnected implements Command {
 
     @Override
     public void process(String command) {
-        view.write(String.format("Команда %s не активна. Подключитесь к базе.", command));
+        view.write(String.format("The command %s is not active. Connect to the database.", command));
     }
 
     @Override

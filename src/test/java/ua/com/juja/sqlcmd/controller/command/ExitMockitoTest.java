@@ -31,6 +31,6 @@ public class ExitMockitoTest {
         }catch (ExitException e){
 
         }
-        Mockito.verify(view).write("До встречи!");
+        Mockito.verify(view).write("Good luck!");
     }
 }

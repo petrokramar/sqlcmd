@@ -24,7 +24,7 @@ public class Help implements Command{
 
     @Override
     public void process(String command) {//TODO alphabete sorting
-        view.write("Список команд");
+        view.write("----- List of commands ------");
         for(Command item: commands){
             if(!"".equals(item.format())){
                 view.write("\t" + ANSI_BLUE + item.format());
@@ -40,7 +40,7 @@ public class Help implements Command{
 
     @Override
     public String description() {
-        return "помощь";
+        return "help";
     }
 
 }

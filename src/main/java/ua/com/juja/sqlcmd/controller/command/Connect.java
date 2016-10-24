@@ -27,17 +27,17 @@ public class Connect implements Command {
         String[] data = command.split("\\|");
         if (data.length != count()) {
             throw new IllegalArgumentException(
-                String.format("Неверно количество параметров разделенных знаком " +
-                "'|', ожидается %s, но есть: %s", count(), data.length));
+                String.format("Invalid number of parameters separated by " +
+                "'|', expected %s, but there are: %s", count(), data.length));
         }
         String databaseName = data[1];
         String userName = data[2];
         String password = data[3];
         try {
             manager.connect(databaseName, userName, password);
-            view.write("Подключились.");
+            view.write("Connection successful.");
         } catch (SQLException e) {
-            view.write(String.format("Ошибка подключения к базе данных '%s' по причине: %",
+            view.write(String.format("Failed to connect to database '%s' by reason: %s",
                 databaseName, e.getMessage()));
         }
     }
@@ -53,7 +53,7 @@ public class Connect implements Command {
 
     @Override
     public String description() {
-        return "подключение к базе данных";
+        return "connect to database";
     }
 
 }

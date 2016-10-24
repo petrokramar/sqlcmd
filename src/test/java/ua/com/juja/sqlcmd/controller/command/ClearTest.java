@@ -42,8 +42,8 @@ public class ClearTest {
             command.process("clear");
             fail();
         }catch (IllegalArgumentException e){
-            assertEquals("Неправильный формат команды. Должно быть 'clear|tableName',\n" +
-                    "а Вы ввели clear", e.getMessage());
+            assertEquals("Incorrect command format. The correct format: 'clear|tableName',\n" +
+                    "your command: clear", e.getMessage());
         }
     }
 
@@ -53,8 +53,8 @@ public class ClearTest {
             command.process("clear|users|zzz");
             fail();
         }catch (IllegalArgumentException e){
-            assertEquals("Неправильный формат команды. Должно быть 'clear|tableName',\n" +
-                    "а Вы ввели clear|users|zzz", e.getMessage());
+            assertEquals("Incorrect command format. The correct format: 'clear|tableName',\n" +
+                    "your command: clear|users|zzz", e.getMessage());
         }
     }
 

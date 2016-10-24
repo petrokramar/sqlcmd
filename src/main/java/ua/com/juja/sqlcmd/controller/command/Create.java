@@ -25,8 +25,8 @@ public class Create implements Command {
     public void process(String command) {
         String[] data = command.split("\\|");
         if(data.length %2 != 0){
-            throw new IllegalArgumentException(String.format("Необходимо четное число параметров в формате\n" +
-                "'create|tableName|column1|value1|...columnN|valueN'. Получено '%s'.",command));
+            throw new IllegalArgumentException(String.format("Need even number of parameters in format\n" +
+                "'create|tableName|column1|value1|...columnN|valueN'. Recieved '%s'.",command));
         }
         String tableName = data[1];
         DataSet dataSet = new DataSet();
@@ -37,7 +37,7 @@ public class Create implements Command {
         }
         try {
             manager.create(tableName, dataSet);
-            view.write(String.format("Запись %s добавлена в таблицу '%s'", dataSet, tableName));
+            view.write(String.format("Record %s added to the table '%s'", dataSet, tableName));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -50,7 +50,7 @@ public class Create implements Command {
 
     @Override
     public String description() {
-        return "создание записей таблицы tableName";
+        return "creating record for table tableName";
     }
 
 }

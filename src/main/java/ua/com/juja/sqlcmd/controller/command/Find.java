@@ -33,7 +33,7 @@ public class Find implements Command{
             TableConstructor constructor = new TableConstructor(tableColumns, tableData);
             view.write(constructor.getTableString());
         } catch (SQLException e) {
-            view.write(String.format("Ошибка чтения данных из таблицы '%s' по причине: %", tableName, e.getMessage()));
+            view.write(String.format("Error reading data from a table '%s' by reason: %", tableName, e.getMessage()));
         }
     }
 
@@ -44,7 +44,7 @@ public class Find implements Command{
 
     @Override
     public String description() {
-        return "вывести содержимое таблицы tableName";
+        return "display the contents of the table tableName";
     }
 
 }
