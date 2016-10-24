@@ -29,4 +29,15 @@ public class GetTableNames implements Command{
             view.write(String.format("Ошибка получения списка таблиц по причине: %", e.getMessage()));
         }
     }
+
+    @Override
+    public String format() {
+        return "list";
+    }
+
+    @Override
+    public String description() {
+        return "вывести список таблиц";
+    }
+
 }

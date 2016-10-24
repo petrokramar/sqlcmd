@@ -42,4 +42,15 @@ public class Create implements Command {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public String format() {
+        return "create|tableName|column1|value1|...columnN|valueN";
+    }
+
+    @Override
+    public String description() {
+        return "создание записей таблицы tableName";
+    }
+
 }

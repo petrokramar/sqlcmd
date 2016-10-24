@@ -11,9 +11,10 @@ public class MainController {
 
     public MainController(View view, DatabaseManager manager) {
         this.view = view;
+        Help commandHelp = new Help(view);
         commands = new Command[] {
             new Connect(view, manager),
-            new Help(view),
+            commandHelp,
             new Exit(view),
             new IsConnected(view, manager),
             new Clear(view, manager),
@@ -23,6 +24,7 @@ public class MainController {
             new Query(view, manager),
             new Unsupported(view)
         };
+        commandHelp.setCommands(commands);
     }
 
     public void run(){
@@ -41,7 +43,7 @@ public class MainController {
 //        view.write("   |_____/   \\___\\_\\ |______|  \\_____| |_|  |_| |_____/");
 
         view.write("Привет!");
-        view.write("Введите имя базы данных, имя пользователя и пароль в формате databaseName|userName|password.");
+        view.write("Введите имя базы данных, имя пользователя и пароль в формате connect|databaseName|userName|password.");
         view.write("(Полный список команд - help).");
         while(true){
             String input = view.read();
@@ -69,7 +71,7 @@ public class MainController {
         if(cause !=null){
             message += " " + cause.getMessage();
         }
-        view.write("Неудача. Причина: " + message);
+        view.write(String.format("Неудача. Причина: %s", message));
         view.write("Повторите попытку.");
     }
 

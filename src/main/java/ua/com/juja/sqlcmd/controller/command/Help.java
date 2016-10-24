@@ -4,6 +4,7 @@ import ua.com.juja.sqlcmd.view.View;
 
 public class Help implements Command{
 
+    private Command[] commands;
     private View view;
     private static final String ANSI_BLUE = "\u001B[34m";
     private static final String ANSI_RESET = "\u001B[0m";
@@ -12,6 +13,9 @@ public class Help implements Command{
         this.view = view;
     }
 
+    public void setCommands(Command[] commands) {
+        this.commands = commands;
+    }
 
     @Override
     public boolean canProcess(String command) {
@@ -19,19 +23,24 @@ public class Help implements Command{
     }
 
     @Override
-    public void process(String command) {
-        view.write("                                       Список команд");
-        view.write("+---------------------------------------------------+--------------------------------------+");
-        view.write("|                     команда                       |               описание               |");
-        view.write("+---------------------------------------------------+--------------------------------------+");
-        view.write("| connect|databaseName|userName|password            | подключение к базе данных            |");
-        view.write("| list                                              | вывести список таблиц                |");
-        view.write("| clear|tableName                                   | очистка таблицы tableName            |");
-        view.write("| create|tableName|column1|value1|...columnN|valueN | создание записей таблицы tableName   |");
-        view.write("| find|tableName                                    | вывести содержимое таблицы tableName |");
-        view.write("| query|text...                                     | произвольный SQL запрос              |");
-        view.write("| help                                              | помощь                               |");
-        view.write("| exit                                              | выход                                |");
-        view.write("+---------------------------------------------------+--------------------------------------+");
+    public void process(String command) {//TODO alphabete sorting
+        view.write("Список команд");
+        for(Command item: commands){
+            if(!"".equals(item.format())){
+                view.write("\t" + ANSI_BLUE + item.format());
+                view.write("\t\t" + ANSI_RESET + item.description());
+            }
+        }
     }
+
+    @Override
+    public String format() {
+        return "help";
+    }
+
+    @Override
+    public String description() {
+        return "помощь";
+    }
+
 }

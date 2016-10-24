@@ -41,6 +41,6 @@ public class DataSet {
 
     @Override
     public String toString() {
-        return "{names: " + getNames() + ", values: " + getValues() + "}";
+        return String.format("{names: %s, values: %s}", getNames(), getValues());
     }
 }

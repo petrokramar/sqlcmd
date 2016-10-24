@@ -37,4 +37,14 @@ public class Find implements Command{
         }
     }
 
+    @Override
+    public String format() {
+        return "find|tableName";
+    }
+
+    @Override
+    public String description() {
+        return "вывести содержимое таблицы tableName";
+    }
+
 }

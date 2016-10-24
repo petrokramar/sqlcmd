@@ -25,8 +25,8 @@ public class Clear implements Command {
     public void process(String command) {
         String[] data = command.split("\\|");
         if(data.length !=2){
-            throw new IllegalArgumentException("Неправильный формат команды. Должно быть 'clear|tableName',\n" +
-                    "а Вы ввели " + command);
+            throw new IllegalArgumentException(String.format("Неправильный формат команды. Должно быть 'clear|tableName',\n" +
+                    "а Вы ввели %s", command));
         }
         String tableName = data[1];
         view.write(String.format("Для подтверждения очистки таблицы '%s' наберите 'yes'.", tableName));
@@ -42,7 +42,14 @@ public class Clear implements Command {
         }
     }
 
+    @Override
+    public String format() {
+        return "clear|tableName";
+    }
 
-
+    @Override
+    public String description() {
+        return "очистка таблицы tableName";
+    }
 
 }

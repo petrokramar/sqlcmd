@@ -22,4 +22,15 @@ public class IsConnected implements Command {
     public void process(String command) {
         view.write(String.format("Команда %s не активна. Подключитесь к базе.", command));
     }
+
+    @Override
+    public String format() {
+        return "";
+    }
+
+    @Override
+    public String description() {
+        return "";
+    }
+
 }

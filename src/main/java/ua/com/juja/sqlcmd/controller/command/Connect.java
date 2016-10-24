@@ -10,7 +10,7 @@ public class Connect implements Command {
     private View view;
     private DatabaseManager manager;
 
-    private static final String COMMAND_SAMPLE = "connect|sqlcmd|postgres|123456";
+    private static final String COMMAND_SAMPLE = "connect|sqlcmd|postgres|123456";//TODO
 
     public Connect(View view, DatabaseManager manager) {
         this.view = view;
@@ -44,6 +44,16 @@ public class Connect implements Command {
 
     private int count() {
         return COMMAND_SAMPLE.split("\\|").length;
+    }
+
+    @Override
+    public String format() {
+        return "connect|databaseName|userName|password";
+    }
+
+    @Override
+    public String description() {
+        return "подключение к базе данных";
     }
 
 }

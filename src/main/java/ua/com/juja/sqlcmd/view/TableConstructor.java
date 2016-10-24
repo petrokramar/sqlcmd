@@ -6,7 +6,6 @@ import org.nocrala.tools.texttablefmt.Table;
 import ua.com.juja.sqlcmd.model.DataSet;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 public class TableConstructor {

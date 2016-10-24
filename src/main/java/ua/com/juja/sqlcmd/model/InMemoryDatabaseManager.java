@@ -21,7 +21,7 @@ public class InMemoryDatabaseManager implements DatabaseManager {
 
     private void validateTable(String tableName) {
         if (!"users".equals(tableName)) {
-            throw new UnsupportedOperationException("Only for 'user' table, but you try to work with: " + tableName);
+            throw new UnsupportedOperationException(String.format("Only for 'user' table, but you try to work with: %s", tableName));
         }
     }
 

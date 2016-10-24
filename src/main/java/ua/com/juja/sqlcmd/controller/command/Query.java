@@ -22,4 +22,15 @@ public class Query implements Command {
         //TODO
         view.write("Пока ничего не делаем. Только для SQL.");
     }
+
+    @Override
+    public String format() {
+        return "query|text...";
+    }
+
+    @Override
+    public String description() {
+        return "произвольный SQL запрос";
+    }
+
 }

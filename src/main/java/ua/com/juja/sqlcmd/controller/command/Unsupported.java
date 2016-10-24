@@ -18,6 +18,17 @@ public class Unsupported implements Command{
 
     @Override
     public void process(String command) {
-        view.write("Несуществующая команда: " + command);
+        view.write(String.format("Несуществующая команда: %s", command));
     }
+
+    @Override
+    public String format() {
+        return "";
+    }
+
+    @Override
+    public String description() {
+        return "";
+    }
+
 }
