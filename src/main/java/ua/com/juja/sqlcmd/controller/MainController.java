@@ -7,7 +7,7 @@ import ua.com.juja.sqlcmd.view.View;
 public class MainController {
 
     private final Command[] commands;
-    private View view;
+    private final View view;
 
     public MainController(View view, DatabaseManager manager) {
         this.view = view;
@@ -37,13 +37,6 @@ public class MainController {
     }
 
     private void doWork() {
-//        view.write("     _____    ____    _         _____   __  __   _____");
-//        view.write("    / ____|  / __ \\  | |       / ____| |  \\/  | |  __ \\");
-//        view.write("   | (___   | |  | | | |      | |      | \\  / | | |  | |");
-//        view.write("    \\___ \\  | |  | | | |      | |      | |\\/| | | |  | |");
-//        view.write("    ____) | | |__| | | |____  | |____  | |  | | | |__| |");
-//        view.write("   |_____/   \\___\\_\\ |______|  \\_____| |_|  |_| |_____/");
-
         view.write("Hello!");
         view.write("Enter the database name, user name and password in format connect|databaseName|userName|password.");
         view.write("(Full list of commands - help).");

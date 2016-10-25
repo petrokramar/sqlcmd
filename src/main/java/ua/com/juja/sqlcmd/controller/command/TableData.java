@@ -11,8 +11,8 @@ import java.util.Set;
 
 public class TableData implements Command {
     private static final int NUMBER_OF_PARAMETERS = 2;
-    private View view;
-    private DatabaseManager manager;
+    private final View view;
+    private final DatabaseManager manager;
 
     public TableData(View view, DatabaseManager manager) {
         this.view = view;
@@ -34,7 +34,7 @@ public class TableData implements Command {
             TableConstructor constructor = new TableConstructor(tableColumns, tableData);
             view.write(constructor.getTableString());
         } catch (SQLException e) {
-            view.write(String.format("Error reading data from a table '%s' by reason: %", tableName, e.getMessage()));
+            view.write(String.format("Error reading data from a table '%s' by reason: %s", tableName, e.getMessage()));
         }
     }
 

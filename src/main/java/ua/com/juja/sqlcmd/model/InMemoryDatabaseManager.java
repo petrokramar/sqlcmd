@@ -1,6 +1,5 @@
 package ua.com.juja.sqlcmd.model;
 
-import java.sql.SQLException;
 import java.util.*;
 
 public class InMemoryDatabaseManager implements DatabaseManager {
@@ -75,7 +74,7 @@ public class InMemoryDatabaseManager implements DatabaseManager {
 
     @Override
     public List<DataSet> executeQuery(String query) {
-        throw new UnsupportedOperationException("This operation unsupported for inmemory database");
+        throw new UnsupportedOperationException("This operation unsupported for in memory database");
     }
 
     @Override

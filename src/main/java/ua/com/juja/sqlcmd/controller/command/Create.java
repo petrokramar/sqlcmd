@@ -9,8 +9,8 @@ import java.sql.SQLException;
 public class Create implements Command {
 
     private static final int NUMBER_OF_PARAMETERS = 2;
-    private View view;
-    private DatabaseManager manager;
+    private final View view;
+    private final DatabaseManager manager;
 
     public Create(View view, DatabaseManager manager) {
         this.view = view;
@@ -37,7 +37,7 @@ public class Create implements Command {
                 manager.create(tableName, dataSet);
                 view.write(String.format("Record %s added to the table '%s'", dataSet, tableName));
             } catch (SQLException e) {
-                e.printStackTrace();
+                view.write(String.format("Error create record in table '%s' by reason: %s", tableName, e.getMessage()));
             }
         }
     }
@@ -47,7 +47,7 @@ public class Create implements Command {
         String[] data = command.split("\\|");
         if (data.length % NUMBER_OF_PARAMETERS != 0) {
             throw new IllegalArgumentException(String.format("Need even number of parameters in format\n" +
-                    "'create|tableName|column1|value1|...columnN|valueN'. Recieved '%s'.", command));
+                    "'create|tableName|column1|value1|...columnN|valueN'. Received '%s'.", command));
         }
         return true;
     }

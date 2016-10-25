@@ -8,8 +8,8 @@ import java.sql.SQLException;
 public class Clear implements Command {
 
     private static final int NUMBER_OF_PARAMETERS = 2;
-    private View view;
-    private DatabaseManager manager;
+    private final View view;
+    private final DatabaseManager manager;
 
     public Clear(View view, DatabaseManager manager) {
         this.view = view;

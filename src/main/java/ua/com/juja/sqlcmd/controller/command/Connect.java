@@ -8,8 +8,8 @@ import java.sql.SQLException;
 public class Connect implements Command {
 
     private static final int NUMBER_OF_PARAMETERS = 4;
-    private View view;
-    private DatabaseManager manager;
+    private final View view;
+    private final DatabaseManager manager;
 
     public Connect(View view, DatabaseManager manager) {
         this.view = view;

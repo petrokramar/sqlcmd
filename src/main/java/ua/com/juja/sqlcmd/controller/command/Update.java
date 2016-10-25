@@ -8,8 +8,8 @@ import java.sql.SQLException;
 
 public class Update implements Command {
     private static final int NUMBER_OF_PARAMETERS = 2;
-    private View view;
-    private DatabaseManager manager;
+    private final View view;
+    private final DatabaseManager manager;
 
     public Update(View view, DatabaseManager manager) {
         this.view = view;
@@ -37,7 +37,7 @@ public class Update implements Command {
                 manager.update(tableName, id, dataSet);
                 view.write(String.format("Record with id=%d in table '%s' updated with %s", id, tableName, dataSet));
             } catch (SQLException e) {
-                e.printStackTrace();
+                view.write(String.format("Error update record in table '%s' by reason: %s", tableName, e.getMessage()));
             }
         }
     }

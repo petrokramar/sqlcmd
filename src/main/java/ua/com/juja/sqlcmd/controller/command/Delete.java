@@ -7,8 +7,8 @@ import java.sql.SQLException;
 
 public class Delete implements Command {
     private static final int NUMBER_OF_PARAMETERS = 3;
-    private View view;
-    private DatabaseManager manager;
+    private final View view;
+    private final DatabaseManager manager;
 
     public Delete(View view, DatabaseManager manager) {
         this.view = view;
@@ -30,7 +30,7 @@ public class Delete implements Command {
                 manager.delete(tableName, id);
                 view.write(String.format("Record with id=%d in table '%s' deleted", id, tableName));
             } catch (SQLException e) {
-                e.printStackTrace();
+                view.write(String.format("Error delete record in table '%s' by reason: %s", tableName, e.getMessage()));
             }
         }
     }

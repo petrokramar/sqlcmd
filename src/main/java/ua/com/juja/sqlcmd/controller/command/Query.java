@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.Set;
 
 public class Query implements Command {
-    private View view;
-    private DatabaseManager manager;
+    private final View view;
+    private final DatabaseManager manager;
 
     public Query(View view, DatabaseManager manager) {
         this.view = view;
@@ -30,7 +30,7 @@ public class Query implements Command {
         String query = data[1];
         try {
             List<DataSet> tableData = manager.executeQuery(query);
-            if (!tableData.isEmpty()) {
+            if (!(tableData == null) && !tableData.isEmpty()) {
                 Set<String> tableColumns = new LinkedHashSet<>(tableData.get(0).getNames());
                 TableConstructor constructor = new TableConstructor(tableColumns, tableData);
                 view.write(constructor.getTableString());

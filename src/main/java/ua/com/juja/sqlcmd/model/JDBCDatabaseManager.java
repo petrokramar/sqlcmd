@@ -34,18 +34,9 @@ public class JDBCDatabaseManager implements DatabaseManager {
 
     @Override
     public List<DataSet> getTableData(String tableName) throws SQLException {
-        List<DataSet> result = new ArrayList<>();
         try (Statement statement = connection.createStatement();
              ResultSet rs = statement.executeQuery(String.format("SELECT * FROM %s", tableName))) {
-            ResultSetMetaData rsmd = rs.getMetaData();
-            while ((rs.next())) {
-                DataSet dataSet = new DataSet();
-                for (int i = 1; i <= rsmd.getColumnCount(); i++) {
-                    dataSet.put(rsmd.getColumnName(i), rs.getObject(i));
-                }
-                result.add(dataSet);
-            }
-            return result;
+            return getDataSets(rs);
         }
     }
 
@@ -143,16 +134,21 @@ public class JDBCDatabaseManager implements DatabaseManager {
         List<DataSet> result = new ArrayList<>();
         try (Statement statement = connection.createStatement();
              ResultSet rs = statement.executeQuery(query)) {
-            ResultSetMetaData rsmd = rs.getMetaData();
-            while ((rs.next())) {
-                DataSet dataSet = new DataSet();
-                for (int i = 1; i <= rsmd.getColumnCount(); i++) {
-                    dataSet.put(rsmd.getColumnName(i), rs.getObject(i));
-                }
-                result.add(dataSet);
-            }
-            return result;
+            return getDataSets(rs);
         }
+    }
+
+    private List<DataSet> getDataSets(ResultSet rs) throws SQLException {
+        List<DataSet> result = new ArrayList<>();
+        ResultSetMetaData rsmd = rs.getMetaData();
+        while ((rs.next())) {
+            DataSet dataSet = new DataSet();
+            for (int i = 1; i <= rsmd.getColumnCount(); i++) {
+                dataSet.put(rsmd.getColumnName(i), rs.getObject(i));
+            }
+            result.add(dataSet);
+        }
+        return result;
     }
 
     @Override
