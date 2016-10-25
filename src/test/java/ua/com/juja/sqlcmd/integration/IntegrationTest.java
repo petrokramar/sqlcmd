@@ -56,6 +56,8 @@ public class IntegrationTest {
                 "\t\t\u001B[0mconnect to database\n" +
                 "\t\u001B[34mcreate|tableName|column1|value1|...columnN|valueN\n" +
                 "\t\t\u001B[0mcreating record for table tableName\n" +
+                "\t\u001B[34mdelete|tableName|id\n" +
+                "\t\t\u001B[0mdelete record from table tableName by id\n" +
                 "\t\u001B[34mexit\n" +
                 "\t\t\u001B[0mexit\n" +
                 "\t\u001B[34mfind|tableName\n" +
@@ -66,6 +68,8 @@ public class IntegrationTest {
                 "\t\t\u001B[0mdisplay list of tables\n" +
                 "\t\u001B[34mquery|text...\n" +
                 "\t\t\u001B[0mcustom SQL query\n" +
+                "\t\u001B[34mupdate|tableName|id|column1|value1|...columnN|valueN\n" +
+                "\t\t\u001B[0mupdate record for table tableName by id\n" +
                 "Enter a command (help - list of commands):\n" +
                 "Good luck!\n", getData());
     }

@@ -116,6 +116,15 @@ public class JDBCDatabaseManager implements DatabaseManager {
     }
 
     @Override
+    public void delete(String tableName, int id) throws SQLException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(
+                String.format("DELETE FROM %s WHERE id=?", tableName))) {
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+        }
+    }
+
+    @Override
     public Set<String> getTableColumns(String tableName) throws SQLException {
         Set<String> columns = new LinkedHashSet<>();
         try (Statement statement = connection.createStatement();

@@ -59,6 +59,12 @@ public class InMemoryDatabaseManager implements DatabaseManager {
     }
 
     @Override
+    public void delete(String tableName, int id) {
+        validateTable(tableName);
+        data.remove(id - 1);
+    }
+
+    @Override
     public Set<String> getTableColumns(String tableName) {
         Set<String> list = new LinkedHashSet<>();
         list.add("id");

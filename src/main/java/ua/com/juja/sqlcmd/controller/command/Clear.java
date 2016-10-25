@@ -7,6 +7,7 @@ import java.sql.SQLException;
 
 public class Clear implements Command {
 
+    private static final int NUMBER_OF_PARAMETERS = 2;
     private View view;
     private DatabaseManager manager;
 
@@ -42,7 +43,7 @@ public class Clear implements Command {
     @Override
     public boolean validate(String command) {
         String[] data = command.split("\\|");
-        if (data.length != 2) {
+        if (data.length != NUMBER_OF_PARAMETERS) {
             throw new IllegalArgumentException(
                     String.format("Incorrect command format. The correct format: 'clear|tableName',\n" +
                             "your command: %s", command));

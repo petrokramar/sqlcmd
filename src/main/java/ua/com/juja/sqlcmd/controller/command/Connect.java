@@ -7,10 +7,9 @@ import java.sql.SQLException;
 
 public class Connect implements Command {
 
+    private static final int NUMBER_OF_PARAMETERS = 4;
     private View view;
     private DatabaseManager manager;
-
-    private static final String COMMAND_SAMPLE = "connect|sqlcmd|postgres|123456";//TODO
 
     public Connect(View view, DatabaseManager manager) {
         this.view = view;
@@ -42,16 +41,12 @@ public class Connect implements Command {
     @Override
     public boolean validate(String command) {
         String[] data = command.split("\\|");
-        if (data.length != count()) {
+        if (data.length != NUMBER_OF_PARAMETERS) {
             throw new IllegalArgumentException(
                     String.format("Invalid number of parameters separated by " +
-                            "'|', expected %s, but there are: %s", count(), data.length));
+                            "'|', expected %s, but there are: %s", NUMBER_OF_PARAMETERS, data.length));
         }
         return true;
-    }
-
-    private int count() {
-        return COMMAND_SAMPLE.split("\\|").length;
     }
 
     @Override

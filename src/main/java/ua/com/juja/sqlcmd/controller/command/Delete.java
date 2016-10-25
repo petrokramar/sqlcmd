@@ -4,30 +4,34 @@ import ua.com.juja.sqlcmd.model.DatabaseManager;
 import ua.com.juja.sqlcmd.view.View;
 
 import java.sql.SQLException;
-import java.util.Set;
 
-public class TableNames implements Command {
-    private static final int NUMBER_OF_PARAMETERS = 1;
+public class Delete implements Command {
+    private static final int NUMBER_OF_PARAMETERS = 3;
     private View view;
     private DatabaseManager manager;
 
-    public TableNames(View view, DatabaseManager manager) {
+    public Delete(View view, DatabaseManager manager) {
         this.view = view;
         this.manager = manager;
     }
 
     @Override
     public boolean canProcess(String command) {
-        return "list".equals(command);
+        return command.startsWith("delete|");
     }
 
     @Override
     public void process(String command) {
-        try {
-            Set<String> tableNames = manager.getTableNames();
-            view.write(tableNames.toString());
-        } catch (SQLException e) {
-            view.write(String.format("Error getting the list of tables by reason: %", e.getMessage()));
+        String[] data = command.split("\\|");
+        if (validate(command)) {
+            String tableName = data[1];
+            int id = Integer.parseInt(data[2]);
+            try {
+                manager.delete(tableName, id);
+                view.write(String.format("Record with id=%d in table '%s' deleted", id, tableName));
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -36,7 +40,7 @@ public class TableNames implements Command {
         String[] data = command.split("\\|");
         if (data.length != NUMBER_OF_PARAMETERS) {
             throw new IllegalArgumentException(
-                    String.format("Incorrect command format. The correct format: 'list',\n" +
+                    String.format("Incorrect command format. The correct format: 'delete|tableName|id',\n" +
                             "your command: %s", command));
         }
         return true;
@@ -44,12 +48,11 @@ public class TableNames implements Command {
 
     @Override
     public String format() {
-        return "list";
+        return "delete|tableName|id";
     }
 
     @Override
     public String description() {
-        return "display list of tables";
+        return "delete record from table tableName by id";
     }
-
 }

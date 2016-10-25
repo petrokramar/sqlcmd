@@ -21,6 +21,8 @@ public interface DatabaseManager {
 
     void update(String tableName, int id, DataSet input) throws SQLException;
 
+    void delete(String tableName, int id) throws SQLException;
+
     Set<String> getTableColumns(String tableName) throws SQLException;
 
     List<DataSet> executeQuery(String query) throws SQLException;

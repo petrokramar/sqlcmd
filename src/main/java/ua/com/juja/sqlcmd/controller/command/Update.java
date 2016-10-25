@@ -6,20 +6,19 @@ import ua.com.juja.sqlcmd.view.View;
 
 import java.sql.SQLException;
 
-public class Create implements Command {
-
+public class Update implements Command {
     private static final int NUMBER_OF_PARAMETERS = 2;
     private View view;
     private DatabaseManager manager;
 
-    public Create(View view, DatabaseManager manager) {
+    public Update(View view, DatabaseManager manager) {
         this.view = view;
         this.manager = manager;
     }
 
     @Override
     public boolean canProcess(String command) {
-        return command.startsWith("create|");
+        return command.startsWith("update|");
     }
 
     @Override
@@ -27,15 +26,16 @@ public class Create implements Command {
         String[] data = command.split("\\|");
         if (validate(command)) {
             String tableName = data[1];
+            int id = Integer.parseInt(data[2]);
             DataSet dataSet = new DataSet();
-            for (int i = 2; i < data.length; i += 2) {
+            for (int i = 3; i < data.length; i += 2) {
                 String columnName = data[i];
                 String value = data[i + 1];
                 dataSet.put(columnName, value);
             }
             try {
-                manager.create(tableName, dataSet);
-                view.write(String.format("Record %s added to the table '%s'", dataSet, tableName));
+                manager.update(tableName, id, dataSet);
+                view.write(String.format("Record with id=%d in table '%s' updated with %s", id, tableName, dataSet));
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -45,21 +45,22 @@ public class Create implements Command {
     @Override
     public boolean validate(String command) {
         String[] data = command.split("\\|");
-        if (data.length % NUMBER_OF_PARAMETERS != 0) {
-            throw new IllegalArgumentException(String.format("Need even number of parameters in format\n" +
-                    "'create|tableName|column1|value1|...columnN|valueN'. Recieved '%s'.", command));
+        if (data.length % NUMBER_OF_PARAMETERS == 0) {
+            throw new IllegalArgumentException(
+                    String.format("Incorrect command format. " +
+                            "The correct format: 'update|tableName|id|column1|value1|...columnN|valueN',\n" +
+                            "your command: %s", command));
         }
         return true;
     }
 
     @Override
     public String format() {
-        return "create|tableName|column1|value1|...columnN|valueN";
+        return "update|tableName|id|column1|value1|...columnN|valueN";
     }
 
     @Override
     public String description() {
-        return "creating record for table tableName";
+        return "update record for table tableName by id";
     }
-
 }

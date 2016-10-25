@@ -19,6 +19,8 @@ public class MainController {
                 new IsConnected(view, manager),
                 new Clear(view, manager),
                 new Create(view, manager),
+                new Update(view, manager),
+                new Delete(view, manager),
                 new TableNames(view, manager),
                 new TableData(view, manager),
                 new Query(view, manager),
