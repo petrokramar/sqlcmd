@@ -30,17 +30,22 @@ public class Query implements Command {
         String query = data[1];
         try {
             List<DataSet> tableData = manager.executeQuery(query);
-            if(!tableData.isEmpty()){
+            if (!tableData.isEmpty()) {
                 Set<String> tableColumns = new LinkedHashSet<>(tableData.get(0).getNames());
                 TableConstructor constructor = new TableConstructor(tableColumns, tableData);
                 view.write(constructor.getTableString());
-            }else{
+            } else {
                 view.write("Query executed.");
             }
         } catch (SQLException e) {
             view.write(String.format("Error execute query '%s' by reason: %s", query, e.getMessage()));
         }
-   }
+    }
+
+    @Override
+    public boolean validate(String command) {
+        return true;
+    }
 
     @Override
     public String format() {

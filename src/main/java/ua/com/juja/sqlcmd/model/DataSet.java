@@ -13,17 +13,17 @@ public class DataSet {
         data.put(name, value);
     }
 
-    public List<Object> getValues(){
+    public List<Object> getValues() {
         List<Object> result = new ArrayList<>();
-        for(Map.Entry<String, Object> entry: data.entrySet()){
+        for (Map.Entry<String, Object> entry : data.entrySet()) {
             result.add(entry.getValue());
         }
         return result;
     }
 
-    public List<String> getNames(){
+    public List<String> getNames() {
         List<String> result = new ArrayList<>();
-        for(Map.Entry<String, Object> entry: data.entrySet()){
+        for (Map.Entry<String, Object> entry : data.entrySet()) {
             result.add(entry.getKey());
         }
         return result;
@@ -34,7 +34,7 @@ public class DataSet {
     }
 
     public void updateFrom(DataSet newValue) {
-        for(Map.Entry<String, Object> entry: data.entrySet()){
+        for (Map.Entry<String, Object> entry : data.entrySet()) {
             this.put(entry.getKey(), entry.getValue());
         }
     }

@@ -15,17 +15,17 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
-public class FindTest {
+public class TableDataTest {
 
     private DatabaseManager manager;
     private View view;
     private Command command;
 
     @Before
-    public void setup(){
+    public void setup() {
         manager = mock(DatabaseManager.class);
         view = mock(View.class);
-        command = new Find(view, manager);
+        command = new TableData(view, manager);
     }
 
     @Test
@@ -87,17 +87,17 @@ public class FindTest {
     }
 
     @Test
-    public void TestCanProcessFindWithParameters(){
+    public void TestCanProcessFindWithParameters() {
         assertTrue(command.canProcess("find|users"));
     }
 
     @Test
-    public void TestCanProcessFindWithoutParameters(){
+    public void TestCanProcessFindWithoutParameters() {
         assertFalse(command.canProcess("find"));
     }
 
     @Test
-    public void TestCanProcessQwe(){
+    public void TestCanProcessQwe() {
         assertFalse(command.canProcess("qwe|user"));
     }
 

@@ -25,7 +25,7 @@ public abstract class DatabaseManagerTest {
         Set<String> testTables = new LinkedHashSet<>();
         testTables.add("users");
         Set<String> tables = manager.getTableNames();
-        assertEquals(testTables,tables);
+        assertEquals(testTables, tables);
     }
 
     @Test
@@ -35,8 +35,9 @@ public abstract class DatabaseManagerTest {
         testColumns.add("name");
         testColumns.add("password");
         Set<String> columns = manager.getTableColumns("users");
-        assertEquals(testColumns,columns);
+        assertEquals(testColumns, columns);
     }
+
     @Test
     public void testGetTableData() throws SQLException {
         manager.clear("users");
@@ -52,7 +53,7 @@ public abstract class DatabaseManagerTest {
 
         DataSet user = users.get(0);
         assertEquals("[id, name, password]", user.getNames().toString());
-        assertEquals("[1, John, pass]",user.getValues().toString());
+        assertEquals("[1, John, pass]", user.getValues().toString());
     }
 
     @Test
@@ -79,7 +80,7 @@ public abstract class DatabaseManagerTest {
     }
 
     @Test
-    public void testDatabaseManagerIsConnected(){
+    public void testDatabaseManagerIsConnected() {
         assertEquals(true, manager.isConnected());
     }
 

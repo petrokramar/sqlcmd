@@ -20,7 +20,7 @@ public class ClearTest {
     private Command command;
 
     @Before
-    public void setup(){
+    public void setup() {
         manager = mock(DatabaseManager.class);
         view = mock(View.class);
         command = new Clear(view, manager);
@@ -37,34 +37,34 @@ public class ClearTest {
 //    }
 
     @Test
-    public void testClearTableErrorOneParameter(){
+    public void testClearTableErrorOneParameter() {
         try {
             command.process("clear");
             fail();
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             assertEquals("Incorrect command format. The correct format: 'clear|tableName',\n" +
                     "your command: clear", e.getMessage());
         }
     }
 
     @Test
-    public void testClearTableErrorThreeParameters(){
+    public void testClearTableErrorThreeParameters() {
         try {
             command.process("clear|users|zzz");
             fail();
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             assertEquals("Incorrect command format. The correct format: 'clear|tableName',\n" +
                     "your command: clear|users|zzz", e.getMessage());
         }
     }
 
     @Test
-    public void TestCanProcessClearWithParameters(){
+    public void TestCanProcessClearWithParameters() {
         assertTrue(command.canProcess("clear|users"));
     }
 
     @Test
-    public void TestCanProcessClearWithoutParameters(){
+    public void TestCanProcessClearWithoutParameters() {
         assertFalse(command.canProcess("clear"));
     }
 

@@ -1,7 +1,8 @@
-package ua.com.juja.sqlcmd.controller;
+package ua.com.juja.sqlcmd;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import ua.com.juja.sqlcmd.controller.MainController;
 import ua.com.juja.sqlcmd.model.DatabaseManager;
 import ua.com.juja.sqlcmd.model.JDBCDatabaseManager;
 import ua.com.juja.sqlcmd.view.Console;

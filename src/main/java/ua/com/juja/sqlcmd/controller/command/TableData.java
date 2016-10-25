@@ -9,11 +9,11 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Set;
 
-public class Find implements Command{
+public class TableData implements Command {
     private View view;
     private DatabaseManager manager;
 
-    public Find(View view, DatabaseManager manager) {
+    public TableData(View view, DatabaseManager manager) {
         this.view = view;
         this.manager = manager;
     }
@@ -35,6 +35,11 @@ public class Find implements Command{
         } catch (SQLException e) {
             view.write(String.format("Error reading data from a table '%s' by reason: %", tableName, e.getMessage()));
         }
+    }
+
+    @Override
+    public boolean validate(String command) {
+        return true;
     }
 
     @Override

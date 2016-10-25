@@ -6,11 +6,11 @@ import ua.com.juja.sqlcmd.view.View;
 import java.sql.SQLException;
 import java.util.Set;
 
-public class GetTableNames implements Command{
+public class TableNames implements Command {
     private View view;
     private DatabaseManager manager;
 
-    public GetTableNames(View view, DatabaseManager manager) {
+    public TableNames(View view, DatabaseManager manager) {
         this.view = view;
         this.manager = manager;
     }
@@ -28,6 +28,11 @@ public class GetTableNames implements Command{
         } catch (SQLException e) {
             view.write(String.format("Error getting the list of tables by reason: %", e.getMessage()));
         }
+    }
+
+    @Override
+    public boolean validate(String command) {
+        return true;
     }
 
     @Override

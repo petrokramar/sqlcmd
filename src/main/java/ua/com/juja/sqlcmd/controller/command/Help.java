@@ -2,7 +2,10 @@ package ua.com.juja.sqlcmd.controller.command;
 
 import ua.com.juja.sqlcmd.view.View;
 
-public class Help implements Command{
+import java.util.Map;
+import java.util.TreeMap;
+
+public class Help implements Command {
 
     private Command[] commands;
     private View view;
@@ -23,14 +26,23 @@ public class Help implements Command{
     }
 
     @Override
-    public void process(String command) {//TODO alphabete sorting
-        view.write("----- List of commands ------");
-        for(Command item: commands){
-            if(!"".equals(item.format())){
-                view.write("\t" + ANSI_BLUE + item.format());
-                view.write("\t\t" + ANSI_RESET + item.description());
+    public void process(String command) {
+        Map<String, String> sortedCommands = new TreeMap<>();
+        for (Command item : commands) {
+            if (!"".equals(item.format())) {
+                sortedCommands.put(item.format(), item.description());
             }
         }
+        view.write("---------- List of commands -----------");
+        for (Map.Entry entry : sortedCommands.entrySet()) {
+            view.write("\t" + ANSI_BLUE + entry.getKey());
+            view.write("\t\t" + ANSI_RESET + entry.getValue());
+        }
+    }
+
+    @Override
+    public boolean validate(String command) {
+        return true;
     }
 
     @Override

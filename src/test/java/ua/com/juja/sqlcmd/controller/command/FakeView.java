@@ -7,7 +7,7 @@ public class FakeView implements View {
     private String messages = "";
     private String input = null;
 
-    public void adrrRead(String input){
+    public void adrrRead(String input) {
         this.input = input;
     }
 
@@ -18,7 +18,7 @@ public class FakeView implements View {
 
     @Override
     public String read() {
-        if(this.input == null){
+        if (this.input == null) {
             throw new IllegalStateException("Input не проинициализирован.");
         }
         String result = this.input;

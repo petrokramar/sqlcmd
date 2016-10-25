@@ -2,7 +2,7 @@ package ua.com.juja.sqlcmd.controller.command;
 
 import ua.com.juja.sqlcmd.view.View;
 
-public class Unsupported implements Command{
+public class Unsupported implements Command {
 
     private View view;
 
@@ -19,6 +19,11 @@ public class Unsupported implements Command{
     @Override
     public void process(String command) {
         view.write(String.format("The command does not exist: %s", command));
+    }
+
+    @Override
+    public boolean validate(String command) {
+        return true;
     }
 
     @Override

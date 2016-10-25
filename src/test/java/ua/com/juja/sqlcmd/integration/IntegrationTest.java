@@ -3,7 +3,7 @@ package ua.com.juja.sqlcmd.integration;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import ua.com.juja.sqlcmd.controller.Main;
+import ua.com.juja.sqlcmd.Main;
 import ua.com.juja.sqlcmd.controller.command.ExitException;
 
 import java.io.ByteArrayOutputStream;
@@ -19,7 +19,7 @@ public class IntegrationTest {
     private static ByteArrayOutputStream out;
 
     @BeforeClass
-    public static void setup(){
+    public static void setup() {
         in = new ConfigurableInputStream();
         out = new ByteArrayOutputStream();
         System.setIn(in);
@@ -49,21 +49,21 @@ public class IntegrationTest {
         assertEquals("Hello!\n" +
                 "Enter the database name, user name and password in format connect|databaseName|userName|password.\n" +
                 "(Full list of commands - help).\n" +
-                "----- List of commands ------\n" +
-                "\t\u001B[34mconnect|databaseName|userName|password\n" +
-                "\t\t\u001B[0mconnect to database\n" +
-                "\t\u001B[34mhelp\n" +
-                "\t\t\u001B[0mhelp\n" +
-                "\t\u001B[34mexit\n" +
-                "\t\t\u001B[0mexit\n" +
+                "---------- List of commands -----------\n" +
                 "\t\u001B[34mclear|tableName\n" +
                 "\t\t\u001B[0mclearing table tableName\n" +
+                "\t\u001B[34mconnect|databaseName|userName|password\n" +
+                "\t\t\u001B[0mconnect to database\n" +
                 "\t\u001B[34mcreate|tableName|column1|value1|...columnN|valueN\n" +
                 "\t\t\u001B[0mcreating record for table tableName\n" +
-                "\t\u001B[34mlist\n" +
-                "\t\t\u001B[0mdisplay list of tables\n" +
+                "\t\u001B[34mexit\n" +
+                "\t\t\u001B[0mexit\n" +
                 "\t\u001B[34mfind|tableName\n" +
                 "\t\t\u001B[0mdisplay the contents of the table tableName\n" +
+                "\t\u001B[34mhelp\n" +
+                "\t\t\u001B[0mhelp\n" +
+                "\t\u001B[34mlist\n" +
+                "\t\t\u001B[0mdisplay list of tables\n" +
                 "\t\u001B[34mquery|text...\n" +
                 "\t\t\u001B[0mcustom SQL query\n" +
                 "Enter a command (help - list of commands):\n" +

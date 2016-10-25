@@ -11,24 +11,24 @@ public class ExitMockitoTest {
     private View view = Mockito.mock(View.class);
 
     @Test
-    public void TestCanProcessExit(){
+    public void TestCanProcessExit() {
         Command command = new Exit(view);
         assertTrue(command.canProcess("exit"));
     }
 
     @Test
-    public void TestCanProcessQwe(){
+    public void TestCanProcessQwe() {
         Command command = new Exit(view);
         assertFalse(command.canProcess("qwe"));
     }
 
     @Test
-    public void TestProcessExit_ThrowsExitException(){
+    public void TestProcessExit_ThrowsExitException() {
         Command command = new Exit(view);
         try {
             command.process("exit");
             fail("Expected ExitException");
-        }catch (ExitException e){
+        } catch (ExitException e) {
 
         }
         Mockito.verify(view).write("Good luck!");

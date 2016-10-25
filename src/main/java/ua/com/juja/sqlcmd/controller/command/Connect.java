@@ -24,22 +24,30 @@ public class Connect implements Command {
 
     @Override
     public void process(String command) {
+        if (validate(command)) {
+            String[] data = command.split("\\|");
+            String databaseName = data[1];
+            String userName = data[2];
+            String password = data[3];
+            try {
+                manager.connect(databaseName, userName, password);
+                view.write("Connection successful.");
+            } catch (SQLException e) {
+                view.write(String.format("Failed to connect to database '%s' by reason: %s",
+                        databaseName, e.getMessage()));
+            }
+        }
+    }
+
+    @Override
+    public boolean validate(String command) {
         String[] data = command.split("\\|");
         if (data.length != count()) {
             throw new IllegalArgumentException(
-                String.format("Invalid number of parameters separated by " +
-                "'|', expected %s, but there are: %s", count(), data.length));
+                    String.format("Invalid number of parameters separated by " +
+                            "'|', expected %s, but there are: %s", count(), data.length));
         }
-        String databaseName = data[1];
-        String userName = data[2];
-        String password = data[3];
-        try {
-            manager.connect(databaseName, userName, password);
-            view.write("Connection successful.");
-        } catch (SQLException e) {
-            view.write(String.format("Failed to connect to database '%s' by reason: %s",
-                databaseName, e.getMessage()));
-        }
+        return true;
     }
 
     private int count() {

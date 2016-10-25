@@ -22,7 +22,8 @@ public class InMemoryDatabaseManager implements DatabaseManager {
 
     private void validateTable(String tableName) {
         if (!"users".equals(tableName)) {
-            throw new UnsupportedOperationException(String.format("Only for 'user' table, but you try to work with: %s", tableName));
+            throw new UnsupportedOperationException(
+                    String.format("Only for 'user' table, but you try to work with: %s", tableName));
         }
     }
 
@@ -53,7 +54,7 @@ public class InMemoryDatabaseManager implements DatabaseManager {
     @Override
     public void update(String tableName, int id, DataSet newValue) {
         validateTable(tableName);
-        DataSet dataSet = data.get(id-1);
+        DataSet dataSet = data.get(id - 1);
         dataSet.updateFrom(newValue);
     }
 
