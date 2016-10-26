@@ -274,48 +274,6 @@ public class IntegrationTest {
                 "Good luck!\n", getData());
     }
 
-//    @Test//TODO
-//    public void testClearWrongTable() {
-//        in.add("connect|sqlcmd|postgres|123456");
-//        in.add("clear|zzz");
-//        in.add("exit");
-//        Main.main(new String[0]);
-//
-//        assertEquals("Привет!\n" +
-//                "Введите имя базы данных, имя пользователя и пароль в формате databaseName|userName|password.\n" +
-//                "Подключились.\n" +
-//                "Введите команду (help - помощь)\n" +
-//                "Неудача. Причина: Неправильный формат команды. Должно быть 'clear|tableName',\n" +
-//                "а Вы ввели clear|zzz|xxx\n" +
-//                "Повторите попытку.\n" +
-//                "Несуществующая команда: clear|zzz|xxx\n" +
-//                "Введите команду (help - помощь)\n" +
-//                "До встречи!\n" +
-//                "Неудача. Причина: null\n" +
-//                "Повторите попытку.\n" +
-//                "Несуществующая команда: exit\n" +
-//                "Введите команду (help - помощь)\n" +
-//                "До встречи!\n", getData());
-//    }
-
-//    @Test//TODO
-//    public void testFindNotExistAfterConnect() {
-//        in.add("connect|sqlcmd|postgres|123456");
-//        in.add("find|notexist");
-//        in.add("exit");
-//        Main.main(new String[0]);
-//        assertEquals("Привет!\n" +
-//                "Введите имя базы данных, имя пользователя и пароль в формате databaseName|userName|password.\n" +
-//                "(Полный список команд - help).\n" +
-//                "Подключились.\n" +
-//                "Введите команду (help - помощь):\n" +
-//                "----------------------------\n" +
-//                "|\n" +
-//                "----------------------------\n" +
-//                "Введите команду (help - помощь):\n" +
-//                "До встречи!\n", getData());
-//    }
-
     public String getData() {
         try {
             String result = new String(out.toByteArray(), "UTF-8").replaceAll("\r\n", "\n");
@@ -326,4 +284,59 @@ public class IntegrationTest {
         }
     }
 
+    @Test
+    public void testQuery() {
+        in.add("connect|sqlcmd|postgres|123456");
+        in.add("clear|users");
+        in.add("yes");
+        in.add("query|INSERT INTO users (id, name, password) VALUES (1, 'John', '123')");
+        in.add("query|INSERT INTO users (id, name, password) VALUES (2, 'Max', '456')");
+        in.add("query|SELECT * FROM users");
+        in.add("query|UPDATE users SET name = 'Bill', password = '777' WHERE id = 1");
+        in.add("query|SELECT * FROM users");
+        in.add("query|DELETE FROM users WHERE id = 2");
+        in.add("query|SELECT * FROM users");
+        in.add("exit");
+        Main.main(new String[0]);
+
+        assertEquals("Hello!\n" +
+                "Enter the database name, user name and password in format connect|databaseName|userName|password.\n" +
+                "(Full list of commands - help).\n" +
+                "Connection successful.\n" +
+                "Enter a command (help - list of commands):\n" +
+                "To confirm clearing table 'users' type 'yes'.\n" +
+                "Table 'users' is cleared\n" +
+                "Enter a command (help - list of commands):\n" +
+                "Query executed.\n" +
+                "Enter a command (help - list of commands):\n" +
+                "Query executed.\n" +
+                "Enter a command (help - list of commands):\n" +
+                "+--+----+--------+\n" +
+                "|id|name|password|\n" +
+                "+--+----+--------+\n" +
+                "|1 |John|123     |\n" +
+                "+--+----+--------+\n" +
+                "|2 |Max |456     |\n" +
+                "+--+----+--------+\n" +
+                "Enter a command (help - list of commands):\n" +
+                "Query executed.\n" +
+                "Enter a command (help - list of commands):\n" +
+                "+--+----+--------+\n" +
+                "|id|name|password|\n" +
+                "+--+----+--------+\n" +
+                "|2 |Max |456     |\n" +
+                "+--+----+--------+\n" +
+                "|1 |Bill|777     |\n" +
+                "+--+----+--------+\n" +
+                "Enter a command (help - list of commands):\n" +
+                "Query executed.\n" +
+                "Enter a command (help - list of commands):\n" +
+                "+--+----+--------+\n" +
+                "|id|name|password|\n" +
+                "+--+----+--------+\n" +
+                "|1 |Bill|777     |\n" +
+                "+--+----+--------+\n" +
+                "Enter a command (help - list of commands):\n" +
+                "Good luck!\n", getData());
+    }
 }

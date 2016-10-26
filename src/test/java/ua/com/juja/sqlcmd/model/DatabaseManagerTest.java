@@ -10,12 +10,13 @@ import static org.junit.Assert.assertEquals;
 
 public abstract class DatabaseManagerTest {
 
-    private DatabaseManager manager;
+    protected DatabaseManager manager;
 
     @Before
     public void setup() throws SQLException {
         manager = getDatabaseManager();
         manager.connect("sqlcmd", "postgres", "123456");
+        manager.clear("users");
     }
 
     protected abstract DatabaseManager getDatabaseManager();
@@ -40,8 +41,6 @@ public abstract class DatabaseManagerTest {
 
     @Test
     public void testGetTableData() throws SQLException {
-        manager.clear("users");
-
         DataSet input = new DataSet();
         input.put("id", 1);
         input.put("name", "John");
@@ -58,8 +57,6 @@ public abstract class DatabaseManagerTest {
 
     @Test
     public void testUpdateTableData() throws SQLException {
-        manager.clear("users");
-
         DataSet input = new DataSet();
         input.put("id", 1);
         input.put("name", "John");
@@ -77,6 +74,39 @@ public abstract class DatabaseManagerTest {
         DataSet user = users.get(0);
         assertEquals("[id, name, password]", user.getNames().toString());
         assertEquals("[1, John2, pass2]", user.getValues().toString());
+    }
+
+    @Test
+    public void testDeleteTableData() throws SQLException {
+        DataSet input = new DataSet();
+        input.put("id", 1);
+        input.put("name", "John");
+        input.put("password", "pass");
+        manager.create("users", input);
+
+        manager.delete("users", 1);
+
+        List<DataSet> users = manager.getTableData("users");
+        assertEquals(0, users.size());
+    }
+
+    @Test
+    public void testGetSize() throws SQLException {
+        assertEquals(0, manager.getSize("users"));
+
+        DataSet input = new DataSet();
+        input.put("id", 1);
+        input.put("name", "John");
+        input.put("password", "pass");
+        manager.create("users", input);
+
+        DataSet inputTwo = new DataSet();
+        inputTwo.put("id", 2);
+        inputTwo.put("name", "Max");
+        inputTwo.put("password", "1234");
+        manager.create("users", inputTwo);
+
+        assertEquals(2, manager.getSize("users"));
     }
 
     @Test

@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 public class Query implements Command {
+    private static final int NUMBER_OF_PARAMETERS = 2;
     private final View view;
     private final DatabaseManager manager;
 
@@ -26,24 +27,32 @@ public class Query implements Command {
 
     @Override
     public void process(String command) {
-        String[] data = command.split("\\|");
-        String query = data[1];
-        try {
-            List<DataSet> tableData = manager.executeQuery(query);
-            if (!(tableData == null) && !tableData.isEmpty()) {
-                Set<String> tableColumns = new LinkedHashSet<>(tableData.get(0).getNames());
-                TableConstructor constructor = new TableConstructor(tableColumns, tableData);
-                view.write(constructor.getTableString());
-            } else {
-                view.write("Query executed.");
+        if (validate(command)) {
+            String[] data = command.split("\\|");
+            String query = data[1];
+            try {
+                List<DataSet> tableData = manager.executeQuery(query);
+                if (!tableData.isEmpty()) {
+                    Set<String> tableColumns = new LinkedHashSet<>(tableData.get(0).getNames());
+                    TableConstructor constructor = new TableConstructor(tableColumns, tableData);
+                    view.write(constructor.getTableString());
+                } else {
+                    view.write("Query executed.");
+                }
+            } catch (SQLException e) {
+                view.write(String.format("Error execute query '%s' by reason: %s", query, e.getMessage()));
             }
-        } catch (SQLException e) {
-            view.write(String.format("Error execute query '%s' by reason: %s", query, e.getMessage()));
         }
     }
 
     @Override
     public boolean validate(String command) {
+        String[] data = command.split("\\|");
+        if (data.length != NUMBER_OF_PARAMETERS) {
+            throw new IllegalArgumentException(
+                    String.format("Incorrect command format. The correct format: 'query|text...',\n" +
+                            "your command: %s", command));
+        }
         return true;
     }
 

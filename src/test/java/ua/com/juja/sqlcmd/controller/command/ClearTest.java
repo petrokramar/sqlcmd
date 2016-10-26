@@ -25,16 +25,6 @@ public class ClearTest {
         command = new Clear(view, manager);
     }
 
-//    @Test//TODO
-//    public void testClearTable() throws SQLException {
-//        command.process("clear|users");
-//        command.process("ye");
-//        command.process("clear|users");
-//        command.process("yes");
-//        verify(manager).clear("users");//TODO проверить, что выполнено два раза
-//        verify(view).write("Таблица 'users' очищена");
-//    }
-
     @Test
     public void testClearTableErrorOneParameter() {
         try {
@@ -58,12 +48,12 @@ public class ClearTest {
     }
 
     @Test
-    public void TestCanProcessClearWithParameters() {
+    public void testCanProcessClearWithParameters() {
         assertTrue(command.canProcess("clear|users"));
     }
 
     @Test
-    public void TestCanProcessClearWithoutParameters() {
+    public void testCanProcessClearWithoutParameters() {
         assertFalse(command.canProcess("clear"));
     }
 

@@ -12,9 +12,7 @@ import ua.com.juja.sqlcmd.view.View;
 import java.sql.SQLException;
 import java.util.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 public class TableDataTest {
@@ -90,17 +88,17 @@ public class TableDataTest {
     }
 
     @Test
-    public void TestCanProcessFindWithParameters() {
+    public void testCanProcessFindWithParameters() {
         assertTrue(command.canProcess("find|users"));
     }
 
     @Test
-    public void TestCanProcessFindWithoutParameters() {
+    public void testCanProcessFindWithoutParameters() {
         assertFalse(command.canProcess("find"));
     }
 
     @Test
-    public void TestCanProcessQwe() {
+    public void testCanProcessQwe() {
         assertFalse(command.canProcess("qwe|user"));
     }
 
@@ -129,6 +127,22 @@ public class TableDataTest {
         assertEquals(
                 expected,
                 captor.getAllValues().toString());
+    }
+
+    @Test
+    public void testValidate() throws SQLException {
+        assertTrue(command.validate("find|users"));
+    }
+
+    @Test
+    public void testValidateWrong() throws SQLException {
+        try {
+            command.validate("find|users|zzz");
+            fail();
+        } catch (IllegalArgumentException e) {
+            assertEquals("Incorrect command format. The correct format: 'find|tableName',\n" +
+                    "your command: find|users|zzz", e.getMessage());
+        }
     }
 
 }

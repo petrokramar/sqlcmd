@@ -22,8 +22,8 @@ public class Delete implements Command {
 
     @Override
     public void process(String command) {
-        String[] data = command.split("\\|");
         if (validate(command)) {
+            String[] data = command.split("\\|");
             String tableName = data[1];
             int id;
             try {

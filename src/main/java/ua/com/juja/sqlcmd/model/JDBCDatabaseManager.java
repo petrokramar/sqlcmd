@@ -130,11 +130,17 @@ public class JDBCDatabaseManager implements DatabaseManager {
     }
 
     @Override
-    public List<DataSet> executeQuery(String query) throws SQLException {//fix UPDATE
-        List<DataSet> result = new ArrayList<>();
-        try (Statement statement = connection.createStatement();
-             ResultSet rs = statement.executeQuery(query)) {
-            return getDataSets(rs);
+    public List<DataSet> executeQuery(String query) throws SQLException {
+        if (query.toLowerCase().startsWith("select")) {
+            try (Statement statement = connection.createStatement();
+                 ResultSet rs = statement.executeQuery(query)) {
+                return getDataSets(rs);
+            }
+        } else {
+            try (Statement statement = connection.createStatement()) {
+                statement.executeUpdate(query);
+                return new ArrayList<>();
+            }
         }
     }
 
