@@ -25,7 +25,14 @@ public class Delete implements Command {
         String[] data = command.split("\\|");
         if (validate(command)) {
             String tableName = data[1];
-            int id = Integer.parseInt(data[2]);
+            int id;
+            try {
+                id = Integer.parseInt(data[2]);
+            } catch (IllegalArgumentException e) {
+                throw new IllegalArgumentException(
+                        String.format("Incorrect command format. Id not a number.\n" +
+                                "Your id: %s", data[2]));
+            }
             try {
                 manager.delete(tableName, id);
                 view.write(String.format("Record with id=%d in table '%s' deleted", id, tableName));

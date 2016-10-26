@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import ua.com.juja.sqlcmd.Main;
-import ua.com.juja.sqlcmd.controller.command.ExitException;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -14,8 +13,7 @@ import java.io.UnsupportedEncodingException;
 import static org.junit.Assert.assertEquals;
 
 public class IntegrationTest {
-
-    private static ConfigurableInputStream in;//TODO может убрать статику?
+    private static ConfigurableInputStream in;
     private static ByteArrayOutputStream out;
 
     @BeforeClass

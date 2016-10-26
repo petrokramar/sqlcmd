@@ -7,6 +7,8 @@ import ua.com.juja.sqlcmd.model.DataSet;
 import ua.com.juja.sqlcmd.model.DatabaseManager;
 import ua.com.juja.sqlcmd.view.View;
 
+import java.sql.SQLException;
+
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 

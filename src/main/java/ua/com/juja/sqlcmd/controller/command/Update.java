@@ -26,7 +26,14 @@ public class Update implements Command {
         String[] data = command.split("\\|");
         if (validate(command)) {
             String tableName = data[1];
-            int id = Integer.parseInt(data[2]);
+            int id;
+            try {
+                id = Integer.parseInt(data[2]);
+            } catch (IllegalArgumentException e) {
+                throw new IllegalArgumentException(
+                        String.format("Incorrect command format. Id not a number.\n" +
+                                "Your id: %s", data[2]));
+            }
             DataSet dataSet = new DataSet();
             for (int i = 3; i < data.length; i += 2) {
                 String columnName = data[i];

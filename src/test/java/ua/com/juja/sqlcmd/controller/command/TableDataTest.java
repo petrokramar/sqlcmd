@@ -1,5 +1,7 @@
 package ua.com.juja.sqlcmd.controller.command;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -23,6 +25,7 @@ public class TableDataTest {
 
     @Before
     public void setup() {
+        Logger.getRootLogger().setLevel(Level.OFF);
         manager = mock(DatabaseManager.class);
         view = mock(View.class);
         command = new TableData(view, manager);
