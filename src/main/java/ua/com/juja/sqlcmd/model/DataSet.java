@@ -34,8 +34,8 @@ public class DataSet {
     }
 
     public void updateFrom(DataSet newValue) {
-        for (Map.Entry<String, Object> entry : data.entrySet()) {
-            this.put(entry.getKey(), entry.getValue());
+        for (Map.Entry<String, Object> entry : newValue.data.entrySet()) {
+            data.put(entry.getKey(), entry.getValue());
         }
     }
 

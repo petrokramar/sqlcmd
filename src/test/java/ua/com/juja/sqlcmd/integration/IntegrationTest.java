@@ -251,7 +251,7 @@ public class IntegrationTest {
                 "Connection successful.\n" +
                 "Enter a command (help - list of commands):\n" +
                 "Failure. Reason: Need even number of parameters in format\n" +
-                "'create|tableName|column1|value1|...columnN|valueN'. Recieved 'create|users|id|15|name'.\n" +
+                "'create|tableName|column1|value1|...columnN|valueN'. Received 'create|users|id|15|name'.\n" +
                 "Try again.\n" +
                 "Enter a command (help - list of commands):\n" +
                 "Good luck!\n", getData());

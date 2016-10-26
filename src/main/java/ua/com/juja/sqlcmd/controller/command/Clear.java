@@ -23,20 +23,27 @@ public class Clear implements Command {
 
     @Override
     public void process(String command) {
-        if (validate(command)) {
+        if (validate(command) && confirm(command)) {
             String[] data = command.split("\\|");
             String tableName = data[1];
-            view.write(String.format("To confirm clearing table '%s' type 'yes'.", tableName));
-            if ("yes".equals(view.read().trim())) {
-                try {
-                    manager.clear(tableName);
-                    view.write(String.format("Table '%s' is cleared", tableName));
-                } catch (SQLException e) {
-                    view.write(String.format("Table clear error '%s' by reason: %s", tableName, e.getMessage()));
-                }
-            } else {
-                view.write(String.format("Clearing table '%s' cancelled.", tableName));
+            try {
+                manager.clear(tableName);
+                view.write(String.format("Table '%s' is cleared", tableName));
+            } catch (SQLException e) {
+                view.write(String.format("Table clear error '%s' by reason: %s", tableName, e.getMessage()));
             }
+        }
+    }
+
+    public boolean confirm(String command) {
+        String[] data = command.split("\\|");
+        String tableName = data[1];
+        view.write(String.format("To confirm clearing table '%s' type 'yes'.", tableName));
+        if ("yes".equals(view.read().trim())) {
+            return true;
+        } else {
+            view.write(String.format("Clearing table '%s' cancelled.", tableName));
+            return false;
         }
     }
 
