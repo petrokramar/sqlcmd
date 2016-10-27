@@ -4,7 +4,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import ua.com.juja.sqlcmd.Main;
-import ua.com.juja.sqlcmd.controller.PropertiesLoader;
+import ua.com.juja.sqlcmd.controller.PropertyHandler;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -17,8 +17,8 @@ public class IntegrationTest {
     private static ConfigurableInputStream in;
     private static ByteArrayOutputStream out;
     private static String CONNECT_PARAMETERS =
-            String.format("connect|%s|%s|%s", PropertiesLoader.DATABASE_NAME,
-                    PropertiesLoader.DATABASE_USER_NAME, PropertiesLoader.DATABASE_USER_PASSWORD);
+            String.format("connect|%s|%s|%s", PropertyHandler.getDatabaseName(),
+                    PropertyHandler.getDatabaseUserName(), PropertyHandler.getDatabaseUserPassword());
 
     @BeforeClass
     public static void setup() {

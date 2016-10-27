@@ -1,6 +1,6 @@
 package ua.com.juja.sqlcmd.model;
 
-import ua.com.juja.sqlcmd.controller.PropertiesLoader;
+import ua.com.juja.sqlcmd.controller.PropertyHandler;
 
 import java.sql.*;
 import java.util.*;
@@ -21,7 +21,7 @@ public class JDBCDatabaseManager implements DatabaseManager {
                 connection.close();
             }
             connection = DriverManager.getConnection(
-                    PropertiesLoader.DATABASE_URL + database, userName, password);
+                    PropertyHandler.getDatabaseUrl() + database, userName, password);
         } catch (SQLException e) {
             connection = null;
             throw new SQLException(

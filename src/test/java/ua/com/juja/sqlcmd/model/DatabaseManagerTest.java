@@ -2,7 +2,7 @@ package ua.com.juja.sqlcmd.model;
 
 import org.junit.Before;
 import org.junit.Test;
-import ua.com.juja.sqlcmd.controller.PropertiesLoader;
+import ua.com.juja.sqlcmd.controller.PropertyHandler;
 
 import java.sql.SQLException;
 import java.util.*;
@@ -16,8 +16,8 @@ public abstract class DatabaseManagerTest {
     @Before
     public void setup() throws SQLException {
         manager = getDatabaseManager();
-        manager.connect(PropertiesLoader.DATABASE_NAME, PropertiesLoader.DATABASE_USER_NAME,
-                PropertiesLoader.DATABASE_USER_PASSWORD);
+        manager.connect(PropertyHandler.getDatabaseName(), PropertyHandler.getDatabaseUserName(),
+                PropertyHandler.getDatabaseUserPassword());
         manager.clear("users");
     }
 
