@@ -7,9 +7,6 @@ import java.util.*;
 
 public class JDBCDatabaseManager implements DatabaseManager {
 
-    private static final PropertiesLoader propertiesLoader = new PropertiesLoader();
-    private static final String DATABASE_URL = String.format(
-            "jdbc:postgresql://%s:%s/", propertiesLoader.getServerName(), propertiesLoader.getDatabasePort());
     private Connection connection;
 
     @Override
@@ -24,7 +21,7 @@ public class JDBCDatabaseManager implements DatabaseManager {
                 connection.close();
             }
             connection = DriverManager.getConnection(
-                    DATABASE_URL + database, userName, password);
+                    PropertiesLoader.DATABASE_URL + database, userName, password);
         } catch (SQLException e) {
             connection = null;
             throw new SQLException(

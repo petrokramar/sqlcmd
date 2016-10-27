@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import ua.com.juja.sqlcmd.Main;
+import ua.com.juja.sqlcmd.controller.PropertiesLoader;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -15,6 +16,9 @@ import static org.junit.Assert.assertEquals;
 public class IntegrationTest {
     private static ConfigurableInputStream in;
     private static ByteArrayOutputStream out;
+    private static String CONNECT_PARAMETERS =
+            String.format("connect|%s|%s|%s", PropertiesLoader.DATABASE_NAME,
+                    PropertiesLoader.DATABASE_USER_NAME, PropertiesLoader.DATABASE_USER_PASSWORD);
 
     @BeforeClass
     public static void setup() {
@@ -113,7 +117,7 @@ public class IntegrationTest {
 
     @Test
     public void testUnsupportedAfterConnect() {
-        in.add("connect|sqlcmd|postgres|123456");
+        in.add(CONNECT_PARAMETERS);
         in.add("zzz");
         in.add("exit");
         Main.main(new String[0]);
@@ -129,7 +133,7 @@ public class IntegrationTest {
 
     @Test
     public void testListAfterConnect() {
-        in.add("connect|sqlcmd|postgres|123456");
+        in.add(CONNECT_PARAMETERS);
         in.add("list");
         in.add("exit");
         Main.main(new String[0]);
@@ -145,9 +149,9 @@ public class IntegrationTest {
 
     @Test
     public void testConnectAfterConnect() {
-        in.add("connect|sqlcmd|postgres|123456");
+        in.add(CONNECT_PARAMETERS);
         in.add("list");
-        in.add("connect|sqlcmd|postgres|123456");
+        in.add(CONNECT_PARAMETERS);
         in.add("list");
         in.add("exit");
         Main.main(new String[0]);
@@ -181,7 +185,7 @@ public class IntegrationTest {
 
     @Test
     public void testFindUsersAfterConnect() {
-        in.add("connect|sqlcmd|postgres|123456");
+        in.add(CONNECT_PARAMETERS);
         in.add("clear|users");
         in.add("ye");
         in.add("clear|users");
@@ -209,7 +213,7 @@ public class IntegrationTest {
 
     @Test
     public void testFindAfterConnectWithData() {
-        in.add("connect|sqlcmd|postgres|123456");
+        in.add(CONNECT_PARAMETERS);
         in.add("clear|users");
         in.add("yes");
         in.add("create|users|id|10|name|Peter|password|1111");
@@ -243,7 +247,7 @@ public class IntegrationTest {
 
     @Test
     public void testCreateWithError() {
-        in.add("connect|sqlcmd|postgres|123456");
+        in.add(CONNECT_PARAMETERS);
         in.add("create|users|id|15|name");
         in.add("exit");
         Main.main(new String[0]);
@@ -262,7 +266,7 @@ public class IntegrationTest {
 
     @Test
     public void testClearWithError() {
-        in.add("connect|sqlcmd|postgres|123456");
+        in.add(CONNECT_PARAMETERS);
         in.add("clear|zzz|xxx");
         in.add("exit");
         Main.main(new String[0]);
@@ -291,7 +295,7 @@ public class IntegrationTest {
 
     @Test
     public void testQuery() {
-        in.add("connect|sqlcmd|postgres|123456");
+        in.add(CONNECT_PARAMETERS);
         in.add("clear|users");
         in.add("yes");
         in.add("query|INSERT INTO users (id, name, password) VALUES (1, 'John', '123')");
