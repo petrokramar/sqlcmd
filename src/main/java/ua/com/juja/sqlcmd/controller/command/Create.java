@@ -24,8 +24,8 @@ public class Create implements Command {
 
     @Override
     public void process(String command) {
-        String[] data = command.split("\\|");
         if (validate(command)) {
+            String[] data = command.split("\\|");
             String tableName = data[1];
             DataSet dataSet = new DataSet();
             for (int i = 2; i < data.length; i += 2) {
@@ -42,8 +42,7 @@ public class Create implements Command {
         }
     }
 
-    @Override
-    public boolean validate(String command) {
+    private boolean validate(String command) {
         String[] data = command.split("\\|");
         if (data.length % NUMBER_OF_PARAMETERS != 0) {
             throw new IllegalArgumentException(String.format("Need even number of parameters in format\n" +

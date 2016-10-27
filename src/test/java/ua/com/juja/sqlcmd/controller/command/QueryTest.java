@@ -35,10 +35,4 @@ public class QueryTest {
                     "your command: query|SELECT * FROM users|77", e.getMessage());
         }
     }
-
-    @Test
-    public void testValidateQuery() {
-        assertTrue(command.validate("query|SELECT * FROM users"));
-    }
-
 }

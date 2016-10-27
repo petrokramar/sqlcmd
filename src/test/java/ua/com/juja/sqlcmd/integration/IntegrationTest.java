@@ -183,6 +183,8 @@ public class IntegrationTest {
     public void testFindUsersAfterConnect() {
         in.add("connect|sqlcmd|postgres|123456");
         in.add("clear|users");
+        in.add("ye");
+        in.add("clear|users");
         in.add("yes");
         in.add("find|users");
         in.add("exit");
@@ -191,6 +193,9 @@ public class IntegrationTest {
                 "Enter the database name, user name and password in format connect|databaseName|userName|password.\n" +
                 "(Full list of commands - help).\n" +
                 "Connection successful.\n" +
+                "Enter a command (help - list of commands):\n" +
+                "To confirm clearing table 'users' type 'yes'.\n" +
+                "Clearing table 'users' cancelled.\n" +
                 "Enter a command (help - list of commands):\n" +
                 "To confirm clearing table 'users' type 'yes'.\n" +
                 "Table 'users' is cleared\n" +

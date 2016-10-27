@@ -2,6 +2,7 @@ package ua.com.juja.sqlcmd.controller.command;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 import ua.com.juja.sqlcmd.model.DatabaseManager;
 import ua.com.juja.sqlcmd.view.View;
 
@@ -23,20 +24,22 @@ public class TableNamesTest {
         command = new TableNames(view, manager);
     }
 
-    @Test
-    public void testValidate() throws SQLException {
-        assertTrue(command.validate("list"));
-   }
+    private void print(String expected) {
+        ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
+        verify(view, atLeastOnce()).write(captor.capture());
+        assertEquals(
+                expected,
+                captor.getAllValues().toString());
+    }
 
     @Test
-    public void testValidateWrong() throws SQLException {
+    public void testWrongParameters() throws SQLException {
         try {
-            command.validate("list|users");
+            command.process("list|zzz");
             fail();
         } catch (IllegalArgumentException e) {
             assertEquals("Incorrect command format. The correct format: 'list',\n" +
-                    "your command: list|users", e.getMessage());
+                    "your command: list|zzz", e.getMessage());
         }
     }
-
 }

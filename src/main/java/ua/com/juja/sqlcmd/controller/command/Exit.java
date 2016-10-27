@@ -22,11 +22,6 @@ public class Exit implements Command {
     }
 
     @Override
-    public boolean validate(String command) {
-        return true;
-    }
-
-    @Override
     public String format() {
         return "exit";
     }

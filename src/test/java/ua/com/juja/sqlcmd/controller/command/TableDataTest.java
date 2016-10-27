@@ -121,23 +121,10 @@ public class TableDataTest {
 
     }
 
-    private void print(String expected) {
-        ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
-        verify(view, atLeastOnce()).write(captor.capture());
-        assertEquals(
-                expected,
-                captor.getAllValues().toString());
-    }
-
     @Test
-    public void testValidate() throws SQLException {
-        assertTrue(command.validate("find|users"));
-    }
-
-    @Test
-    public void testValidateWrong() throws SQLException {
+    public void testWrongParameters() throws SQLException {
         try {
-            command.validate("find|users|zzz");
+            command.process("find|users|zzz");
             fail();
         } catch (IllegalArgumentException e) {
             assertEquals("Incorrect command format. The correct format: 'find|tableName',\n" +
@@ -145,4 +132,11 @@ public class TableDataTest {
         }
     }
 
+    private void print(String expected) {
+        ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
+        verify(view, atLeastOnce()).write(captor.capture());
+        assertEquals(
+                expected,
+                captor.getAllValues().toString());
+    }
 }

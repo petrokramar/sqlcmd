@@ -38,8 +38,7 @@ public class Connect implements Command {
         }
     }
 
-    @Override
-    public boolean validate(String command) {
+    private boolean validate(String command) {
         String[] data = command.split("\\|");
         if (data.length != NUMBER_OF_PARAMETERS) {
             throw new IllegalArgumentException(

@@ -5,8 +5,8 @@ import ua.com.juja.sqlcmd.view.View;
 
 public class IsConnected implements Command {
 
-    private View view;
-    private DatabaseManager manager;
+    private final View view;
+    private final DatabaseManager manager;
 
     public IsConnected(View view, DatabaseManager manager) {
         this.view = view;
@@ -21,11 +21,6 @@ public class IsConnected implements Command {
     @Override
     public void process(String command) {
         view.write(String.format("The command %s is not active. Connect to the database.", command));
-    }
-
-    @Override
-    public boolean validate(String command) {
-        return true;
     }
 
     @Override

@@ -2,12 +2,8 @@ package ua.com.juja.sqlcmd.controller.command;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.ArgumentCaptor;
-import ua.com.juja.sqlcmd.model.DataSet;
 import ua.com.juja.sqlcmd.model.DatabaseManager;
 import ua.com.juja.sqlcmd.view.View;
-
-import java.sql.SQLException;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;

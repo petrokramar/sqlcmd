@@ -4,7 +4,7 @@ import java.util.*;
 
 public class InMemoryDatabaseManager implements DatabaseManager {
 
-    public static final String TABLE_NAME = "users"; // TODO implement multitables
+    public static final String TABLE_NAME = "users"; // TODO implement multytables
 
     private List<DataSet> data = new LinkedList<>();
 

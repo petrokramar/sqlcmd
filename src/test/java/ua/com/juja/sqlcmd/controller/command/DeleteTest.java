@@ -65,7 +65,7 @@ public class DeleteTest {
 
     @Test
     public void testCanProcessWrong() {
-        assertFalse(command.canProcess("help"));
+        assertFalse(command.canProcess("delet|users|33"));
     }
 
 }

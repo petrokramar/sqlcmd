@@ -35,7 +35,7 @@ public class Clear implements Command {
         }
     }
 
-    public boolean confirm(String command) {
+    private boolean confirm(String command) {
         String[] data = command.split("\\|");
         String tableName = data[1];
         view.write(String.format("To confirm clearing table '%s' type 'yes'.", tableName));
@@ -47,8 +47,7 @@ public class Clear implements Command {
         }
     }
 
-    @Override
-    public boolean validate(String command) {
+    private boolean validate(String command) {
         String[] data = command.split("\\|");
         if (data.length != NUMBER_OF_PARAMETERS) {
             throw new IllegalArgumentException(

@@ -42,11 +42,10 @@ public class JDBCDatabaseManager implements DatabaseManager {
 
     @Override
     public int getSize(String tableName) throws SQLException {
-        int size = 0;
         try (Statement statement = connection.createStatement();
              ResultSet rs = statement.executeQuery(String.format("SELECT COUNT(*) FROM %s", tableName))) {
             rs.next();
-            size = rs.getInt(1);
+            int size = rs.getInt(1);
             return size;
         }
     }
@@ -149,8 +148,8 @@ public class JDBCDatabaseManager implements DatabaseManager {
         ResultSetMetaData rsmd = rs.getMetaData();
         while ((rs.next())) {
             DataSet dataSet = new DataSet();
-            for (int i = 1; i <= rsmd.getColumnCount(); i++) {
-                dataSet.put(rsmd.getColumnName(i), rs.getObject(i));
+            for (int index = 1; index <= rsmd.getColumnCount(); index++) {
+                dataSet.put(rsmd.getColumnName(index), rs.getObject(index));
             }
             result.add(dataSet);
         }

@@ -5,8 +5,6 @@ public interface Command {
 
     void process(String command);
 
-    boolean validate(String command);
-
     String format();
 
     String description();

@@ -23,16 +23,17 @@ public class TableNames implements Command {
 
     @Override
     public void process(String command) {
-        try {
-            Set<String> tableNames = manager.getTableNames();
-            view.write(tableNames.toString());
-        } catch (SQLException e) {
-            view.write(String.format("Error getting the list of tables by reason: %s", e.getMessage()));
+        if (validate(command)) {
+            try {
+                Set<String> tableNames = manager.getTableNames();
+                view.write(tableNames.toString());
+            } catch (SQLException e) {
+                view.write(String.format("Error getting the list of tables by reason: %s", e.getMessage()));
+            }
         }
     }
 
-    @Override
-    public boolean validate(String command) {
+    private boolean validate(String command) {
         String[] data = command.split("\\|");
         if (data.length != NUMBER_OF_PARAMETERS) {
             throw new IllegalArgumentException(

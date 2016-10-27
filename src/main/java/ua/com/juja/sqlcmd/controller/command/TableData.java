@@ -26,20 +26,22 @@ public class TableData implements Command {
 
     @Override
     public void process(String command) {
-        String[] data = command.split("\\|");
-        String tableName = data[1];
-        try {
-            Set<String> tableColumns = manager.getTableColumns(tableName);
-            List<DataSet> tableData = manager.getTableData(tableName);
-            TableConstructor constructor = new TableConstructor(tableColumns, tableData);
-            view.write(constructor.getTableString());
-        } catch (SQLException e) {
-            view.write(String.format("Error reading data from a table '%s' by reason: %s", tableName, e.getMessage()));
+        if (validate(command)) {
+            String[] data = command.split("\\|");
+            String tableName = data[1];
+            try {
+                Set<String> tableColumns = manager.getTableColumns(tableName);
+                List<DataSet> tableData = manager.getTableData(tableName);
+                TableConstructor constructor = new TableConstructor(tableColumns, tableData);
+                view.write(constructor.getTableString());
+            } catch (SQLException e) {
+                view.write(String.format("Error reading data from a table '%s' by reason: %s",
+                        tableName, e.getMessage()));
+            }
         }
     }
 
-    @Override
-    public boolean validate(String command) {
+    private boolean validate(String command) {
         String[] data = command.split("\\|");
         if (data.length != NUMBER_OF_PARAMETERS) {
             throw new IllegalArgumentException(
