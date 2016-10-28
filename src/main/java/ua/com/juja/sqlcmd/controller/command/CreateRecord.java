@@ -6,11 +6,11 @@ import ua.com.juja.sqlcmd.view.View;
 
 import java.sql.SQLException;
 
-public class Create implements Command {
+public class CreateRecord implements Command {
     private final View view;
     private final DatabaseManager manager;
 
-    public Create(View view, DatabaseManager manager) {
+    public CreateRecord(View view, DatabaseManager manager) {
         this.view = view;
         this.manager = manager;
     }

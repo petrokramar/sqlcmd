@@ -5,7 +5,7 @@ import ua.com.juja.sqlcmd.controller.PropertyHandler;
 import java.sql.*;
 import java.util.*;
 
-public class JDBCDatabaseManager implements DatabaseManager {
+public class PostgreSQLManager implements DatabaseManager {
 
     private Connection connection;
 
@@ -32,7 +32,7 @@ public class JDBCDatabaseManager implements DatabaseManager {
     @Override
     public List<DataSet> getTableData(String tableName) throws SQLException {
         try (Statement statement = connection.createStatement();
-             ResultSet rs = statement.executeQuery(String.format("SELECT * FROM %s", tableName))) {
+             ResultSet rs = statement.executeQuery(String.format("SELECT * FROM %s ORDER BY id", tableName))) {
             return getDataSets(rs);
         }
     }
@@ -64,6 +64,21 @@ public class JDBCDatabaseManager implements DatabaseManager {
     public void clear(String tableName) throws SQLException {
         try (Statement statement = connection.createStatement()) {
             statement.executeUpdate(String.format("DELETE FROM %s", tableName));
+        }
+    }
+
+    @Override
+    public boolean existRecord(String tableName, String field, String parameter) throws SQLException {
+        try (Statement statement = connection.createStatement();
+             ResultSet rs = statement.executeQuery(String.format(
+                     "SELECT COUNT(*) FROM %s WHERE %s = %s", tableName, field, parameter))) {
+            rs.next();
+            int size = rs.getInt(1);
+            if (size != 0) {
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 

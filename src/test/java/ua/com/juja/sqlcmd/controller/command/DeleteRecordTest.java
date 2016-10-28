@@ -8,7 +8,7 @@ import ua.com.juja.sqlcmd.view.View;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
-public class DeleteTest {
+public class DeleteRecordTest {
     private DatabaseManager manager;
     private View view;
     private Command command;
@@ -17,7 +17,7 @@ public class DeleteTest {
     public void setup() {
         manager = mock(DatabaseManager.class);
         view = mock(View.class);
-        command = new Delete(view, manager);
+        command = new DeleteRecord(view, manager);
     }
 
     @Test

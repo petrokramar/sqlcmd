@@ -8,7 +8,7 @@ import ua.com.juja.sqlcmd.view.View;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
-public class UpdateTest {
+public class UpdateRecordTest {
     private DatabaseManager manager;
     private View view;
     private Command command;
@@ -17,7 +17,7 @@ public class UpdateTest {
     public void setup() {
         manager = mock(DatabaseManager.class);
         view = mock(View.class);
-        command = new Update(view, manager);
+        command = new UpdateRecord(view, manager);
     }
 
     @Test

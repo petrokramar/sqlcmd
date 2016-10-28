@@ -1,22 +1,23 @@
 package ua.com.juja.sqlcmd.controller.command;
 
+import ua.com.juja.sqlcmd.model.DataSet;
 import ua.com.juja.sqlcmd.model.DatabaseManager;
 import ua.com.juja.sqlcmd.view.View;
 
 import java.sql.SQLException;
 
-public class Delete implements Command {
+public class UpdateRecord implements Command {
     private final View view;
     private final DatabaseManager manager;
 
-    public Delete(View view, DatabaseManager manager) {
+    public UpdateRecord(View view, DatabaseManager manager) {
         this.view = view;
         this.manager = manager;
     }
 
     @Override
     public boolean canProcess(String command) {
-        return command.startsWith("delete|");
+        return command.startsWith("update|");
     }
 
     @Override
@@ -32,20 +33,31 @@ public class Delete implements Command {
                         String.format("Incorrect command format. Id not a number.\n" +
                                 "Your id: %s", data[2]));
             }
+            DataSet dataSet = new DataSet();
+            for (int i = 3; i < data.length; i += 2) {
+                String columnName = data[i];
+                String value = data[i + 1];
+                dataSet.put(columnName, value);
+            }
             try {
-                manager.delete(tableName, id);
-                view.write(String.format("Record with id=%d in table '%s' deleted", id, tableName));
+                if (manager.existRecord(tableName, "id", data[2])) {
+                    manager.update(tableName, id, dataSet);
+                    view.write(String.format("Record with id=%d in table '%s' updated with %s", id, tableName, dataSet));
+                } else {
+                    view.write(String.format("Record with id=%d in table '%s' not exist", id, tableName));
+                }
             } catch (SQLException e) {
-                view.write(String.format("Error delete record in table '%s' by reason: %s", tableName, e.getMessage()));
+                view.write(String.format("Error update record in table '%s' by reason: %s", tableName, e.getMessage()));
             }
         }
     }
 
     private boolean validate(String command) {
         String[] data = command.split("\\|");
-        if (data.length != format().split("\\|").length) {
+        if (data.length % 2 == 0) {
             throw new IllegalArgumentException(
-                    String.format("Incorrect command format. The correct format: '%s',\n" +
+                    String.format("Incorrect command format. " +
+                            "The correct format: '%s',\n" +
                             "your command: %s", format(), command));
         }
         return true;
@@ -53,11 +65,11 @@ public class Delete implements Command {
 
     @Override
     public String format() {
-        return "delete|tableName|id";
+        return "update|tableName|id|column1|value1|...columnN|valueN";
     }
 
     @Override
     public String description() {
-        return "delete record from table tableName by id";
+        return "update record for table tableName by id";
     }
 }

@@ -294,6 +294,84 @@ public class IntegrationTest {
     }
 
     @Test
+    public void testDelete() {
+        in.add(CONNECT_PARAMETERS);
+        in.add("clear|users");
+        in.add("yes");
+        in.add("create|users|id|10|name|Peter|password|1111");
+        in.add("create|users|id|11|name|Victor|password|2222");
+        in.add("delete|users|7");
+        in.add("delete|users|10");
+        in.add("find|users");
+        in.add("exit");
+        Main.main(new String[0]);
+
+        assertEquals("Hello!\n" +
+                "Enter the database name, user name and password in format connect|databaseName|userName|password.\n" +
+                "(Full list of commands - help).\n" +
+                "Connection successful.\n" +
+                "Enter a command (help - list of commands):\n" +
+                "To confirm clearing table 'users' type 'yes'.\n" +
+                "Table 'users' is cleared\n" +
+                "Enter a command (help - list of commands):\n" +
+                "Record {names: [id, name, password], values: [10, Peter, 1111]} added to the table 'users'\n" +
+                "Enter a command (help - list of commands):\n" +
+                "Record {names: [id, name, password], values: [11, Victor, 2222]} added to the table 'users'\n" +
+                "Enter a command (help - list of commands):\n" +
+                "Record with id=7 in table 'users' not exist\n" +
+                "Enter a command (help - list of commands):\n" +
+                "Record with id=10 in table 'users' deleted\n" +
+                "Enter a command (help - list of commands):\n" +
+                "+--+------+--------+\n" +
+                "|id|name  |password|\n" +
+                "+--+------+--------+\n" +
+                "|11|Victor|2222    |\n" +
+                "+--+------+--------+\n" +
+                "Enter a command (help - list of commands):\n" +
+                "Good luck!\n", getData());
+    }
+
+    @Test
+    public void testUpdate() {
+        in.add(CONNECT_PARAMETERS);
+        in.add("clear|users");
+        in.add("yes");
+        in.add("create|users|id|10|name|Peter|password|1111");
+        in.add("create|users|id|11|name|Victor|password|2222");
+        in.add("update|users|7|name|Max|password|3333");
+        in.add("update|users|10|name|Max|password|3333");
+        in.add("find|users");
+        in.add("exit");
+        Main.main(new String[0]);
+
+        assertEquals("Hello!\n" +
+                "Enter the database name, user name and password in format connect|databaseName|userName|password.\n" +
+                "(Full list of commands - help).\n" +
+                "Connection successful.\n" +
+                "Enter a command (help - list of commands):\n" +
+                "To confirm clearing table 'users' type 'yes'.\n" +
+                "Table 'users' is cleared\n" +
+                "Enter a command (help - list of commands):\n" +
+                "Record {names: [id, name, password], values: [10, Peter, 1111]} added to the table 'users'\n" +
+                "Enter a command (help - list of commands):\n" +
+                "Record {names: [id, name, password], values: [11, Victor, 2222]} added to the table 'users'\n" +
+                "Enter a command (help - list of commands):\n" +
+                "Record with id=7 in table 'users' not exist\n" +
+                "Enter a command (help - list of commands):\n" +
+                "Record with id=10 in table 'users' updated with {names: [name, password], values: [Max, 3333]}\n" +
+                "Enter a command (help - list of commands):\n" +
+                "+--+------+--------+\n" +
+                "|id|name  |password|\n" +
+                "+--+------+--------+\n" +
+                "|10|Max   |3333    |\n" +
+                "+--+------+--------+\n" +
+                "|11|Victor|2222    |\n" +
+                "+--+------+--------+\n" +
+                "Enter a command (help - list of commands):\n" +
+                "Good luck!\n", getData());
+    }
+
+    @Test
     public void testQuery() {
         in.add(CONNECT_PARAMETERS);
         in.add("clear|users");

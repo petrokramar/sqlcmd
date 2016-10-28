@@ -8,7 +8,7 @@ import ua.com.juja.sqlcmd.view.View;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
-public class ClearTest {
+public class ClearTableTest {
 
     private DatabaseManager manager;
     private View view;
@@ -18,7 +18,7 @@ public class ClearTest {
     public void setup() {
         manager = mock(DatabaseManager.class);
         view = mock(View.class);
-        command = new Clear(view, manager);
+        command = new ClearTable(view, manager);
     }
 
     @Test

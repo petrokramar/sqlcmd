@@ -17,6 +17,8 @@ public interface DatabaseManager {
 
     void clear(String tableName) throws SQLException;
 
+    boolean existRecord(String tableName, String field, String parameter) throws SQLException;
+
     void create(String tableName, DataSet input) throws SQLException;
 
     void update(String tableName, int id, DataSet input) throws SQLException;

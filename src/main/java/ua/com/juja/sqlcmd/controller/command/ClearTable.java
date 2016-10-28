@@ -5,11 +5,11 @@ import ua.com.juja.sqlcmd.view.View;
 
 import java.sql.SQLException;
 
-public class Clear implements Command {
+public class ClearTable implements Command {
     private final View view;
     private final DatabaseManager manager;
 
-    public Clear(View view, DatabaseManager manager) {
+    public ClearTable(View view, DatabaseManager manager) {
         this.view = view;
         this.manager = manager;
     }
