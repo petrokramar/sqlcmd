@@ -6,8 +6,6 @@ import ua.com.juja.sqlcmd.view.View;
 import java.sql.SQLException;
 
 public class Clear implements Command {
-
-    private static final int NUMBER_OF_PARAMETERS = 2;
     private final View view;
     private final DatabaseManager manager;
 
@@ -49,10 +47,10 @@ public class Clear implements Command {
 
     private boolean validate(String command) {
         String[] data = command.split("\\|");
-        if (data.length != NUMBER_OF_PARAMETERS) {
+        if (data.length != format().split("\\|").length) {
             throw new IllegalArgumentException(
-                    String.format("Incorrect command format. The correct format: 'clear|tableName',\n" +
-                            "your command: %s", command));
+                    String.format("Incorrect command format. The correct format: '%s',\n" +
+                            "your command: %s", format(), command));
         }
         return true;
     }
@@ -66,5 +64,4 @@ public class Clear implements Command {
     public String description() {
         return "clearing table tableName";
     }
-
 }

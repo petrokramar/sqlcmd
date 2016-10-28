@@ -7,8 +7,6 @@ import ua.com.juja.sqlcmd.view.View;
 import java.sql.SQLException;
 
 public class Create implements Command {
-
-    private static final int NUMBER_OF_PARAMETERS = 2;
     private final View view;
     private final DatabaseManager manager;
 
@@ -44,9 +42,9 @@ public class Create implements Command {
 
     private boolean validate(String command) {
         String[] data = command.split("\\|");
-        if (data.length % NUMBER_OF_PARAMETERS != 0) {
+        if (data.length % 2 != 0) {
             throw new IllegalArgumentException(String.format("Need even number of parameters in format\n" +
-                    "'create|tableName|column1|value1|...columnN|valueN'. Received '%s'.", command));
+                    "'%s'. Received '%s'.", format(), command));
         }
         return true;
     }
@@ -60,5 +58,4 @@ public class Create implements Command {
     public String description() {
         return "creating record for table tableName";
     }
-
 }

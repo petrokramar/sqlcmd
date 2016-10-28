@@ -3,7 +3,6 @@ package ua.com.juja.sqlcmd.controller.command;
 import ua.com.juja.sqlcmd.view.View;
 
 public class Unsupported implements Command {
-
     private final View view;
 
     public Unsupported(View view) {
@@ -30,5 +29,4 @@ public class Unsupported implements Command {
     public String description() {
         return "";
     }
-
 }

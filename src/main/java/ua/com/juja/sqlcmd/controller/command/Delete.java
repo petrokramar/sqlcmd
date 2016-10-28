@@ -6,7 +6,6 @@ import ua.com.juja.sqlcmd.view.View;
 import java.sql.SQLException;
 
 public class Delete implements Command {
-    private static final int NUMBER_OF_PARAMETERS = 3;
     private final View view;
     private final DatabaseManager manager;
 
@@ -44,10 +43,10 @@ public class Delete implements Command {
 
     private boolean validate(String command) {
         String[] data = command.split("\\|");
-        if (data.length != NUMBER_OF_PARAMETERS) {
+        if (data.length != format().split("\\|").length) {
             throw new IllegalArgumentException(
-                    String.format("Incorrect command format. The correct format: 'delete|tableName|id',\n" +
-                            "your command: %s", command));
+                    String.format("Incorrect command format. The correct format: '%s',\n" +
+                            "your command: %s", format(), command));
         }
         return true;
     }

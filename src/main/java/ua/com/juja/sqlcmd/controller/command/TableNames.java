@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.Set;
 
 public class TableNames implements Command {
-    private static final int NUMBER_OF_PARAMETERS = 1;
     private final View view;
     private final DatabaseManager manager;
 
@@ -35,10 +34,10 @@ public class TableNames implements Command {
 
     private boolean validate(String command) {
         String[] data = command.split("\\|");
-        if (data.length != NUMBER_OF_PARAMETERS) {
+        if (data.length != format().split("\\|").length) {
             throw new IllegalArgumentException(
-                    String.format("Incorrect command format. The correct format: 'list',\n" +
-                            "your command: %s", command));
+                    String.format("Incorrect command format. The correct format: '%s',\n" +
+                            "your command: %s", format(), command));
         }
         return true;
     }
@@ -52,5 +51,4 @@ public class TableNames implements Command {
     public String description() {
         return "display list of tables";
     }
-
 }

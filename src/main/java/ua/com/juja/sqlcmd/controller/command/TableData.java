@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Set;
 
 public class TableData implements Command {
-    private static final int NUMBER_OF_PARAMETERS = 2;
     private final View view;
     private final DatabaseManager manager;
 
@@ -43,10 +42,10 @@ public class TableData implements Command {
 
     private boolean validate(String command) {
         String[] data = command.split("\\|");
-        if (data.length != NUMBER_OF_PARAMETERS) {
+        if (data.length != format().split("\\|").length) {
             throw new IllegalArgumentException(
-                    String.format("Incorrect command format. The correct format: 'find|tableName',\n" +
-                            "your command: %s", command));
+                    String.format("Incorrect command format. The correct format: '%s',\n" +
+                            "your command: %s", format(), command));
         }
         return true;
     }
@@ -60,5 +59,4 @@ public class TableData implements Command {
     public String description() {
         return "display the contents of the table tableName";
     }
-
 }

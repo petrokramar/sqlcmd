@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class Help implements Command {
-
     private Command[] commands;
     private final View view;
     private static final String ANSI_BLUE = "\u001B[34m";
@@ -49,5 +48,4 @@ public class Help implements Command {
     public String description() {
         return "help";
     }
-
 }

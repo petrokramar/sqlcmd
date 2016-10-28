@@ -7,7 +7,6 @@ import ua.com.juja.sqlcmd.view.View;
 import java.sql.SQLException;
 
 public class Update implements Command {
-    private static final int NUMBER_OF_PARAMETERS = 2;
     private final View view;
     private final DatabaseManager manager;
 
@@ -51,11 +50,11 @@ public class Update implements Command {
 
     private boolean validate(String command) {
         String[] data = command.split("\\|");
-        if (data.length % NUMBER_OF_PARAMETERS == 0) {
+        if (data.length % 2 == 0) {
             throw new IllegalArgumentException(
                     String.format("Incorrect command format. " +
-                            "The correct format: 'update|tableName|id|column1|value1|...columnN|valueN',\n" +
-                            "your command: %s", command));
+                            "The correct format: '%s',\n" +
+                            "your command: %s", format(), command));
         }
         return true;
     }

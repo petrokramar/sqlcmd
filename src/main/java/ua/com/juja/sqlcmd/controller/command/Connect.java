@@ -6,8 +6,6 @@ import ua.com.juja.sqlcmd.view.View;
 import java.sql.SQLException;
 
 public class Connect implements Command {
-
-    private static final int NUMBER_OF_PARAMETERS = 4;
     private final View view;
     private final DatabaseManager manager;
 
@@ -40,10 +38,10 @@ public class Connect implements Command {
 
     private boolean validate(String command) {
         String[] data = command.split("\\|");
-        if (data.length != NUMBER_OF_PARAMETERS) {
+        if (data.length != format().split("\\|").length) {
             throw new IllegalArgumentException(
                     String.format("Invalid number of parameters separated by " +
-                            "'|', expected %s, but there are: %s", NUMBER_OF_PARAMETERS, data.length));
+                            "'|', expected %s, but there are: %s", format().split("\\|").length, data.length));
         }
         return true;
     }
@@ -57,5 +55,4 @@ public class Connect implements Command {
     public String description() {
         return "connect to database";
     }
-
 }
