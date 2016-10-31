@@ -5,27 +5,37 @@ import java.util.List;
 import java.util.Set;
 
 public interface DatabaseManager {
-    void connect(String database, String userName, String password) throws SQLException;
+    void connect(String database, String userName, String password);
+
+    void disconnect(String database);
 
     boolean isConnected();
 
-    List<DataSet> getTableData(String tableName) throws SQLException;
+    void createDatabase(String databaseName);
 
-    int getSize(String tableName) throws SQLException;
+    void dropDatabase(String databaseName);
 
-    Set<String> getTableNames() throws SQLException;
+    void createTable(String tableName, String query);
 
-    void clear(String tableName) throws SQLException;
+    void dropTable(String tableName);
 
-    boolean existRecord(String tableName, String field, String parameter) throws SQLException;
+    List<DataSet> getTableData(String tableName);
 
-    void create(String tableName, DataSet input) throws SQLException;
+    int getSize(String tableName);
 
-    void update(String tableName, int id, DataSet input) throws SQLException;
+    Set<String> getTableNames();
 
-    void delete(String tableName, int id) throws SQLException;
+    void clear(String tableName);
 
-    Set<String> getTableColumns(String tableName) throws SQLException;
+    boolean existRecord(String tableName, String field, String parameter);
 
-    List<DataSet> executeQuery(String query) throws SQLException;
+    void create(String tableName, DataSet input);
+
+    void update(String tableName, int id, DataSet input);
+
+    void delete(String tableName, int id);
+
+    Set<String> getTableColumns(String tableName);
+
+    List<DataSet> executeQuery(String query);
 }

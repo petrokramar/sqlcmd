@@ -1,6 +1,7 @@
 package ua.com.juja.sqlcmd.controller.command;
 
 import ua.com.juja.sqlcmd.model.DatabaseManager;
+import ua.com.juja.sqlcmd.model.DatabaseManagerException;
 import ua.com.juja.sqlcmd.view.View;
 
 import java.sql.SQLException;
@@ -32,15 +33,11 @@ public class DeleteRecord implements Command {
                         String.format("Incorrect command format. Id not a number.\n" +
                                 "Your id: %s", data[2]));
             }
-            try {
-                if (manager.existRecord(tableName, "id", data[2])) {
-                    manager.delete(tableName, id);
-                    view.write(String.format("Record with id=%d in table '%s' deleted", id, tableName));
-                } else {
-                    view.write(String.format("Record with id=%d in table '%s' not exist", id, tableName));
-                }
-            } catch (SQLException e) {
-                view.write(String.format("Error delete record in table '%s' by reason: %s", tableName, e.getMessage()));
+            if (manager.existRecord(tableName, "id", data[2])) {
+                manager.delete(tableName, id);
+                view.write(String.format("Record with id=%d in table '%s' deleted", id, tableName));
+            } else {
+                view.write(String.format("Record with id=%d in table '%s' not exist", id, tableName));
             }
         }
     }

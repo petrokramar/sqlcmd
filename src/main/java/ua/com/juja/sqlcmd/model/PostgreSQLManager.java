@@ -10,11 +10,11 @@ public class PostgreSQLManager implements DatabaseManager {
     private Connection connection;
 
     @Override
-    public void connect(String database, String userName, String password) throws SQLException {
+    public void connect(String database, String userName, String password) {
         try {
             Class.forName("org.postgresql.Driver");
         } catch (ClassNotFoundException e) {
-            throw new SQLException("PostgreSQL driver not found", e);
+            throw new DatabaseManagerException("PostgreSQL driver not found", e);
         }
         try {
             if (connection != null) {
@@ -24,31 +24,52 @@ public class PostgreSQLManager implements DatabaseManager {
                     PropertyHandler.getDatabaseUrl() + database, userName, password);
         } catch (SQLException e) {
             connection = null;
-            throw new SQLException(
+            throw new DatabaseManagerException(
                     String.format("Failed to connect to database: %s, user: %s", database, userName), e);
         }
     }
 
     @Override
-    public List<DataSet> getTableData(String tableName) throws SQLException {
-        try (Statement statement = connection.createStatement();
-             ResultSet rs = statement.executeQuery(String.format("SELECT * FROM %s ORDER BY id", tableName))) {
-            return getDataSets(rs);
+    public void disconnect(String database) {
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                throw new DatabaseManagerException(
+                        String.format("Failed to disconnect from database: %s", database), e);
+            }
+            connection = null;
+        } else {
+            throw new DatabaseManagerException("Disconnect failed. You are not connected to any database.");
         }
     }
 
     @Override
-    public int getSize(String tableName) throws SQLException {
+    public List<DataSet> getTableData(String tableName) {
+        try (Statement statement = connection.createStatement();
+             ResultSet rs = statement.executeQuery(String.format("SELECT * FROM %s ORDER BY id", tableName))) {
+            return getDataSets(rs);
+        } catch (SQLException e) {
+            throw new DatabaseManagerException(
+                    String.format("Error getting data from table '%s'", tableName), e);
+        }
+    }
+
+    @Override
+    public int getSize(String tableName) {
         try (Statement statement = connection.createStatement();
              ResultSet rs = statement.executeQuery(String.format("SELECT COUNT(*) FROM %s", tableName))) {
             rs.next();
             int size = rs.getInt(1);
             return size;
+        } catch (SQLException e) {
+            throw new DatabaseManagerException(
+                    String.format("Error getting size of table '%s'", tableName), e);
         }
     }
 
     @Override
-    public Set<String> getTableNames() throws SQLException {
+    public Set<String> getTableNames() {
         Set<String> tables = new LinkedHashSet<>();
         try (Statement statement = connection.createStatement();
              ResultSet rs = statement.executeQuery("SELECT table_name FROM information_schema.tables" +
@@ -57,18 +78,23 @@ public class PostgreSQLManager implements DatabaseManager {
                 tables.add(rs.getString("table_name"));
             }
             return tables;
+        } catch (SQLException e) {
+            throw new DatabaseManagerException("Error getting table names", e);
         }
     }
 
     @Override
-    public void clear(String tableName) throws SQLException {
+    public void clear(String tableName) {
         try (Statement statement = connection.createStatement()) {
             statement.executeUpdate(String.format("DELETE FROM %s", tableName));
+        } catch (SQLException e) {
+            throw new DatabaseManagerException(
+                    String.format("Error deleting data from table '%s'", tableName), e);
         }
     }
 
     @Override
-    public boolean existRecord(String tableName, String field, String parameter) throws SQLException {
+    public boolean existRecord(String tableName, String field, String parameter) {
         try (Statement statement = connection.createStatement();
              ResultSet rs = statement.executeQuery(String.format(
                      "SELECT COUNT(*) FROM %s WHERE %s = %s", tableName, field, parameter))) {
@@ -79,11 +105,14 @@ public class PostgreSQLManager implements DatabaseManager {
             } else {
                 return false;
             }
+        } catch (SQLException e) {
+            throw new DatabaseManagerException(
+                    String.format("Error reading data from table '%s'", tableName), e);
         }
     }
 
     @Override
-    public void create(String tableName, DataSet input) throws SQLException {
+    public void create(String tableName, DataSet input) {
         try (Statement statement = connection.createStatement()) {
             String columns = "";
             for (String name : input.getNames()) {
@@ -96,11 +125,14 @@ public class PostgreSQLManager implements DatabaseManager {
             }
             values = values.substring(0, values.length() - 1);
             statement.executeUpdate(String.format("INSERT INTO %s (%s) VALUES (%s)", tableName, columns, values));
+        } catch (SQLException e) {
+            throw new DatabaseManagerException(
+                    String.format("Error creating record in table '%s'. Input: %s", tableName, input), e);
         }
     }
 
     @Override
-    public void update(String tableName, int id, DataSet input) throws SQLException {
+    public void update(String tableName, int id, DataSet input) {
         String fields = "";
         for (String name : input.getNames()) {
             fields += String.format("%s =? ", name) + ",";
@@ -114,20 +146,26 @@ public class PostgreSQLManager implements DatabaseManager {
             }
             preparedStatement.setInt(index, id);
             preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DatabaseManagerException(
+                    String.format("Error update record in table '%s'? id = %d, input: % ", tableName, id, input), e);
         }
     }
 
     @Override
-    public void delete(String tableName, int id) throws SQLException {
+    public void delete(String tableName, int id) {
         try (PreparedStatement preparedStatement = connection.prepareStatement(
                 String.format("DELETE FROM %s WHERE id=?", tableName))) {
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DatabaseManagerException(
+                    String.format("Error deleting data from table '%s', id = %%d", tableName, id), e);
         }
     }
 
     @Override
-    public Set<String> getTableColumns(String tableName) throws SQLException {
+    public Set<String> getTableColumns(String tableName) {
         Set<String> columns = new LinkedHashSet<>();
         try (Statement statement = connection.createStatement();
              ResultSet rs = statement.executeQuery(
@@ -137,33 +175,46 @@ public class PostgreSQLManager implements DatabaseManager {
                 columns.add(rs.getString("column_name"));
             }
             return columns;
+        } catch (SQLException e) {
+            throw new DatabaseManagerException(
+                    String.format("Error getting table columns from table '%s'", tableName), e);
         }
     }
 
     @Override
-    public List<DataSet> executeQuery(String query) throws SQLException {
+    public List<DataSet> executeQuery(String query) {
         if (query.toLowerCase().startsWith("select")) {
             try (Statement statement = connection.createStatement();
                  ResultSet rs = statement.executeQuery(query)) {
                 return getDataSets(rs);
+            } catch (SQLException e) {
+                throw new DatabaseManagerException(
+                        String.format("Error execute query '%s'", query), e);
             }
         } else {
             try (Statement statement = connection.createStatement()) {
                 statement.executeUpdate(query);
                 return new ArrayList<>();
+            } catch (SQLException e) {
+                throw new DatabaseManagerException(
+                        String.format("Error execute query '%s'", query), e);
             }
         }
     }
 
-    private List<DataSet> getDataSets(ResultSet rs) throws SQLException {
+    private List<DataSet> getDataSets(ResultSet rs) {
         List<DataSet> result = new ArrayList<>();
-        ResultSetMetaData rsmd = rs.getMetaData();
-        while ((rs.next())) {
-            DataSet dataSet = new DataSet();
-            for (int index = 1; index <= rsmd.getColumnCount(); index++) {
-                dataSet.put(rsmd.getColumnName(index), rs.getObject(index));
+        try {
+            ResultSetMetaData rsmd = rs.getMetaData();
+            while ((rs.next())) {
+                DataSet dataSet = new DataSet();
+                for (int index = 1; index <= rsmd.getColumnCount(); index++) {
+                    dataSet.put(rsmd.getColumnName(index), rs.getObject(index));
+                }
+                result.add(dataSet);
             }
-            result.add(dataSet);
+        } catch (SQLException e) {
+            throw new DatabaseManagerException("Error getting dataSets", e);
         }
         return result;
     }
@@ -171,5 +222,43 @@ public class PostgreSQLManager implements DatabaseManager {
     @Override
     public boolean isConnected() {
         return connection != null;
+    }
+
+    @Override
+    public void createDatabase(String databaseName) {
+        try (Statement statement = connection.createStatement()) {
+            statement.executeUpdate("CREATE DATABASE  " + databaseName);
+        } catch (SQLException e) {
+            throw new DatabaseManagerException(String.format("Error creating a table '%s'", databaseName), e);
+        }
+    }
+
+    @Override
+    public void dropDatabase(String databaseName) {
+        try (Statement statement = connection.createStatement()) {
+            statement.executeUpdate("DROP DATABASE IF EXISTS " + databaseName + ";");
+        } catch (SQLException e) {
+            throw new DatabaseManagerException(String.format("Error deleting database '%s'", databaseName), e);
+
+        }
+    }
+
+    @Override
+    public void createTable(String tableName, String query) {
+        try (Statement statement = connection.createStatement()) {
+            statement.executeUpdate("CREATE TABLE public." + query);
+        } catch (SQLException e) {
+            throw new DatabaseManagerException(String.format("Error creating table '%s'. Query: %s",
+                    tableName, query), e);
+        }
+    }
+
+    @Override
+    public void dropTable(String tableName) {
+        try (Statement statement = connection.createStatement()) {
+            statement.executeUpdate("DROP TABLE IF EXISTS public." + tableName);
+        } catch (SQLException e) {
+            throw new DatabaseManagerException(String.format("It isn't possible to delete a table '%s'", tableName), e);
+        }
     }
 }

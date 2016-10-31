@@ -29,17 +29,13 @@ public class Query implements Command {
         if (validate(command)) {
             String[] data = command.split("\\|");
             String query = data[1];
-            try {
-                List<DataSet> tableData = manager.executeQuery(query);
-                if (!tableData.isEmpty()) {
-                    Set<String> tableColumns = new LinkedHashSet<>(tableData.get(0).getNames());
-                    TableConstructor constructor = new TableConstructor(tableColumns, tableData);
-                    view.write(constructor.getTableString());
-                } else {
-                    view.write("Query executed.");
-                }
-            } catch (SQLException e) {
-                view.write(String.format("Error execute query '%s' by reason: %s", query, e.getMessage()));
+            List<DataSet> tableData = manager.executeQuery(query);
+            if (!tableData.isEmpty()) {
+                Set<String> tableColumns = new LinkedHashSet<>(tableData.get(0).getNames());
+                TableConstructor constructor = new TableConstructor(tableColumns, tableData);
+                view.write(constructor.getTableString());
+            } else {
+                view.write("Query executed.");
             }
         }
     }

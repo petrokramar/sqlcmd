@@ -26,13 +26,8 @@ public class Connect implements Command {
             String databaseName = data[1];
             String userName = data[2];
             String password = data[3];
-            try {
-                manager.connect(databaseName, userName, password);
-                view.write("Connection successful.");
-            } catch (SQLException e) {
-                view.write(String.format("Failed to connect to database '%s' by reason: %s",
-                        databaseName, e.getMessage()));
-            }
+            manager.connect(databaseName, userName, password);
+            view.write("Connection successful.");
         }
     }
 
@@ -53,6 +48,6 @@ public class Connect implements Command {
 
     @Override
     public String description() {
-        return "connect to database";
+        return "connect to database databaseName";
     }
 }

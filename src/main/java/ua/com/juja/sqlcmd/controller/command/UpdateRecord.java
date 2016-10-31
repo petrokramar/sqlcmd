@@ -39,15 +39,11 @@ public class UpdateRecord implements Command {
                 String value = data[i + 1];
                 dataSet.put(columnName, value);
             }
-            try {
-                if (manager.existRecord(tableName, "id", data[2])) {
-                    manager.update(tableName, id, dataSet);
-                    view.write(String.format("Record with id=%d in table '%s' updated with %s", id, tableName, dataSet));
-                } else {
-                    view.write(String.format("Record with id=%d in table '%s' not exist", id, tableName));
-                }
-            } catch (SQLException e) {
-                view.write(String.format("Error update record in table '%s' by reason: %s", tableName, e.getMessage()));
+            if (manager.existRecord(tableName, "id", data[2])) {
+                manager.update(tableName, id, dataSet);
+                view.write(String.format("Record with id=%d in table '%s' updated with %s", id, tableName, dataSet));
+            } else {
+                view.write(String.format("Record with id=%d in table '%s' not exist", id, tableName));
             }
         }
     }

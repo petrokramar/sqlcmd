@@ -24,12 +24,8 @@ public class ClearTable implements Command {
         if (validate(command) && confirm(command)) {
             String[] data = command.split("\\|");
             String tableName = data[1];
-            try {
-                manager.clear(tableName);
-                view.write(String.format("Table '%s' is cleared", tableName));
-            } catch (SQLException e) {
-                view.write(String.format("Table clear error '%s' by reason: %s", tableName, e.getMessage()));
-            }
+            manager.clear(tableName);
+            view.write(String.format("Table '%s' is cleared", tableName));
         }
     }
 

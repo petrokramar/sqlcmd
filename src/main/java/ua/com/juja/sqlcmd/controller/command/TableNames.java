@@ -23,12 +23,8 @@ public class TableNames implements Command {
     @Override
     public void process(String command) {
         if (validate(command)) {
-            try {
-                Set<String> tableNames = manager.getTableNames();
-                view.write(tableNames.toString());
-            } catch (SQLException e) {
-                view.write(String.format("Error getting the list of tables by reason: %s", e.getMessage()));
-            }
+            Set<String> tableNames = manager.getTableNames();
+            view.write(tableNames.toString());
         }
     }
 

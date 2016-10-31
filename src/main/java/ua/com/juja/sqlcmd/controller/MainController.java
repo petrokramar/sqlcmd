@@ -13,16 +13,21 @@ public class MainController {
         this.view = view;
         Help commandHelp = new Help(view);
         commands = new Command[]{
-                new Connect(view, manager),
                 commandHelp,
+                new Connect(view, manager),
+                new Disconnect(view, manager),
                 new Exit(view),
                 new IsConnected(view, manager),
+                new CreateDatabase(view, manager),
+                new DropDatabase(view, manager),
+                new TableNames(view, manager),
+                new CreateTable(view, manager),
+                new DropTable(view, manager),
                 new ClearTable(view, manager),
+                new TableData(view, manager),
                 new CreateRecord(view, manager),
                 new UpdateRecord(view, manager),
                 new DeleteRecord(view, manager),
-                new TableNames(view, manager),
-                new TableData(view, manager),
                 new Query(view, manager),
                 new Unsupported(view)
         };
@@ -55,7 +60,6 @@ public class MainController {
                     printError(e);
                     break;
                 }
-                ;
             }
             view.write("Enter a command (help - list of commands):");
         }

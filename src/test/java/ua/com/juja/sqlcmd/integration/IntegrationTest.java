@@ -55,11 +55,21 @@ public class IntegrationTest {
                 "\t\u001B[34mclear|tableName\n" +
                 "\t\t\u001B[0mclearing table tableName\n" +
                 "\t\u001B[34mconnect|databaseName|userName|password\n" +
-                "\t\t\u001B[0mconnect to database\n" +
+                "\t\t\u001B[0mconnect to database databaseName\n" +
+                "\t\u001B[34mcreateDatabase|DatabaseName\n" +
+                "\t\t\u001B[0mcreate database DatabaseName\n" +
+                "\t\u001B[34mcreateTable|TableName\n" +
+                "\t\t\u001B[0mcreate table TableName\n" +
                 "\t\u001B[34mcreate|tableName|column1|value1|...columnN|valueN\n" +
                 "\t\t\u001B[0mcreating record for table tableName\n" +
                 "\t\u001B[34mdelete|tableName|id\n" +
                 "\t\t\u001B[0mdelete record from table tableName by id\n" +
+                "\t\u001B[34mdisconnect|databaseName\n" +
+                "\t\t\u001B[0mdisconnect from database databaseName\n" +
+                "\t\u001B[34mdropDatabase|DatabaseName\n" +
+                "\t\t\u001B[0mdrop database DatabaseName\n" +
+                "\t\u001B[34mdropTable|TableName\n" +
+                "\t\t\u001B[0mdrop table TableName\n" +
                 "\t\u001B[34mexit\n" +
                 "\t\t\u001B[0mexit\n" +
                 "\t\u001B[34mfind|tableName\n" +

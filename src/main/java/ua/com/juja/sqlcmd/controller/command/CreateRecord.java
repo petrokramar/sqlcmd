@@ -31,12 +31,8 @@ public class CreateRecord implements Command {
                 String value = data[i + 1];
                 dataSet.put(columnName, value);
             }
-            try {
-                manager.create(tableName, dataSet);
-                view.write(String.format("Record %s added to the table '%s'", dataSet, tableName));
-            } catch (SQLException e) {
-                view.write(String.format("Error create record in table '%s' by reason: %s", tableName, e.getMessage()));
-            }
+            manager.create(tableName, dataSet);
+            view.write(String.format("Record %s added to the table '%s'", dataSet, tableName));
         }
     }
 
