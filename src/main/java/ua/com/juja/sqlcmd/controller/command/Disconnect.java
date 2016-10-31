@@ -14,7 +14,7 @@ public class Disconnect implements Command {
 
     @Override
     public boolean canProcess(String command) {
-        return command.startsWith("disconnect|");
+        return "disconnect".equals(command);
     }
 
     @Override
