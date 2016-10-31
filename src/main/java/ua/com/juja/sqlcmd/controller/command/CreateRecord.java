@@ -4,8 +4,6 @@ import ua.com.juja.sqlcmd.model.DataSet;
 import ua.com.juja.sqlcmd.model.DatabaseManager;
 import ua.com.juja.sqlcmd.view.View;
 
-import java.sql.SQLException;
-
 public class CreateRecord implements Command {
     private final View view;
     private final DatabaseManager manager;

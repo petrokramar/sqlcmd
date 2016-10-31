@@ -58,7 +58,7 @@ public class IntegrationTest {
                 "\t\t\u001B[0mconnect to database databaseName\n" +
                 "\t\u001B[34mcreateDatabase|DatabaseName\n" +
                 "\t\t\u001B[0mcreate database DatabaseName\n" +
-                "\t\u001B[34mcreateTable|TableName\n" +
+                "\t\u001B[34mcreateTable|TableName|query text...\n" +
                 "\t\t\u001B[0mcreate table TableName\n" +
                 "\t\u001B[34mcreate|tableName|column1|value1|...columnN|valueN\n" +
                 "\t\t\u001B[0mcreating record for table tableName\n" +

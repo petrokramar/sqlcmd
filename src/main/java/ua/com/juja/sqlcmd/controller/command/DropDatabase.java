@@ -3,9 +3,6 @@ package ua.com.juja.sqlcmd.controller.command;
 import ua.com.juja.sqlcmd.model.DatabaseManager;
 import ua.com.juja.sqlcmd.view.View;
 
-/**
- * Created by kramar on 31.10.16.
- */
 public class DropDatabase implements Command {
     private final View view;
     private final DatabaseManager manager;
@@ -22,7 +19,12 @@ public class DropDatabase implements Command {
 
     @Override
     public void process(String command) {
-
+        if (validate(command)) {
+            String[] data = command.split("\\|");
+            String databaseName = data[1];
+            manager.dropDatabase(databaseName);
+            view.write(String.format("Database '%s' dropped successfully", databaseName));
+        }
     }
 
     @Override
@@ -33,5 +35,15 @@ public class DropDatabase implements Command {
     @Override
     public String description() {
         return "drop database DatabaseName";
+    }
+
+    private boolean validate(String command) {
+        String[] data = command.split("\\|");
+        if (data.length != format().split("\\|").length) {
+            throw new IllegalArgumentException(
+                    String.format("Incorrect command format. The correct format: '%s',\n" +
+                            "your command: %s", format(), command));
+        }
+        return true;
     }
 }

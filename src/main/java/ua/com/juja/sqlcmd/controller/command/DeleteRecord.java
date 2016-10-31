@@ -1,10 +1,7 @@
 package ua.com.juja.sqlcmd.controller.command;
 
 import ua.com.juja.sqlcmd.model.DatabaseManager;
-import ua.com.juja.sqlcmd.model.DatabaseManagerException;
 import ua.com.juja.sqlcmd.view.View;
-
-import java.sql.SQLException;
 
 public class DeleteRecord implements Command {
     private final View view;

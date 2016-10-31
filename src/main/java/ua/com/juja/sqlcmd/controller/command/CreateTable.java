@@ -3,9 +3,6 @@ package ua.com.juja.sqlcmd.controller.command;
 import ua.com.juja.sqlcmd.model.DatabaseManager;
 import ua.com.juja.sqlcmd.view.View;
 
-/**
- * Created by kramar on 31.10.16.
- */
 public class CreateTable implements Command {
     private final View view;
     private final DatabaseManager manager;
@@ -22,16 +19,32 @@ public class CreateTable implements Command {
 
     @Override
     public void process(String command) {
-
+        if (validate(command)) {
+            String[] data = command.split("\\|");
+            String tableName = data[1];
+            String query = data[2];
+            manager.createTable(tableName, query);
+            view.write(String.format("Table '%s' with query %s created successfully ", tableName, query));
+        }
     }
 
     @Override
     public String format() {
-        return "createTable|TableName";
+        return "createTable|TableName|query text...";
     }
 
     @Override
     public String description() {
         return "create table TableName";
+    }
+
+    private boolean validate(String command) {
+        String[] data = command.split("\\|");
+        if (data.length != format().split("\\|").length) {
+            throw new IllegalArgumentException(
+                    String.format("Incorrect command format. The correct format: '%s',\n" +
+                            "your command: %s", format(), command));
+        }
+        return true;
     }
 }
