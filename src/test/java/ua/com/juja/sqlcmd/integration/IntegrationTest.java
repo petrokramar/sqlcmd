@@ -60,6 +60,8 @@ public class IntegrationTest {
                 "\t\t\u001B[0mcreate database DatabaseName\n" +
                 "\t\u001B[34mcreateTable|TableName|query text...\n" +
                 "\t\t\u001B[0mcreate table TableName\n" +
+                "\t\tExample: createTable|tableName|id SERIAL PRIMARY KEY, name varchar(45) NOT NULL,\n" +
+                "\t\tpassword varchar(45) NOT NULL\n" +
                 "\t\u001B[34mcreate|tableName|column1|value1|...columnN|valueN\n" +
                 "\t\t\u001B[0mcreating record for table tableName\n" +
                 "\t\u001B[34mdelete|tableName|id\n" +
@@ -293,16 +295,6 @@ public class IntegrationTest {
                 "Good luck!\n", getData());
     }
 
-    public String getData() {
-        try {
-            String result = new String(out.toByteArray(), "UTF-8").replaceAll("\r\n", "\n");
-            out.reset();
-            return result;
-        } catch (UnsupportedEncodingException e) {
-            return e.getMessage();
-        }
-    }
-
     @Test
     public void testDelete() {
         in.add(CONNECT_PARAMETERS);
@@ -435,5 +427,15 @@ public class IntegrationTest {
                 "+--+----+--------+\n" +
                 "Enter a command (help - list of commands):\n" +
                 "Good luck!\n", getData());
+    }
+
+    public String getData() {
+        try {
+            String result = new String(out.toByteArray(), "UTF-8").replaceAll("\r\n", "\n");
+            out.reset();
+            return result;
+        } catch (UnsupportedEncodingException e) {
+            return e.getMessage();
+        }
     }
 }

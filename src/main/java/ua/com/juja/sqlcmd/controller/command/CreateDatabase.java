@@ -3,6 +3,8 @@ package ua.com.juja.sqlcmd.controller.command;
 import ua.com.juja.sqlcmd.model.DatabaseManager;
 import ua.com.juja.sqlcmd.view.View;
 
+import java.util.Set;
+
 public class CreateDatabase implements Command {
     private final View view;
     private final DatabaseManager manager;
@@ -22,8 +24,12 @@ public class CreateDatabase implements Command {
         if (validate(command)) {
             String[] data = command.split("\\|");
             String databaseName = data[1];
-            manager.createDatabase(databaseName);
-            view.write(String.format("Database '%s' created successfully", databaseName));
+            if (!databaseExist(databaseName)) {
+                manager.createDatabase(databaseName);
+                view.write(String.format("Database '%s' created successfully", databaseName));
+            } else {
+                view.write(String.format("Database '%s' already exist. Operation cancelled.", databaseName));
+            }
         }
     }
 
@@ -45,6 +51,14 @@ public class CreateDatabase implements Command {
                             "your command: %s", format(), command));
         }
         return true;
+    }
+
+    private boolean databaseExist(String databaseName) {
+        Set<String> databases = manager.getDatabasesNames();
+        if (databases.contains(databaseName)) {
+            return true;
+        }
+        return false;
     }
 }
 

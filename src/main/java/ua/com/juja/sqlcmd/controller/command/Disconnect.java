@@ -19,7 +19,7 @@ public class Disconnect implements Command {
 
     @Override
     public void process(String command) {
-
+        manager.disconnect();
     }
 
     @Override

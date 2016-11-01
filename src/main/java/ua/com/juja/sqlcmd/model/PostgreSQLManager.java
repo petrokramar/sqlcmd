@@ -30,13 +30,12 @@ public class PostgreSQLManager implements DatabaseManager {
     }
 
     @Override
-    public void disconnect(String database) {
+    public void disconnect() {
         if (connection != null) {
             try {
                 connection.close();
             } catch (SQLException e) {
-                throw new DatabaseManagerException(
-                        String.format("Failed to disconnect from database: %s", database), e);
+                throw new DatabaseManagerException("Failed to disconnect from database", e);
             }
             connection = null;
         } else {
@@ -227,7 +226,7 @@ public class PostgreSQLManager implements DatabaseManager {
     @Override
     public void createDatabase(String databaseName) {
         try (Statement statement = connection.createStatement()) {
-            statement.executeUpdate("CREATE DATABASE  " + databaseName);
+            statement.executeUpdate(String.format("CREATE DATABASE %s",databaseName));
         } catch (SQLException e) {
             throw new DatabaseManagerException(String.format("Error creating a table '%s'", databaseName), e);
         }
@@ -236,7 +235,7 @@ public class PostgreSQLManager implements DatabaseManager {
     @Override
     public void dropDatabase(String databaseName) {
         try (Statement statement = connection.createStatement()) {
-            statement.executeUpdate("DROP DATABASE IF EXISTS " + databaseName + ";");
+            statement.executeUpdate(String.format("DROP DATABASE IF EXISTS %s", databaseName));
         } catch (SQLException e) {
             throw new DatabaseManagerException(String.format("Error deleting database '%s'", databaseName), e);
 
@@ -244,9 +243,24 @@ public class PostgreSQLManager implements DatabaseManager {
     }
 
     @Override
+    public Set<String> getDatabasesNames() {
+        Set<String> databases = new LinkedHashSet<>();
+        try (Statement statement = connection.createStatement();
+             ResultSet rs = statement.executeQuery(
+                     "SELECT datname AS db_name FROM pg_database WHERE datistemplate = false;")) {
+            while (rs.next()) {
+                databases.add(rs.getString("db_name"));
+            }
+            return databases;
+        } catch (SQLException e) {
+            throw new DatabaseManagerException("Impossible to get list of databases.", e);
+        }
+    }
+
+    @Override
     public void createTable(String tableName, String query) {
         try (Statement statement = connection.createStatement()) {
-            statement.executeUpdate("CREATE TABLE public." + query);
+            statement.executeUpdate(String.format(" CREATE TABLE public.%s (%s)", tableName, query));
         } catch (SQLException e) {
             throw new DatabaseManagerException(String.format("Error creating table '%s'. Query: %s",
                     tableName, query), e);
@@ -256,7 +270,7 @@ public class PostgreSQLManager implements DatabaseManager {
     @Override
     public void dropTable(String tableName) {
         try (Statement statement = connection.createStatement()) {
-            statement.executeUpdate("DROP TABLE IF EXISTS public." + tableName);
+            statement.executeUpdate(String.format("DROP TABLE IF EXISTS public.%s", tableName));
         } catch (SQLException e) {
             throw new DatabaseManagerException(String.format("It isn't possible to delete a table '%s'", tableName), e);
         }

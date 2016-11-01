@@ -7,13 +7,15 @@ import java.util.Set;
 public interface DatabaseManager {
     void connect(String database, String userName, String password);
 
-    void disconnect(String database);
+    void disconnect();
 
     boolean isConnected();
 
     void createDatabase(String databaseName);
 
     void dropDatabase(String databaseName);
+
+    Set<String> getDatabasesNames();
 
     void createTable(String tableName, String query);
 

@@ -35,7 +35,9 @@ public class CreateTable implements Command {
 
     @Override
     public String description() {
-        return "create table TableName";
+        return "create table TableName\n" +
+                "\t\tExample: createTable|tableName|id SERIAL PRIMARY KEY, name varchar(45) NOT NULL,\n" +
+                "\t\tpassword varchar(45) NOT NULL";
     }
 
     private boolean validate(String command) {
