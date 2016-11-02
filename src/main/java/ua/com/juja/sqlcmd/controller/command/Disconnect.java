@@ -20,6 +20,7 @@ public class Disconnect implements Command {
     @Override
     public void process(String command) {
         manager.disconnect();
+        view.write("Disconnect successful.");
     }
 
     @Override

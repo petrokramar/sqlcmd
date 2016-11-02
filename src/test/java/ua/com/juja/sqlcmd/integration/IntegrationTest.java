@@ -89,6 +89,20 @@ public class IntegrationTest {
     }
 
     @Test
+    public void testDisconnectWithoutConnect() {
+        in.add("disconnect");
+        in.add("exit");
+        Main.main(new String[0]);
+        assertEquals("Hello!\n" +
+                "Enter the database name, user name and password in format connect|databaseName|userName|password.\n" +
+                "(Full list of commands - help).\n" +
+                "Failure. Reason: Disconnect failed. You are not connected to any database.\n" +
+                "Try again.\n" +
+                "Enter a command (help - list of commands):\n" +
+                "Good luck!\n", getData());
+    }
+
+    @Test
     public void testListWithoutConnect() {
         in.add("list");
         in.add("exit");
@@ -128,6 +142,22 @@ public class IntegrationTest {
     }
 
     @Test
+    public void testDisconnect() {
+        in.add(CONNECT_PARAMETERS);
+        in.add("disconnect");
+        in.add("exit");
+        Main.main(new String[0]);
+        assertEquals("Hello!\n" +
+                "Enter the database name, user name and password in format connect|databaseName|userName|password.\n" +
+                "(Full list of commands - help).\n" +
+                "Connection successful.\n" +
+                "Enter a command (help - list of commands):\n" +
+                "Disconnect successful.\n" +
+                "Enter a command (help - list of commands):\n" +
+                "Good luck!\n", getData());
+    }
+    @Test
+
     public void testUnsupportedAfterConnect() {
         in.add(CONNECT_PARAMETERS);
         in.add("zzz");
@@ -428,7 +458,6 @@ public class IntegrationTest {
                 "Enter a command (help - list of commands):\n" +
                 "Good luck!\n", getData());
     }
-
 
     public String getData() {
         try {

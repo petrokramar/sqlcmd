@@ -25,7 +25,7 @@ public class PropertyHandler {
             databaseUserName = properties.getProperty("database.user.name");
             databaseUserPassword = properties.getProperty("database.user.password");
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Error loading sqlcmd.properties");
         }
     }
 

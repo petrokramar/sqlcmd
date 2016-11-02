@@ -69,7 +69,7 @@ public class PostgreSQLManager implements DatabaseManager {
 
     @Override
     public Set<String> getTableNames() {
-        Set<String> tables = new LinkedHashSet<>();
+        Set<String> tables = new TreeSet<>();
         try (Statement statement = connection.createStatement();
              ResultSet rs = statement.executeQuery("SELECT table_name FROM information_schema.tables" +
                      " WHERE table_schema = 'public' AND table_type = 'BASE TABLE'")) {
@@ -106,7 +106,8 @@ public class PostgreSQLManager implements DatabaseManager {
             }
         } catch (SQLException e) {
             throw new DatabaseManagerException(
-                    String.format("Error reading data from table '%s'", tableName), e);
+                    String.format("Error getting record from table '%s' where %s = %s",
+                            tableName, field, parameter), e);
         }
     }
 
@@ -147,7 +148,7 @@ public class PostgreSQLManager implements DatabaseManager {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new DatabaseManagerException(
-                    String.format("Error update record in table '%s'? id = %d, input: % ", tableName, id, input), e);
+                    String.format("Error update record in table '%s' where id = %d, input: %s", tableName, id, input), e);
         }
     }
 
@@ -159,7 +160,7 @@ public class PostgreSQLManager implements DatabaseManager {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new DatabaseManagerException(
-                    String.format("Error deleting data from table '%s', id = %%d", tableName, id), e);
+                    String.format("Error deleting data from table '%s' where id = %d", tableName, id), e);
         }
     }
 
@@ -188,7 +189,7 @@ public class PostgreSQLManager implements DatabaseManager {
                 return getDataSets(rs);
             } catch (SQLException e) {
                 throw new DatabaseManagerException(
-                        String.format("Error execute query '%s'", query), e);
+                        String.format("Error execute query '%s'", query),e);
             }
         } else {
             try (Statement statement = connection.createStatement()) {
@@ -228,7 +229,7 @@ public class PostgreSQLManager implements DatabaseManager {
         try (Statement statement = connection.createStatement()) {
             statement.executeUpdate(String.format("CREATE DATABASE %s",databaseName));
         } catch (SQLException e) {
-            throw new DatabaseManagerException(String.format("Error creating a table '%s'", databaseName), e);
+            throw new DatabaseManagerException(String.format("Error creating a database '%s'", databaseName), e);
         }
     }
 
@@ -272,7 +273,7 @@ public class PostgreSQLManager implements DatabaseManager {
         try (Statement statement = connection.createStatement()) {
             statement.executeUpdate(String.format("DROP TABLE IF EXISTS public.%s", tableName));
         } catch (SQLException e) {
-            throw new DatabaseManagerException(String.format("It isn't possible to delete a table '%s'", tableName), e);
+            throw new DatabaseManagerException(String.format("It's impossible to drop a table '%s'", tableName), e);
         }
     }
 }

@@ -66,7 +66,7 @@ public class TableIntegrationTest {
                 "Failure. Reason: Error creating table 'table1'. Query: id SERIAL PRIMARY KEY, name varchar(45) NOT NULL, password varchar(45) NOT NULL\n" +
                 "Try again.\n" +
                 "Enter a command (help - list of commands):\n" +
-                "[users, table1]\n" +
+                "[table1, users]\n" +
                 "Enter a command (help - list of commands):\n" +
                 "Failure. Reason: Incorrect command format. The correct format: 'dropTable|TableName',\n" +
                 "your command: dropTable|table1|zzz\n" +

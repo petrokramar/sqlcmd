@@ -33,12 +33,6 @@ public class DataSet {
         return data.get(name);
     }
 
-    public void updateFrom(DataSet newValue) {
-        for (Map.Entry<String, Object> entry : newValue.data.entrySet()) {
-            data.put(entry.getKey(), entry.getValue());
-        }
-    }
-
     @Override
     public String toString() {
         return String.format("{names: %s, values: %s}", getNames(), getValues());
