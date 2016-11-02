@@ -429,6 +429,7 @@ public class IntegrationTest {
                 "Good luck!\n", getData());
     }
 
+
     public String getData() {
         try {
             String result = new String(out.toByteArray(), "UTF-8").replaceAll("\r\n", "\n");

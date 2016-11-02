@@ -22,11 +22,6 @@ public class DropDatabaseTest {
     }
 
     @Test
-    public void testCreateDatabase() {
-        command.process("dropDatabase|testDatabase");
-    }
-
-    @Test
     public void testCreateDatabaseWrongParameters() {
         try {
             command.process("dropDatabase|testDatabase|111");

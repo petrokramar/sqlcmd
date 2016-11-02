@@ -13,7 +13,7 @@ import java.io.UnsupportedEncodingException;
 
 import static org.junit.Assert.assertEquals;
 
-public class DatabaseIntegrationTest {
+public class TableIntegrationTest {
     private static ConfigurableInputStream in;
     private static ByteArrayOutputStream out;
     private static String CONNECT_PARAMETERS =
@@ -34,22 +34,20 @@ public class DatabaseIntegrationTest {
     }
 
     @Test
-    public void testCreateAndDropDatabase() {
+    public void testCreateAndDropTable() {
         in.add(CONNECT_PARAMETERS);
-        in.add("dropDatabase|db1");
+        in.add("dropTable|table1");
         in.add("yes");
-        in.add("dropDatabase|db2");
+        in.add("createTable|table1|zzz");
+        in.add("createTable|table1|id SERIAL PRIMARY KEY, name varchar(45) NOT NULL, password varchar(45) NOT NULL");
+        in.add("createTable|table1|id SERIAL PRIMARY KEY, name varchar(45) NOT NULL, password varchar(45) NOT NULL");
+        in.add("list");
+        in.add("dropTable|table1|zzz");
+        in.add("dropTable|table1");
+        in.add("no");
+        in.add("dropTable|table1");
         in.add("yes");
-        in.add("createDatabase|db1|zzz");
-        in.add("createDatabase|db1");
-        in.add("createDatabase|db1");
-        in.add("dropDatabase|db1|zzz");
-        in.add("dropDatabase|db2");
-        in.add("yes");
-        in.add("dropDatabase|db1");
-        in.add("ye");
-        in.add("dropDatabase|db1");
-        in.add("yes");
+        in.add("list");
         in.add("exit");
         Main.main(new String[0]);
         assertEquals("Hello!\n" +
@@ -57,32 +55,30 @@ public class DatabaseIntegrationTest {
                 "(Full list of commands - help).\n" +
                 "Connection successful.\n" +
                 "Enter a command (help - list of commands):\n" +
-                "To confirm drop database 'db1' type 'yes'.\n" +
-                "Database 'db1' not exist. Operation cancelled.\n" +
+                "To confirm drop table 'table1' type 'yes'.\n" +
+                "Table 'table1' dropped successfully\n" +
                 "Enter a command (help - list of commands):\n" +
-                "To confirm drop database 'db2' type 'yes'.\n" +
-                "Database 'db2' not exist. Operation cancelled.\n" +
-                "Enter a command (help - list of commands):\n" +
-                "Failure. Reason: Incorrect command format. The correct format: 'createDatabase|DatabaseName',\n" +
-                "your command: createDatabase|db1|zzz\n" +
+                "Failure. Reason: Error creating table 'table1'. Query: zzz\n" +
                 "Try again.\n" +
                 "Enter a command (help - list of commands):\n" +
-                "Database 'db1' created successfully\n" +
+                "Table 'table1' with query id SERIAL PRIMARY KEY, name varchar(45) NOT NULL, password varchar(45) NOT NULL created successfully \n" +
                 "Enter a command (help - list of commands):\n" +
-                "Database 'db1' already exist. Operation cancelled.\n" +
-                "Enter a command (help - list of commands):\n" +
-                "Failure. Reason: Incorrect command format. The correct format: 'dropDatabase|DatabaseName',\n" +
-                "your command: dropDatabase|db1|zzz\n" +
+                "Failure. Reason: Error creating table 'table1'. Query: id SERIAL PRIMARY KEY, name varchar(45) NOT NULL, password varchar(45) NOT NULL\n" +
                 "Try again.\n" +
                 "Enter a command (help - list of commands):\n" +
-                "To confirm drop database 'db2' type 'yes'.\n" +
-                "Database 'db2' not exist. Operation cancelled.\n" +
+                "[users, table1]\n" +
                 "Enter a command (help - list of commands):\n" +
-                "To confirm drop database 'db1' type 'yes'.\n" +
-                "Drop database 'db1' cancelled.\n" +
+                "Failure. Reason: Incorrect command format. The correct format: 'dropTable|TableName',\n" +
+                "your command: dropTable|table1|zzz\n" +
+                "Try again.\n" +
                 "Enter a command (help - list of commands):\n" +
-                "To confirm drop database 'db1' type 'yes'.\n" +
-                "Database 'db1' dropped successfully\n" +
+                "To confirm drop table 'table1' type 'yes'.\n" +
+                "Drop table 'table1' cancelled.\n" +
+                "Enter a command (help - list of commands):\n" +
+                "To confirm drop table 'table1' type 'yes'.\n" +
+                "Table 'table1' dropped successfully\n" +
+                "Enter a command (help - list of commands):\n" +
+                "[users]\n" +
                 "Enter a command (help - list of commands):\n" +
                 "Good luck!\n", getData());
     }

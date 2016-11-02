@@ -263,7 +263,7 @@ public class PostgreSQLManager implements DatabaseManager {
             statement.executeUpdate(String.format(" CREATE TABLE public.%s (%s)", tableName, query));
         } catch (SQLException e) {
             throw new DatabaseManagerException(String.format("Error creating table '%s'. Query: %s",
-                    tableName, query), e);
+                    tableName, query));
         }
     }
 

@@ -19,10 +19,10 @@ public class DropTable implements Command {
 
     @Override
     public void process(String command) {
-        if (validate(command)) {
+        if (validate(command) && confirm(command)) {
             String[] data = command.split("\\|");
             String tableName = data[1];
-            manager.dropDatabase(tableName);
+            manager.dropTable(tableName);
             view.write(String.format("Table '%s' dropped successfully", tableName));
         }
     }
@@ -45,5 +45,17 @@ public class DropTable implements Command {
                             "your command: %s", format(), command));
         }
         return true;
+    }
+
+    private boolean confirm(String command) {
+        String[] data = command.split("\\|");
+        String tableName = data[1];
+        view.write(String.format("To confirm drop table '%s' type 'yes'.", tableName));
+        if ("yes".equals(view.read().trim())) {
+            return true;
+        } else {
+            view.write(String.format("Drop table '%s' cancelled.", tableName));
+            return false;
+        }
     }
 }
