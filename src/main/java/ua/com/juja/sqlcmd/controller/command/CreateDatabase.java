@@ -55,10 +55,7 @@ public class CreateDatabase implements Command {
 
     private boolean databaseExist(String databaseName) {
         Set<String> databases = manager.getDatabasesNames();
-        if (databases.contains(databaseName)) {
-            return true;
-        }
-        return false;
+        return databases.contains(databaseName);
     }
 }
 

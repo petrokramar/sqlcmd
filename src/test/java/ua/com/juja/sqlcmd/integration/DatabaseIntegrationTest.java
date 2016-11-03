@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import ua.com.juja.sqlcmd.Main;
+import ua.com.juja.sqlcmd.TestUtils;
 import ua.com.juja.sqlcmd.controller.PropertyHandler;
 
 import java.io.ByteArrayOutputStream;
@@ -16,7 +17,7 @@ import static org.junit.Assert.assertEquals;
 public class DatabaseIntegrationTest {
     private static ConfigurableInputStream in;
     private static ByteArrayOutputStream out;
-    private static String CONNECT_PARAMETERS =
+    private static final String CONNECT_PARAMETERS =
             String.format("connect|%s|%s|%s", PropertyHandler.getDatabaseName(),
                     PropertyHandler.getDatabaseUserName(), PropertyHandler.getDatabaseUserPassword());
 
@@ -84,17 +85,6 @@ public class DatabaseIntegrationTest {
                 "To confirm drop database 'db1' type 'yes'.\n" +
                 "Database 'db1' dropped successfully\n" +
                 "Enter a command (help - list of commands):\n" +
-                "Good luck!\n", getData());
+                "Good luck!\n", TestUtils.formatOutput(out));
     }
-
-    public String getData() {
-        try {
-            String result = new String(out.toByteArray(), "UTF-8").replaceAll("\r\n", "\n");
-            out.reset();
-            return result;
-        } catch (UnsupportedEncodingException e) {
-            return e.getMessage();
-        }
-    }
-
 }

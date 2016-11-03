@@ -7,10 +7,6 @@ public class FakeView implements View {
     private String messages = "";
     private String input = null;
 
-    public void adrrRead(String input) {
-        this.input = input;
-    }
-
     @Override
     public void write(String message) {
         messages += message + "\n";

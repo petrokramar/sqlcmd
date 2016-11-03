@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
 
 public class ExitMockitoTest {
 
-    private View view = Mockito.mock(View.class);
+    private final View view = Mockito.mock(View.class);
 
     @Test
     public void testCanProcessExit() {

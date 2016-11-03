@@ -59,8 +59,7 @@ public class PostgreSQLManager implements DatabaseManager {
         try (Statement statement = connection.createStatement();
              ResultSet rs = statement.executeQuery(String.format("SELECT COUNT(*) FROM %s", tableName))) {
             rs.next();
-            int size = rs.getInt(1);
-            return size;
+            return rs.getInt(1);
         } catch (SQLException e) {
             throw new DatabaseManagerException(
                     String.format("Error getting size of table '%s'", tableName), e);
@@ -99,11 +98,7 @@ public class PostgreSQLManager implements DatabaseManager {
                      "SELECT COUNT(*) FROM %s WHERE %s = %s", tableName, field, parameter))) {
             rs.next();
             int size = rs.getInt(1);
-            if (size != 0) {
-                return true;
-            } else {
-                return false;
-            }
+            return size != 0;
         } catch (SQLException e) {
             throw new DatabaseManagerException(
                     String.format("Error getting record from table '%s' where %s = %s",

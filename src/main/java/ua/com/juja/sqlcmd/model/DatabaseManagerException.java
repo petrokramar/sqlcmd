@@ -1,6 +1,6 @@
 package ua.com.juja.sqlcmd.model;
 
-public class DatabaseManagerException extends RuntimeException {
+class DatabaseManagerException extends RuntimeException {
     DatabaseManagerException(String message) {
         super(message);
     }

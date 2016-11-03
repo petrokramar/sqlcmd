@@ -24,14 +24,6 @@ public class TableNamesTest {
         command = new TableNames(view, manager);
     }
 
-    private void print(String expected) {
-        ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
-        verify(view, atLeastOnce()).write(captor.capture());
-        assertEquals(
-                expected,
-                captor.getAllValues().toString());
-    }
-
     @Test
     public void testWrongParameters() throws SQLException {
         try {

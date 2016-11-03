@@ -16,7 +16,7 @@ import static org.junit.Assert.assertEquals;
 public class IntegrationTest {
     private static ConfigurableInputStream in;
     private static ByteArrayOutputStream out;
-    private static String CONNECT_PARAMETERS =
+    private static final String CONNECT_PARAMETERS =
             String.format("connect|%s|%s|%s", PropertyHandler.getDatabaseName(),
                     PropertyHandler.getDatabaseUserName(), PropertyHandler.getDatabaseUserPassword());
 
@@ -459,7 +459,7 @@ public class IntegrationTest {
                 "Good luck!\n", getData());
     }
 
-    public String getData() {
+    private String getData() {
         try {
             String result = new String(out.toByteArray(), "UTF-8").replaceAll("\r\n", "\n");
             out.reset();

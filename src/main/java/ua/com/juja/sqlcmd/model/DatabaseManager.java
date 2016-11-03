@@ -1,6 +1,5 @@
 package ua.com.juja.sqlcmd.model;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Set;
 

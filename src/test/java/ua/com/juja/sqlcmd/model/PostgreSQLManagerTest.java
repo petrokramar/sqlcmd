@@ -47,6 +47,16 @@ public class PostgreSQLManagerTest extends DatabaseManagerTest {
     }
 
     @Test
+    public void testCreateExistingDatabase() {
+        try {
+            manager.createDatabase("sqlcmd");
+            fail();
+        } catch (DatabaseManagerException e) {
+            assertEquals("Error creating a database 'sqlcmd'", e.getMessage());
+        }
+    }
+
+    @Test
     public void testSelectQueryWrongParameters() {
         try {
             manager.executeQuery("SELECT pass FROM users");
@@ -84,17 +94,6 @@ public class PostgreSQLManagerTest extends DatabaseManagerTest {
             fail();
         } catch (DatabaseManagerException e) {
             assertEquals("Error getting size of table 'wrongTable'", e.getMessage());
-        }
-    }
-
-    @Test
-    public void testDeleteDataWrongTable() {
-        try {
-            final int id = 1;
-            manager.delete("wrongTable", id);
-            fail();
-        } catch (DatabaseManagerException e) {
-            assertEquals("Error deleting data from table 'wrongTable' where id = 1", e.getMessage());
         }
     }
 

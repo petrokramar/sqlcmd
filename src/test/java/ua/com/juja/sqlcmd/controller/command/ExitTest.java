@@ -6,7 +6,7 @@ import static org.junit.Assert.*;
 
 public class ExitTest {
 
-    FakeView view = new FakeView();
+    private final FakeView view = new FakeView();
 
     @Test
     public void testCanProcessExit() {

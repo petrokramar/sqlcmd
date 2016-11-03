@@ -6,10 +6,10 @@ import java.util.Properties;
 
 public class PropertyHandler {
 
-    private static String databaseUrl;
-    private static String databaseName;
-    private static String databaseUserName;
-    private static String databaseUserPassword;
+    private static final String databaseUrl;
+    private static final String databaseName;
+    private static final String databaseUserName;
+    private static final String databaseUserPassword;
 
     static {
         String resourceName = "sqlcmd.properties";
