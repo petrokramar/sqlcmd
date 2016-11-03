@@ -20,6 +20,7 @@ public class MainController {
                 new IsConnected(view, manager),
                 new CreateDatabase(view, manager),
                 new DropDatabase(view, manager),
+                new DatabaseNames(view, manager),
                 new TableNames(view, manager),
                 new CreateTable(view, manager),
                 new DropTable(view, manager),

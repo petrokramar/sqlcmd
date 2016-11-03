@@ -5,33 +5,33 @@ import ua.com.juja.sqlcmd.view.View;
 
 import java.util.Set;
 
-public class TableNames implements Command {
+public class DatabaseNames implements Command {
     private final View view;
     private final DatabaseManager manager;
 
-    public TableNames(View view, DatabaseManager manager) {
+    public DatabaseNames(View view, DatabaseManager manager) {
         this.view = view;
         this.manager = manager;
     }
 
     @Override
     public boolean canProcess(String command) {
-        return "tables".equals(command);
+        return "databases".equals(command);
     }
 
     @Override
     public void process(String command) {
-        Set<String> tableNames = manager.getTableNames();
-        view.write(tableNames.toString());
+        Set<String> databaseNames = manager.getDatabasesNames();
+        view.write(databaseNames.toString());
     }
 
     @Override
     public String format() {
-        return "tables";
+        return "databases";
     }
 
     @Override
     public String description() {
-        return "display list of tables";
+        return "list of databases";
     }
 }

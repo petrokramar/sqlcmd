@@ -4,15 +4,15 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import ua.com.juja.sqlcmd.Main;
-import ua.com.juja.sqlcmd.TestUtils;
 import ua.com.juja.sqlcmd.controller.PropertyHandler;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.io.UnsupportedEncodingException;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static ua.com.juja.sqlcmd.TestUtilites.formatOutput;
 
 public class DatabaseIntegrationTest {
     private static ConfigurableInputStream in;
@@ -85,6 +85,15 @@ public class DatabaseIntegrationTest {
                 "To confirm drop database 'db1' type 'yes'.\n" +
                 "Database 'db1' dropped successfully\n" +
                 "Enter a command (help - list of commands):\n" +
-                "Good luck!\n", TestUtils.formatOutput(out));
+                "Good luck!\n", formatOutput(out));
+    }
+
+    @Test
+    public void testDatabasesList() {
+        in.add(CONNECT_PARAMETERS);
+        in.add("databases");
+        in.add("exit");
+        Main.main(new String[0]);
+        assertTrue(formatOutput(out).contains("sqlcmd"));
     }
 }

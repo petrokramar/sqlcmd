@@ -9,9 +9,9 @@ import ua.com.juja.sqlcmd.controller.PropertyHandler;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.io.UnsupportedEncodingException;
 
 import static org.junit.Assert.assertEquals;
+import static ua.com.juja.sqlcmd.TestUtilites.formatOutput;
 
 public class TableIntegrationTest {
     private static ConfigurableInputStream in;
@@ -41,13 +41,13 @@ public class TableIntegrationTest {
         in.add("createTable|table1|zzz");
         in.add("createTable|table1|id SERIAL PRIMARY KEY, name varchar(45) NOT NULL, password varchar(45) NOT NULL");
         in.add("createTable|table1|id SERIAL PRIMARY KEY, name varchar(45) NOT NULL, password varchar(45) NOT NULL");
-        in.add("list");
+        in.add("tables");
         in.add("dropTable|table1|zzz");
         in.add("dropTable|table1");
         in.add("no");
         in.add("dropTable|table1");
         in.add("yes");
-        in.add("list");
+        in.add("tables");
         in.add("exit");
         Main.main(new String[0]);
         assertEquals("Hello!\n" +
@@ -80,17 +80,6 @@ public class TableIntegrationTest {
                 "Enter a command (help - list of commands):\n" +
                 "[users]\n" +
                 "Enter a command (help - list of commands):\n" +
-                "Good luck!\n", getData());
+                "Good luck!\n", formatOutput(out));
     }
-
-    private String getData() {
-        try {
-            String result = new String(out.toByteArray(), "UTF-8").replaceAll("\r\n", "\n");
-            out.reset();
-            return result;
-        } catch (UnsupportedEncodingException e) {
-            return e.getMessage();
-        }
-    }
-
 }

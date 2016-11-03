@@ -9,9 +9,9 @@ import ua.com.juja.sqlcmd.controller.PropertyHandler;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.io.UnsupportedEncodingException;
 
 import static org.junit.Assert.assertEquals;
+import static ua.com.juja.sqlcmd.TestUtilites.formatOutput;
 
 public class IntegrationTest {
     private static ConfigurableInputStream in;
@@ -40,7 +40,7 @@ public class IntegrationTest {
         assertEquals("Hello!\n" +
                 "Enter the database name, user name and password in format connect|databaseName|userName|password.\n" +
                 "(Full list of commands - help).\n" +
-                "Good luck!\n", getData());
+                "Good luck!\n", formatOutput(out));
     }
 
     @Test
@@ -64,6 +64,8 @@ public class IntegrationTest {
                 "\t\tpassword varchar(45) NOT NULL\n" +
                 "\t\u001B[34mcreate|tableName|column1|value1|...columnN|valueN\n" +
                 "\t\t\u001B[0mcreating record for table tableName\n" +
+                "\t\u001B[34mdatabases\n" +
+                "\t\t\u001B[0mlist of databases\n" +
                 "\t\u001B[34mdelete|tableName|id\n" +
                 "\t\t\u001B[0mdelete record from table tableName by id\n" +
                 "\t\u001B[34mdisconnect|databaseName\n" +
@@ -78,14 +80,14 @@ public class IntegrationTest {
                 "\t\t\u001B[0mdisplay the contents of the table tableName\n" +
                 "\t\u001B[34mhelp\n" +
                 "\t\t\u001B[0mhelp\n" +
-                "\t\u001B[34mlist\n" +
-                "\t\t\u001B[0mdisplay list of tables\n" +
                 "\t\u001B[34mquery|text...\n" +
                 "\t\t\u001B[0mcustom SQL query\n" +
+                "\t\u001B[34mtables\n" +
+                "\t\t\u001B[0mdisplay list of tables\n" +
                 "\t\u001B[34mupdate|tableName|id|column1|value1|...columnN|valueN\n" +
                 "\t\t\u001B[0mupdate record for table tableName by id\n" +
                 "Enter a command (help - list of commands):\n" +
-                "Good luck!\n", getData());
+                "Good luck!\n", formatOutput(out));
     }
 
     @Test
@@ -99,7 +101,7 @@ public class IntegrationTest {
                 "Failure. Reason: Disconnect failed. You are not connected to any database.\n" +
                 "Try again.\n" +
                 "Enter a command (help - list of commands):\n" +
-                "Good luck!\n", getData());
+                "Good luck!\n", formatOutput(out));
     }
 
     @Test
@@ -112,7 +114,7 @@ public class IntegrationTest {
                 "(Full list of commands - help).\n" +
                 "The command list is not active. Connect to the database.\n" +
                 "Enter a command (help - list of commands):\n" +
-                "Good luck!\n", getData());
+                "Good luck!\n", formatOutput(out));
     }
 
     @Test
@@ -125,7 +127,7 @@ public class IntegrationTest {
                 "(Full list of commands - help).\n" +
                 "The command find|users is not active. Connect to the database.\n" +
                 "Enter a command (help - list of commands):\n" +
-                "Good luck!\n", getData());
+                "Good luck!\n", formatOutput(out));
     }
 
     @Test
@@ -138,7 +140,7 @@ public class IntegrationTest {
                 "(Full list of commands - help).\n" +
                 "The command zzz is not active. Connect to the database.\n" +
                 "Enter a command (help - list of commands):\n" +
-                "Good luck!\n", getData());
+                "Good luck!\n", formatOutput(out));
     }
 
     @Test
@@ -154,7 +156,7 @@ public class IntegrationTest {
                 "Enter a command (help - list of commands):\n" +
                 "Disconnect successful.\n" +
                 "Enter a command (help - list of commands):\n" +
-                "Good luck!\n", getData());
+                "Good luck!\n", formatOutput(out));
     }
     @Test
 
@@ -170,13 +172,13 @@ public class IntegrationTest {
                 "Enter a command (help - list of commands):\n" +
                 "The command does not exist: zzz\n" +
                 "Enter a command (help - list of commands):\n" +
-                "Good luck!\n", getData());
+                "Good luck!\n", formatOutput(out));
     }
 
     @Test
     public void testListAfterConnect() {
         in.add(CONNECT_PARAMETERS);
-        in.add("list");
+        in.add("tables");
         in.add("exit");
         Main.main(new String[0]);
         assertEquals("Hello!\n" +
@@ -186,15 +188,15 @@ public class IntegrationTest {
                 "Enter a command (help - list of commands):\n" +
                 "[users]\n" +
                 "Enter a command (help - list of commands):\n" +
-                "Good luck!\n", getData());
+                "Good luck!\n", formatOutput(out));
     }
 
     @Test
     public void testConnectAfterConnect() {
         in.add(CONNECT_PARAMETERS);
-        in.add("list");
+        in.add("tables");
         in.add(CONNECT_PARAMETERS);
-        in.add("list");
+        in.add("tables");
         in.add("exit");
         Main.main(new String[0]);
         assertEquals("Hello!\n" +
@@ -208,7 +210,7 @@ public class IntegrationTest {
                 "Enter a command (help - list of commands):\n" +
                 "[users]\n" +
                 "Enter a command (help - list of commands):\n" +
-                "Good luck!\n", getData());
+                "Good luck!\n", formatOutput(out));
     }
 
     @Test
@@ -222,7 +224,7 @@ public class IntegrationTest {
                 "Failure. Reason: Invalid number of parameters separated by '|', expected 4, but there are: 2\n" +
                 "Try again.\n" +
                 "Enter a command (help - list of commands):\n" +
-                "Good luck!\n", getData());
+                "Good luck!\n", formatOutput(out));
     }
 
     @Test
@@ -250,7 +252,7 @@ public class IntegrationTest {
                 "|id|name|password|\n" +
                 "+--+----+--------+\n" +
                 "Enter a command (help - list of commands):\n" +
-                "Good luck!\n", getData());
+                "Good luck!\n", formatOutput(out));
     }
 
     @Test
@@ -284,7 +286,7 @@ public class IntegrationTest {
                 "|11|Victor|2222    |\n" +
                 "+--+------+--------+\n" +
                 "Enter a command (help - list of commands):\n" +
-                "Good luck!\n", getData());
+                "Good luck!\n", formatOutput(out));
     }
 
     @Test
@@ -303,7 +305,7 @@ public class IntegrationTest {
                 "'create|tableName|column1|value1|...columnN|valueN'. Received 'create|users|id|15|name'.\n" +
                 "Try again.\n" +
                 "Enter a command (help - list of commands):\n" +
-                "Good luck!\n", getData());
+                "Good luck!\n", formatOutput(out));
     }
 
     @Test
@@ -322,7 +324,7 @@ public class IntegrationTest {
                 "your command: clear|zzz|xxx\n" +
                 "Try again.\n" +
                 "Enter a command (help - list of commands):\n" +
-                "Good luck!\n", getData());
+                "Good luck!\n", formatOutput(out));
     }
 
     @Test
@@ -360,7 +362,7 @@ public class IntegrationTest {
                 "|11|Victor|2222    |\n" +
                 "+--+------+--------+\n" +
                 "Enter a command (help - list of commands):\n" +
-                "Good luck!\n", getData());
+                "Good luck!\n", formatOutput(out));
     }
 
     @Test
@@ -400,7 +402,7 @@ public class IntegrationTest {
                 "|11|Victor|2222    |\n" +
                 "+--+------+--------+\n" +
                 "Enter a command (help - list of commands):\n" +
-                "Good luck!\n", getData());
+                "Good luck!\n", formatOutput(out));
     }
 
     @Test
@@ -456,16 +458,6 @@ public class IntegrationTest {
                 "|1 |Bill|777     |\n" +
                 "+--+----+--------+\n" +
                 "Enter a command (help - list of commands):\n" +
-                "Good luck!\n", getData());
-    }
-
-    private String getData() {
-        try {
-            String result = new String(out.toByteArray(), "UTF-8").replaceAll("\r\n", "\n");
-            out.reset();
-            return result;
-        } catch (UnsupportedEncodingException e) {
-            return e.getMessage();
-        }
+                "Good luck!\n", formatOutput(out));
     }
 }

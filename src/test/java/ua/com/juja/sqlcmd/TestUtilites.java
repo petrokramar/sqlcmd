@@ -3,7 +3,7 @@ package ua.com.juja.sqlcmd;
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 
-public class TestUtils {
+public class TestUtilites {
 
     public static String formatOutput(ByteArrayOutputStream out) {
         try {
