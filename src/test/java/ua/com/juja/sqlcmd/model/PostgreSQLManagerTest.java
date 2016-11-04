@@ -24,13 +24,13 @@ public class PostgreSQLManagerTest extends DatabaseManagerTest {
         input.put("id", 1);
         input.put("name", "John");
         input.put("password", "pass");
-        manager.create("users", input);
+        manager.createRecord("users", input);
 
         DataSet inputTwo = new DataSet();
         inputTwo.put("id", 2);
         inputTwo.put("name", "Max");
         inputTwo.put("password", "1234");
-        manager.create("users", inputTwo);
+        manager.createRecord("users", inputTwo);
 
         result = manager.executeQuery("SELECT * FROM users");
         assertEquals(2, result.size());
@@ -90,7 +90,7 @@ public class PostgreSQLManagerTest extends DatabaseManagerTest {
     @Test
     public void testGetSizeWrongTable() {
         try {
-            manager.getSize("wrongTable");
+            manager.getTableSize("wrongTable");
             fail();
         } catch (DatabaseManagerException e) {
             assertEquals("Error getting size of table 'wrongTable'", e.getMessage());
@@ -100,7 +100,7 @@ public class PostgreSQLManagerTest extends DatabaseManagerTest {
     @Test
     public void testClearWrongTable() {
         try {
-            manager.clear("wrongTable");
+            manager.clearTable("wrongTable");
             fail();
         } catch (DatabaseManagerException e) {
             assertEquals("Error deleting data from table 'wrongTable'", e.getMessage());
@@ -123,7 +123,7 @@ public class PostgreSQLManagerTest extends DatabaseManagerTest {
         try {
             DataSet dataSet = new DataSet();
             dataSet.put("field", "value");
-            manager.create("wrongTable", dataSet);
+            manager.createRecord("wrongTable", dataSet);
             fail();
         } catch (DatabaseManagerException e) {
             assertEquals("Error creating record in table 'wrongTable'. Input: {names: [field], values: [value]}",
@@ -137,7 +137,7 @@ public class PostgreSQLManagerTest extends DatabaseManagerTest {
         dataSet.put("field", "value");
         final int id = 1;
         try {
-            manager.update("wrongTable", id, dataSet);
+            manager.updateRecord("wrongTable", id, dataSet);
             fail();
         } catch (DatabaseManagerException e) {
             assertEquals("Error update record in table 'wrongTable' where id = 1, " +
@@ -149,7 +149,7 @@ public class PostgreSQLManagerTest extends DatabaseManagerTest {
     public void testDeleteRecordWrongTable() {
         try {
             final int id = 1;
-            manager.delete("wrongTable", id);
+            manager.deleteRecord("wrongTable", id);
             fail();
         } catch (DatabaseManagerException e) {
             assertEquals("Error deleting data from table 'wrongTable' where id = 1",

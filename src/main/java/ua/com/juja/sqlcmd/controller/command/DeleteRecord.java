@@ -31,7 +31,7 @@ public class DeleteRecord implements Command {
                                 "Your id: %s", data[2]));
             }
             if (manager.existRecord(tableName, "id", data[2])) {
-                manager.delete(tableName, id);
+                manager.deleteRecord(tableName, id);
                 view.write(String.format("Record with id=%d in table '%s' deleted", id, tableName));
             } else {
                 view.write(String.format("Record with id=%d in table '%s' not exist", id, tableName));

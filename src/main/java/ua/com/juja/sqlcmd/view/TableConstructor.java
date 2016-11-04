@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Set;
 
 public class TableConstructor {
-
     private final Set<String> columns;
     private final Table table;
     private final List<DataSet> tableData;

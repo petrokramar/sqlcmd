@@ -16,7 +16,6 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 public class TableDataTest {
-
     private DatabaseManager manager;
     private View view;
     private Command command;

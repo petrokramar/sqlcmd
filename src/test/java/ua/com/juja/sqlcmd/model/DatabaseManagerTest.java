@@ -10,7 +10,6 @@ import java.util.*;
 import static org.junit.Assert.assertEquals;
 
 public abstract class DatabaseManagerTest {
-
     protected DatabaseManager manager;
 
     @Before
@@ -18,7 +17,7 @@ public abstract class DatabaseManagerTest {
         manager = getDatabaseManager();
         manager.connect(PropertyHandler.getDatabaseName(), PropertyHandler.getDatabaseUserName(),
                 PropertyHandler.getDatabaseUserPassword());
-        manager.clear("users");
+        manager.clearTable("users");
     }
 
     protected abstract DatabaseManager getDatabaseManager();
@@ -47,7 +46,7 @@ public abstract class DatabaseManagerTest {
         input.put("id", 1);
         input.put("name", "John");
         input.put("password", "pass");
-        manager.create("users", input);
+        manager.createRecord("users", input);
 
         List<DataSet> users = manager.getTableData("users");
         assertEquals(1, users.size());
@@ -63,12 +62,12 @@ public abstract class DatabaseManagerTest {
         input.put("id", 1);
         input.put("name", "John");
         input.put("password", "pass");
-        manager.create("users", input);
+        manager.createRecord("users", input);
 
         DataSet newValue = new DataSet();
         newValue.put("name", "John2");
         newValue.put("password", "pass2");
-        manager.update("users", 1, newValue);
+        manager.updateRecord("users", 1, newValue);
 
         List<DataSet> users = manager.getTableData("users");
         assertEquals(1, users.size());
@@ -84,9 +83,9 @@ public abstract class DatabaseManagerTest {
         input.put("id", 1);
         input.put("name", "John");
         input.put("password", "pass");
-        manager.create("users", input);
+        manager.createRecord("users", input);
 
-        manager.delete("users", 1);
+        manager.deleteRecord("users", 1);
 
         List<DataSet> users = manager.getTableData("users");
         assertEquals(0, users.size());
@@ -94,27 +93,25 @@ public abstract class DatabaseManagerTest {
 
     @Test
     public void testGetSize() throws SQLException {
-        assertEquals(0, manager.getSize("users"));
+        assertEquals(0, manager.getTableSize("users"));
 
         DataSet input = new DataSet();
         input.put("id", 1);
         input.put("name", "John");
         input.put("password", "pass");
-        manager.create("users", input);
+        manager.createRecord("users", input);
 
         DataSet inputTwo = new DataSet();
         inputTwo.put("id", 2);
         inputTwo.put("name", "Max");
         inputTwo.put("password", "1234");
-        manager.create("users", inputTwo);
+        manager.createRecord("users", inputTwo);
 
-        assertEquals(2, manager.getSize("users"));
+        assertEquals(2, manager.getTableSize("users"));
     }
 
     @Test
     public void testDatabaseManagerIsConnected() {
         assertEquals(true, manager.isConnected());
     }
-
-
 }

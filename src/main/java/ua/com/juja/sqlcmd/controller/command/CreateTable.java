@@ -28,6 +28,16 @@ public class CreateTable implements Command {
         }
     }
 
+    private boolean validate(String command) {
+        String[] data = command.split("\\|");
+        if (data.length != format().split("\\|").length) {
+            throw new IllegalArgumentException(
+                    String.format("Incorrect command format. The correct format: '%s',\n" +
+                            "your command: %s", format(), command));
+        }
+        return true;
+    }
+
     @Override
     public String format() {
         return "createTable|TableName|query text...";
@@ -38,15 +48,5 @@ public class CreateTable implements Command {
         return "create table TableName\n" +
                 "\t\tExample: createTable|tableName|id SERIAL PRIMARY KEY, name varchar(45) NOT NULL,\n" +
                 "\t\tpassword varchar(45) NOT NULL";
-    }
-
-    private boolean validate(String command) {
-        String[] data = command.split("\\|");
-        if (data.length != format().split("\\|").length) {
-            throw new IllegalArgumentException(
-                    String.format("Incorrect command format. The correct format: '%s',\n" +
-                            "your command: %s", format(), command));
-        }
-        return true;
     }
 }

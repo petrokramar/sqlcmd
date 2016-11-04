@@ -22,9 +22,19 @@ public class ClearTable implements Command {
         if (validate(command) && confirm(command)) {
             String[] data = command.split("\\|");
             String tableName = data[1];
-            manager.clear(tableName);
+            manager.clearTable(tableName);
             view.write(String.format("Table '%s' is cleared", tableName));
         }
+    }
+
+    private boolean validate(String command) {
+        String[] data = command.split("\\|");
+        if (data.length != format().split("\\|").length) {
+            throw new IllegalArgumentException(
+                    String.format("Incorrect command format. The correct format: '%s',\n" +
+                            "your command: %s", format(), command));
+        }
+        return true;
     }
 
     private boolean confirm(String command) {
@@ -37,16 +47,6 @@ public class ClearTable implements Command {
             view.write(String.format("Clearing table '%s' cancelled.", tableName));
             return false;
         }
-    }
-
-    private boolean validate(String command) {
-        String[] data = command.split("\\|");
-        if (data.length != format().split("\\|").length) {
-            throw new IllegalArgumentException(
-                    String.format("Incorrect command format. The correct format: '%s',\n" +
-                            "your command: %s", format(), command));
-        }
-        return true;
     }
 
     @Override

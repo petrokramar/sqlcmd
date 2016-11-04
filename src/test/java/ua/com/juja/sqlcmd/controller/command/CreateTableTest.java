@@ -36,6 +36,5 @@ public class CreateTableTest {
             assertEquals("Incorrect command format. The correct format: 'createTable|TableName|query text...',\n" +
                     "your command: createTable|usersTest|name varchar(45)|111", e.getMessage());
         }
-
     }
 }

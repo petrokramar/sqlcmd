@@ -38,7 +38,7 @@ public class UpdateRecord implements Command {
                 dataSet.put(columnName, value);
             }
             if (manager.existRecord(tableName, "id", data[2])) {
-                manager.update(tableName, id, dataSet);
+                manager.updateRecord(tableName, id, dataSet);
                 view.write(String.format("Record with id=%d in table '%s' updated with %s", id, tableName, dataSet));
             } else {
                 view.write(String.format("Record with id=%d in table '%s' not exist", id, tableName));

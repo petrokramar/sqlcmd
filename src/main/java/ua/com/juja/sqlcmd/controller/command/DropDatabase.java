@@ -33,16 +33,6 @@ public class DropDatabase implements Command {
         }
     }
 
-    @Override
-    public String format() {
-        return "dropDatabase|DatabaseName";
-    }
-
-    @Override
-    public String description() {
-        return "drop database DatabaseName";
-    }
-
     private boolean validate(String command) {
         String[] data = command.split("\\|");
         if (data.length != format().split("\\|").length) {
@@ -68,5 +58,15 @@ public class DropDatabase implements Command {
     private boolean databaseExist(String databaseName) {
         Set<String> databases = manager.getDatabasesNames();
         return databases.contains(databaseName);
+    }
+
+    @Override
+    public String format() {
+        return "dropDatabase|DatabaseName";
+    }
+
+    @Override
+    public String description() {
+        return "drop database DatabaseName";
     }
 }

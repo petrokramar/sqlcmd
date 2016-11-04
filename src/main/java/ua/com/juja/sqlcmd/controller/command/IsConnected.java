@@ -32,5 +32,4 @@ public class IsConnected implements Command {
     public String description() {
         return "";
     }
-
 }

@@ -68,5 +68,4 @@ public class UpdateRecordTest {
     public void testCanProcessWrong() {
         assertFalse(command.canProcess("list"));
     }
-
 }

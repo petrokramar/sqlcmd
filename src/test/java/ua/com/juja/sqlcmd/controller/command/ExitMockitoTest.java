@@ -7,7 +7,6 @@ import ua.com.juja.sqlcmd.view.View;
 import static org.junit.Assert.*;
 
 public class ExitMockitoTest {
-
     private final View view = Mockito.mock(View.class);
 
     @Test

@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class PropertyHandler {
-
     private static final String databaseUrl;
     private static final String databaseName;
     private static final String databaseUserName;
@@ -44,5 +43,4 @@ public class PropertyHandler {
     public static String getDatabaseUserPassword() {
         return databaseUserPassword;
     }
-
 }

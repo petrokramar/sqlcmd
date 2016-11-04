@@ -29,7 +29,7 @@ public class CreateRecord implements Command {
                 String value = data[i + 1];
                 dataSet.put(columnName, value);
             }
-            manager.create(tableName, dataSet);
+            manager.createRecord(tableName, dataSet);
             view.write(String.format("Record %s added to the table '%s'", dataSet, tableName));
         }
     }

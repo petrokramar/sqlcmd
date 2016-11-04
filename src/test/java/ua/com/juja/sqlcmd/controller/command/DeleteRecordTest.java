@@ -67,5 +67,4 @@ public class DeleteRecordTest {
     public void testCanProcessWrong() {
         assertFalse(command.canProcess("delet|users|33"));
     }
-
 }

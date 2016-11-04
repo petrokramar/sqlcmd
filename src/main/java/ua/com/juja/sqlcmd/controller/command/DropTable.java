@@ -27,16 +27,6 @@ public class DropTable implements Command {
         }
     }
 
-    @Override
-    public String format() {
-        return "dropTable|TableName";
-    }
-
-    @Override
-    public String description() {
-        return "drop table TableName";
-    }
-
     private boolean validate(String command) {
         String[] data = command.split("\\|");
         if (data.length != format().split("\\|").length) {
@@ -57,5 +47,15 @@ public class DropTable implements Command {
             view.write(String.format("Drop table '%s' cancelled.", tableName));
             return false;
         }
+    }
+
+    @Override
+    public String format() {
+        return "dropTable|TableName";
+    }
+
+    @Override
+    public String description() {
+        return "drop table TableName";
     }
 }

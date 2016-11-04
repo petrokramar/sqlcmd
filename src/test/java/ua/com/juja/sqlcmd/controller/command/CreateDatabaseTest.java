@@ -35,6 +35,5 @@ public class CreateDatabaseTest {
             assertEquals("Incorrect command format. The correct format: 'createDatabase|DatabaseName',\n" +
                     "your command: createDatabase|testDatabase|111", e.getMessage());
         }
-
     }
 }

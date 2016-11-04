@@ -4,7 +4,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 
 public class TestUtilites {
-
     public static String formatOutput(ByteArrayOutputStream out) {
         try {
             String result = new String(out.toByteArray(), "UTF-8").replaceAll("\r\n", "\n");
@@ -14,6 +13,4 @@ public class TestUtilites {
             return e.getMessage();
         }
     }
-
-
 }

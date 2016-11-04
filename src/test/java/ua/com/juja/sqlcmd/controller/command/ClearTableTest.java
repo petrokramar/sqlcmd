@@ -9,7 +9,6 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 public class ClearTableTest {
-
     private DatabaseManager manager;
     private View view;
     private Command command;
@@ -52,5 +51,4 @@ public class ClearTableTest {
     public void testCanProcessClearWithoutParameters() {
         assertFalse(command.canProcess("clear"));
     }
-
 }

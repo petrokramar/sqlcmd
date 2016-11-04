@@ -20,23 +20,23 @@ public interface DatabaseManager {
 
     void dropTable(String tableName);
 
+    Set<String> getTableColumns(String tableName);
+
     List<DataSet> getTableData(String tableName);
 
-    int getSize(String tableName);
+    int getTableSize(String tableName);
 
     Set<String> getTableNames();
 
-    void clear(String tableName);
+    void clearTable(String tableName);
 
     boolean existRecord(String tableName, String field, String parameter);
 
-    void create(String tableName, DataSet input);
+    void createRecord(String tableName, DataSet input);
 
-    void update(String tableName, int id, DataSet input);
+    void updateRecord(String tableName, int id, DataSet input);
 
-    void delete(String tableName, int id);
-
-    Set<String> getTableColumns(String tableName);
+    void deleteRecord(String tableName, int id);
 
     List<DataSet> executeQuery(String query);
 }

@@ -4,7 +4,6 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class DataSetTest {
-
     @Test
     public void testGet(){
         DataSet data = new DataSet();

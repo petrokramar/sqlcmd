@@ -33,16 +33,6 @@ public class CreateDatabase implements Command {
         }
     }
 
-    @Override
-    public String format() {
-        return "createDatabase|DatabaseName";
-    }
-
-    @Override
-    public String description() {
-        return "create database DatabaseName";
-    }
-
     private boolean validate(String command) {
         String[] data = command.split("\\|");
         if (data.length != format().split("\\|").length) {
@@ -56,6 +46,16 @@ public class CreateDatabase implements Command {
     private boolean databaseExist(String databaseName) {
         Set<String> databases = manager.getDatabasesNames();
         return databases.contains(databaseName);
+    }
+
+    @Override
+    public String format() {
+        return "createDatabase|DatabaseName";
+    }
+
+    @Override
+    public String description() {
+        return "create database DatabaseName";
     }
 }
 

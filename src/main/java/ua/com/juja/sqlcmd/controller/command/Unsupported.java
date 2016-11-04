@@ -9,7 +9,6 @@ public class Unsupported implements Command {
         this.view = view;
     }
 
-
     @Override
     public boolean canProcess(String command) {
         return true;

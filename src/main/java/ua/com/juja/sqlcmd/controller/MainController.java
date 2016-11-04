@@ -5,7 +5,6 @@ import ua.com.juja.sqlcmd.model.DatabaseManager;
 import ua.com.juja.sqlcmd.view.View;
 
 public class MainController {
-
     private final Command[] commands;
     private final View view;
 
@@ -75,5 +74,4 @@ public class MainController {
         view.write(String.format("Failure. Reason: %s", message));
         view.write("Try again.");
     }
-
 }
