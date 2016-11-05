@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import ua.com.juja.sqlcmd.Main;
-import ua.com.juja.sqlcmd.controller.PropertyHandler;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -12,13 +11,12 @@ import java.io.PrintStream;
 
 import static org.junit.Assert.assertEquals;
 import static ua.com.juja.sqlcmd.TestUtilites.formatOutput;
+import static ua.com.juja.sqlcmd.TestUtilites.getConnectParameters;
 
 public class TableIntegrationTest {
     private static ConfigurableInputStream in;
     private static ByteArrayOutputStream out;
-    private static final String CONNECT_PARAMETERS =
-            String.format("connect|%s|%s|%s", PropertyHandler.getDatabaseName(),
-                    PropertyHandler.getDatabaseUserName(), PropertyHandler.getDatabaseUserPassword());
+    private static String connectParameters;
 
     @BeforeClass
     public static void setup() {
@@ -26,6 +24,7 @@ public class TableIntegrationTest {
         out = new ByteArrayOutputStream();
         System.setIn(in);
         System.setOut(new PrintStream(out));
+        connectParameters = getConnectParameters();
     }
 
     @Before
@@ -35,7 +34,7 @@ public class TableIntegrationTest {
 
     @Test
     public void testCreateAndDropTable() {
-        in.add(CONNECT_PARAMETERS);
+        in.add(connectParameters);
         in.add("dropTable|table1");
         in.add("yes");
         in.add("createTable|table1|zzz");
@@ -61,9 +60,11 @@ public class TableIntegrationTest {
                 "Failure. Reason: Error creating table 'table1'. Query: zzz\n" +
                 "Try again.\n" +
                 "Enter a command (help - list of commands):\n" +
-                "Table 'table1' with query id SERIAL PRIMARY KEY, name varchar(45) NOT NULL, password varchar(45) NOT NULL created successfully \n" +
+                "Table 'table1' with query id SERIAL PRIMARY KEY, name varchar(45) NOT NULL, " +
+                "password varchar(45) NOT NULL created successfully \n" +
                 "Enter a command (help - list of commands):\n" +
-                "Failure. Reason: Error creating table 'table1'. Query: id SERIAL PRIMARY KEY, name varchar(45) NOT NULL, password varchar(45) NOT NULL\n" +
+                "Failure. Reason: Error creating table 'table1'. Query: id SERIAL PRIMARY KEY, " +
+                "name varchar(45) NOT NULL, password varchar(45) NOT NULL\n" +
                 "Try again.\n" +
                 "Enter a command (help - list of commands):\n" +
                 "[table1, users]\n" +

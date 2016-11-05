@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import ua.com.juja.sqlcmd.Main;
-import ua.com.juja.sqlcmd.controller.PropertyHandler;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -12,14 +11,12 @@ import java.io.PrintStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static ua.com.juja.sqlcmd.TestUtilites.formatOutput;
+import static ua.com.juja.sqlcmd.TestUtilites.*;
 
 public class DatabaseIntegrationTest {
     private static ConfigurableInputStream in;
     private static ByteArrayOutputStream out;
-    private static final String CONNECT_PARAMETERS =
-            String.format("connect|%s|%s|%s", PropertyHandler.getDatabaseName(),
-                    PropertyHandler.getDatabaseUserName(), PropertyHandler.getDatabaseUserPassword());
+    private static String connectParameters;
 
     @BeforeClass
     public static void setup() {
@@ -27,6 +24,7 @@ public class DatabaseIntegrationTest {
         out = new ByteArrayOutputStream();
         System.setIn(in);
         System.setOut(new PrintStream(out));
+        connectParameters = getConnectParameters();
     }
 
     @Before
@@ -36,7 +34,7 @@ public class DatabaseIntegrationTest {
 
     @Test
     public void testCreateAndDropDatabase() {
-        in.add(CONNECT_PARAMETERS);
+        in.add(connectParameters);
         in.add("dropDatabase|db1");
         in.add("yes");
         in.add("dropDatabase|db2");
@@ -90,7 +88,7 @@ public class DatabaseIntegrationTest {
 
     @Test
     public void testDatabasesList() {
-        in.add(CONNECT_PARAMETERS);
+        in.add(connectParameters);
         in.add("databases");
         in.add("exit");
         Main.main(new String[0]);

@@ -6,10 +6,11 @@ import java.sql.*;
 import java.util.*;
 
 public class PostgreSQLManager implements DatabaseManager {
+    private final String DATABASE_JDBC_DRIVER = "jdbc:postgresql://";
     private Connection connection;
 
     @Override
-    public void connect(String database, String userName, String password) {
+    public void connect(String databaseName, String userName, String password) {
         try {
             Class.forName("org.postgresql.Driver");
         } catch (ClassNotFoundException e) {
@@ -19,13 +20,19 @@ public class PostgreSQLManager implements DatabaseManager {
             if (connection != null) {
                 connection.close();
             }
-            connection = DriverManager.getConnection(
-                    PropertyHandler.getDatabaseUrl() + database, userName, password);
+            connection = DriverManager.getConnection(getJdbcUrl() + databaseName, userName, password);
         } catch (SQLException e) {
             connection = null;
             throw new DatabaseManagerException(
-                    String.format("Failed to connect to database: %s, user: %s", database, userName), e);
+                    String.format("Failed to connect to database: %s, user: %s", databaseName, userName), e);
         }
+    }
+
+    private String getJdbcUrl(){
+        PropertyHandler settings = PropertyHandler.getInstance();
+        return String.format("%s%s:%s/", DATABASE_JDBC_DRIVER,
+                settings.getProperty("database.server.name"),
+                settings.getProperty("database.port"));
     }
 
     @Override

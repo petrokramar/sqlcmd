@@ -15,8 +15,9 @@ public abstract class DatabaseManagerTest {
     @Before
     public void setup() throws SQLException {
         manager = getDatabaseManager();
-        manager.connect(PropertyHandler.getDatabaseName(), PropertyHandler.getDatabaseUserName(),
-                PropertyHandler.getDatabaseUserPassword());
+        final PropertyHandler settings = PropertyHandler.getInstance();
+        manager.connect(settings.getProperty("database.name"), settings.getProperty("database.user.name"),
+                settings.getProperty("database.user.password"));
         manager.clearTable("users");
     }
 

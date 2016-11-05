@@ -4,21 +4,18 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import ua.com.juja.sqlcmd.Main;
-import ua.com.juja.sqlcmd.controller.PropertyHandler;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 
 import static org.junit.Assert.assertEquals;
-import static ua.com.juja.sqlcmd.TestUtilites.formatOutput;
+import static ua.com.juja.sqlcmd.TestUtilites.*;
 
 public class IntegrationTest {
     private static ConfigurableInputStream in;
     private static ByteArrayOutputStream out;
-    private static final String CONNECT_PARAMETERS =
-            String.format("connect|%s|%s|%s", PropertyHandler.getDatabaseName(),
-                    PropertyHandler.getDatabaseUserName(), PropertyHandler.getDatabaseUserPassword());
+    private static String connectParameters;
 
     @BeforeClass
     public static void setup() {
@@ -26,6 +23,7 @@ public class IntegrationTest {
         out = new ByteArrayOutputStream();
         System.setIn(in);
         System.setOut(new PrintStream(out));
+        connectParameters = getConnectParameters();
     }
 
     @Before
@@ -145,7 +143,7 @@ public class IntegrationTest {
 
     @Test
     public void testDisconnect() {
-        in.add(CONNECT_PARAMETERS);
+        in.add(connectParameters);
         in.add("disconnect");
         in.add("exit");
         Main.main(new String[0]);
@@ -161,7 +159,7 @@ public class IntegrationTest {
     @Test
 
     public void testUnsupportedAfterConnect() {
-        in.add(CONNECT_PARAMETERS);
+        in.add(connectParameters);
         in.add("zzz");
         in.add("exit");
         Main.main(new String[0]);
@@ -177,7 +175,7 @@ public class IntegrationTest {
 
     @Test
     public void testListAfterConnect() {
-        in.add(CONNECT_PARAMETERS);
+        in.add(connectParameters);
         in.add("tables");
         in.add("exit");
         Main.main(new String[0]);
@@ -193,9 +191,9 @@ public class IntegrationTest {
 
     @Test
     public void testConnectAfterConnect() {
-        in.add(CONNECT_PARAMETERS);
+        in.add(connectParameters);
         in.add("tables");
-        in.add(CONNECT_PARAMETERS);
+        in.add(connectParameters);
         in.add("tables");
         in.add("exit");
         Main.main(new String[0]);
@@ -229,7 +227,7 @@ public class IntegrationTest {
 
     @Test
     public void testFindUsersAfterConnect() {
-        in.add(CONNECT_PARAMETERS);
+        in.add(connectParameters);
         in.add("clear|users");
         in.add("ye");
         in.add("clear|users");
@@ -257,7 +255,7 @@ public class IntegrationTest {
 
     @Test
     public void testFindAfterConnectWithData() {
-        in.add(CONNECT_PARAMETERS);
+        in.add(connectParameters);
         in.add("clear|users");
         in.add("yes");
         in.add("create|users|id|10|name|Peter|password|1111");
@@ -291,7 +289,7 @@ public class IntegrationTest {
 
     @Test
     public void testCreateWithError() {
-        in.add(CONNECT_PARAMETERS);
+        in.add(connectParameters);
         in.add("create|users|id|15|name");
         in.add("exit");
         Main.main(new String[0]);
@@ -310,7 +308,7 @@ public class IntegrationTest {
 
     @Test
     public void testClearWithError() {
-        in.add(CONNECT_PARAMETERS);
+        in.add(connectParameters);
         in.add("clear|zzz|xxx");
         in.add("exit");
         Main.main(new String[0]);
@@ -329,7 +327,7 @@ public class IntegrationTest {
 
     @Test
     public void testDelete() {
-        in.add(CONNECT_PARAMETERS);
+        in.add(connectParameters);
         in.add("clear|users");
         in.add("yes");
         in.add("create|users|id|10|name|Peter|password|1111");
@@ -367,7 +365,7 @@ public class IntegrationTest {
 
     @Test
     public void testUpdate() {
-        in.add(CONNECT_PARAMETERS);
+        in.add(connectParameters);
         in.add("clear|users");
         in.add("yes");
         in.add("create|users|id|10|name|Peter|password|1111");
@@ -407,7 +405,7 @@ public class IntegrationTest {
 
     @Test
     public void testQuery() {
-        in.add(CONNECT_PARAMETERS);
+        in.add(connectParameters);
         in.add("clear|users");
         in.add("yes");
         in.add("query|INSERT INTO users (id, name, password) VALUES (1, 'John', '123')");
