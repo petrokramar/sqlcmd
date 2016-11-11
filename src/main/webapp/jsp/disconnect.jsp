@@ -5,7 +5,7 @@
     <title>SQLCmd</title>
 </head>
 <body>
-Help<br>
+Disconnect<br>
 <%@include file="footer.jsp" %>
 </body>
 </html>

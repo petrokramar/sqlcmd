@@ -5,7 +5,7 @@
     <title>SQLCmd</title>
 </head>
 <body>
-Help<br>
+Table names<br>
 <%@include file="footer.jsp" %>
 </body>
 </html>
