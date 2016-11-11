@@ -5,8 +5,6 @@
     <title>SQLCmd</title>
 </head>
 <body>
-<c:forEach items="${commands}" var="command">
-    <a href="${command}">${command}</a><br>
-</c:forEach>
+Help
 </body>
 </html>
