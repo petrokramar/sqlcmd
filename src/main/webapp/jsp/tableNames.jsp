@@ -5,7 +5,15 @@
     <title>SQLCmd</title>
 </head>
 <body>
-Table names<br>
+Tables<br>
+<table border="1">
+    <c:forEach items="${tables}" var="table">
+        <tr>
+            <td><a href="table?name=${table}">${table}</a><br></td>
+            <td><a href="droptable?name=${table}">drop</a><br></td>
+        </tr>
+    </c:forEach>
+</table>
 <%@include file="footer.jsp" %>
 </body>
 </html>

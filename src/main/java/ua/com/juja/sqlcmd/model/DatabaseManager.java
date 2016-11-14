@@ -14,7 +14,7 @@ public interface DatabaseManager {
 
     void dropDatabase(String databaseName);
 
-    Set<String> getDatabasesNames();
+    Set<String> getDatabaseNames();
 
     void createTable(String tableName, String query);
 
@@ -31,6 +31,8 @@ public interface DatabaseManager {
     void clearTable(String tableName);
 
     boolean existRecord(String tableName, String field, String parameter);
+
+    DataSet getRecordData(String tableName, int id);
 
     void createRecord(String tableName, DataSet input);
 

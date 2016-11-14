@@ -74,7 +74,7 @@ public class PostgreSQLManager implements DatabaseManager {
     }
 
     @Override
-    public Set<String> getDatabasesNames() {
+    public Set<String> getDatabaseNames() {
         Set<String> databases = new LinkedHashSet<>();
         try (Statement statement = connection.createStatement();
              ResultSet rs = statement.executeQuery(
@@ -185,6 +185,27 @@ public class PostgreSQLManager implements DatabaseManager {
                     String.format("Error getting record from table '%s' where %s = %s",
                             tableName, field, parameter), e);
         }
+    }
+
+    @Override
+    //TODO can be id string?
+    public DataSet getRecordData(String tableName, int id) {
+        DataSet dataSet = new DataSet();
+        try (Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(String.format(
+                     "SELECT * FROM %s WHERE id = %d", tableName, id))) {
+            ResultSetMetaData rsmd = rs.getMetaData();
+            if (rs.next()) {
+                for (int index = 1; index <= rsmd.getColumnCount(); index++) {
+                    dataSet.put(rsmd.getColumnName(index), rs.getObject(index));
+                }
+            }
+        } catch (SQLException e) {
+            throw new DatabaseManagerException(
+                    String.format("Error getting record from table '%s' where id = %s",
+                            tableName, id), e);
+        }
+        return dataSet;
     }
 
     @Override

@@ -6,11 +6,15 @@ import java.util.List;
 import java.util.Map;
 
 public class DataSet {
-
     private Map<String, Object> data = new LinkedHashMap<>();
 
     public void put(String name, Object value) {
         data.put(name, value);
+    }
+
+    //TODO безопасно ли возвращать коллекцию
+    public Map<String, Object> getData() {
+        return data;
     }
 
     public List<Object> getValues() {

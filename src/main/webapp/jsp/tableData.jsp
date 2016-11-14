@@ -5,7 +5,26 @@
     <title>SQLCmd</title>
 </head>
 <body>
-Table data<br>
+<h1>Table: ${table}<br></h1>
+<table border="1">
+    <tr>
+        <c:forEach items="${columns}" var="column">
+            <td>${column}<br></td>
+        </c:forEach>
+        <td></td>
+        <td></td>
+        <c:forEach items="${tableData}" var="row">
+            <tr>
+                <c:forEach items="${row}" var="column">
+                    <td>${column}</td>
+                </c:forEach>
+                <td><a href="updateecord?name=${column}">update</a><br></td>
+                <td><a href="deleterecord?name=${column}">delete</a><br></td>
+            </tr>
+        </c:forEach>
+    </tr>
+</table>
+<td><a href="createrecord?table=${table}">Create record</a><br></td>
 <%@include file="footer.jsp" %>
 </body>
 </html>

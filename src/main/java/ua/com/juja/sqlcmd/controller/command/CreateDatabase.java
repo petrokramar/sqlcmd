@@ -44,7 +44,7 @@ public class CreateDatabase implements Command {
     }
 
     private boolean databaseExist(String databaseName) {
-        Set<String> databases = manager.getDatabasesNames();
+        Set<String> databases = manager.getDatabaseNames();
         return databases.contains(databaseName);
     }
 
