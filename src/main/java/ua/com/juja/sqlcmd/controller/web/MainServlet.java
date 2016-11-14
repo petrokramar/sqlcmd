@@ -36,7 +36,6 @@ public class MainServlet extends HttpServlet {
                 req.setAttribute("databases", databases);
                 req.getRequestDispatcher("jsp/databaseNames.jsp").forward(req, resp);
             } else if (action.startsWith("/tables")) {
-                String tableName = (String) req.getParameter("name");
                 manager.connect("sqlcmd", "postgres", "123456");
                 Set<String> tables = manager.getTableNames();
                 req.setAttribute("tables", tables);
@@ -63,16 +62,21 @@ public class MainServlet extends HttpServlet {
                 String tableName = (String) req.getParameter("table");
                 manager.connect("sqlcmd", "postgres", "123456");
                 Set<String> columns = manager.getTableColumns(tableName);
+                columns.remove("id");
                 req.setAttribute("table", tableName);
                 req.setAttribute("columns", columns);
                 req.getRequestDispatcher("jsp/createRecord.jsp").forward(req, resp);
             } else if (action.startsWith("/deleterecord")) {
                 String tableName = (String) req.getParameter("table");
-                int id = Integer.getInteger(req.getParameter("id"));
+                int id = Integer.parseInt(req.getParameter("id"));
                 manager.connect("sqlcmd", "postgres", "123456");
 //                Set<String> columns = manager.getTableColumns(tableName);
                 DataSet set = manager.getRecordData(tableName, id);
-                Map<String, Object> record = set.getData();
+                Map<String, Object> data = set.getData();
+                Map<String, String> record = new TreeMap<>();
+                for (Map.Entry<String, Object> entry : data.entrySet()) {
+                    record.put(entry.getKey(), entry.getValue().toString());
+                }
 //                List<List<String>> tableRecord = new ArrayList<>();
 //                for (Map.Entry<String, Object> entry : data.entrySet())  {
 //                    List<String> field = new ArrayList<>();

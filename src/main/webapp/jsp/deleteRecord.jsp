@@ -17,6 +17,10 @@ Table '${table}'. Delete record.<br>
                 <td>${entry.value}</td>
             </tr>
         </c:forEach>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Delete"></td>
+        </tr>
     </table>
 </form>
 <%@include file="footer.jsp" %>
