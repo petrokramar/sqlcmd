@@ -1,7 +1,3 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<h1>JuJa SQLcmd</h1><br>
 <br>
-<br>
-<br>
-<a href="menu">Menu</a><br>
-<a href="help">Help</a><br>
-Copyright JuJa 2016

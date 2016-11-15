@@ -5,22 +5,23 @@
     <title>SQLCmd</title>
 </head>
 <body>
-Table '${table}'. New record.<br>
-<form action="createrecord" method="post">
-    <input type="hidden" name = "tableName" value="${table}">
-    <table>
-        <c:forEach items="${columns}" var="column">
+    <%@include file="header.jsp" %>
+    Table '${table}'. New record.<br>
+    <form action="createrecord" method="post">
+        <input type="hidden" name = "tableName" value="${table}">
+        <table>
+            <c:forEach items="${columns}" var="column">
+                <tr>
+                    <td>${column}</td>
+                    <td><input type="text" name="${column}"></td>
+                </tr>
+            </c:forEach>
             <tr>
-                <td>${column}</td>
-                <td><input type="text" name="${column}"></td>
+                <td></td>
+                <td><input type="submit" value="Create"></td>
             </tr>
-        </c:forEach>
-        <tr>
-            <td></td>
-            <td><input type="submit" value="Create"></td>
-        </tr>
-    </table>
-</form>
+        </table>
+    </form>
 <%@include file="footer.jsp" %>
 </body>
 </html>

@@ -5,6 +5,7 @@
     <title>SQLCmd</title>
 </head>
 <body>
+<%@include file="header.jsp" %>
 <h1>Create database</h1><br>
 <form action="createdatabase" method="post">
     <table>

@@ -5,6 +5,7 @@
     <title>SQLCmd</title>
 </head>
 <body>
+<%@include file="header.jsp" %>
 Tables<br>
 <table border="1">
     <c:forEach items="${tables}" var="table">
@@ -14,6 +15,7 @@ Tables<br>
         </tr>
     </c:forEach>
 </table>
+<a href="databases">Database list</a><br>
 <%@include file="footer.jsp" %>
 </body>
 </html>

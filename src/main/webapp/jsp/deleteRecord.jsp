@@ -5,6 +5,7 @@
     <title>SQLCmd</title>
 </head>
 <body>
+<%@include file="header.jsp" %>
 <h1>Table '${table}'. Delete record.<br></h1>
 <form action="deleterecord" method="post">
     <input type="hidden" name = "tableName" value="${table}">

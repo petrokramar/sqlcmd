@@ -6,6 +6,17 @@
 
     <display-name>SQLCmd</display-name>
 
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>/WEB-INF/application-context.xml</param-value>
+    </context-param>
+
+    <listener>
+        <listener-class>
+            org.springframework.web.context.ContextLoaderListener
+        </listener-class>
+    </listener>
+
     <servlet>
         <servlet-name>MainServlet</servlet-name>
         <servlet-class>ua.com.juja.sqlcmd.controller.web.MainServlet</servlet-class>

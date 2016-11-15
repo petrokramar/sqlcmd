@@ -1,9 +1,10 @@
 package ua.com.juja.sqlcmd.controller.web;
 
-import ua.com.juja.sqlcmd.model.DataSet;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import ua.com.juja.sqlcmd.service.Service;
-import ua.com.juja.sqlcmd.service.ServiceImpl;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,13 +13,16 @@ import java.io.IOException;
 import java.util.*;
 
 public class MainServlet extends HttpServlet {
+
+    @Autowired
     private Service service;
 
     @Override
-    public void init() throws ServletException {
-        super.init();
-        service = new ServiceImpl();
-    };
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
+                config.getServletContext());
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -30,8 +34,13 @@ public class MainServlet extends HttpServlet {
 
 
             } else if (action.startsWith("/databases")) {
+                if (!service.isConnected()) {
+                    req.getRequestDispatcher("jsp/connect.jsp").forward(req, resp);
+                }
+                String currentDatabase = service.currentDatabase();
                 Set<String> databases= service.getDatabaseNames();
                 req.setAttribute("databases", databases);
+                req.setAttribute("current", currentDatabase);
                 req.getRequestDispatcher("jsp/databaseNames.jsp").forward(req, resp);
 
             } else if (action.startsWith("/createdatabase")) {
@@ -98,6 +107,9 @@ public class MainServlet extends HttpServlet {
             } else if (action.startsWith("/connect")) {
                 req.getRequestDispatcher("jsp/connect.jsp").forward(req, resp);
 
+            } else if (action.startsWith("/cur")) {
+                throw new RuntimeException(service.currentDatabase());
+
             } else {
                 req.getRequestDispatcher("jsp/menu.jsp").forward(req, resp);
             }
@@ -109,40 +121,45 @@ public class MainServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String action = getAction(req);
+        try{
+            String action = getAction(req);
 
-        if (action.startsWith("/connect")) {
-            String databaseName = req.getParameter("dbname");
-            String userName = req.getParameter("username");
-            String password = req.getParameter("password");
-            service.connect(databaseName, userName, password);
+            if (action.startsWith("/connect")) {
+                String databaseName = req.getParameter("dbname");
+                String userName = req.getParameter("username");
+                String password = req.getParameter("password");
+                service.connect(databaseName, userName, password);
+                resp.sendRedirect(resp.encodeRedirectURL("databases"));
 
-        } else if (action.startsWith("/createdatabase")) {
-            String databaseName = req.getParameter("database");
-            service.createDatabase(databaseName);
-            resp.sendRedirect(resp.encodeRedirectURL("databases"));
-        } else if (action.startsWith("/dropdatabase")) {
-            String databaseName = req.getParameter("database");
-            service.dropDatabase(databaseName);
-            resp.sendRedirect(resp.encodeRedirectURL("databases"));
+            } else if (action.startsWith("/createdatabase")) {
+                String databaseName = req.getParameter("database");
+                service.createDatabase(databaseName);
+                resp.sendRedirect(resp.encodeRedirectURL("databases"));
+            } else if (action.startsWith("/dropdatabase")) {
+                String databaseName = req.getParameter("database");
+                service.dropDatabase(databaseName);
+                resp.sendRedirect(resp.encodeRedirectURL("databases"));
 
-        } else if (action.startsWith("/createrecord")) {
-            Map<String, String[]> parameters = req.getParameterMap();
-            String tableName = req.getParameter("tableName");
-            service.createRecord(tableName, parameters);
-            resp.sendRedirect(resp.encodeRedirectURL("table?name=" + tableName));
-        } else if (action.startsWith("/deleterecord")) {
-            String tableName = req.getParameter("tableName");
-            int id = Integer.parseInt(req.getParameter("id"));
-            service.deleteRecord(tableName, id);
-            resp.sendRedirect(resp.encodeRedirectURL("table?name=" + tableName));
-        } else if (action.startsWith("/updaterecord")) {
-            String tableName = req.getParameter("tableName");
-            int id = Integer.parseInt(req.getParameter("id"));;
-            Map<String, String[]> parameters = req.getParameterMap();
-            service.updateRecord(tableName, id, parameters);
-            resp.sendRedirect(resp.encodeRedirectURL("table?name=" + tableName));
-
+            } else if (action.startsWith("/createrecord")) {
+                Map<String, String[]> parameters = req.getParameterMap();
+                String tableName = req.getParameter("tableName");
+                service.createRecord(tableName, parameters);
+                resp.sendRedirect(resp.encodeRedirectURL("table?name=" + tableName));
+            } else if (action.startsWith("/deleterecord")) {
+                String tableName = req.getParameter("tableName");
+                int id = Integer.parseInt(req.getParameter("id"));
+                service.deleteRecord(tableName, id);
+                resp.sendRedirect(resp.encodeRedirectURL("table?name=" + tableName));
+            } else if (action.startsWith("/updaterecord")) {
+                String tableName = req.getParameter("tableName");
+                int id = Integer.parseInt(req.getParameter("id"));;
+                Map<String, String[]> parameters = req.getParameterMap();
+                service.updateRecord(tableName, id, parameters);
+                resp.sendRedirect(resp.encodeRedirectURL("table?name=" + tableName));
+            }
+        } catch (Exception e) {
+            req.setAttribute("message", e.getMessage());
+            req.getRequestDispatcher("jsp/error.jsp").forward(req, resp);
         }
     }
 

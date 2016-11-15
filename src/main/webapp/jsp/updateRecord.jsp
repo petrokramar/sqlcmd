@@ -5,6 +5,7 @@
     <title>SQLCmd</title>
 </head>
 <body>
+<%@include file="header.jsp" %>
 <h1>Table '${table}'. Update record.</h1><br>
 <form action="updaterecord" method="post">
     <input type="hidden" name = "tableName" value="${table}">

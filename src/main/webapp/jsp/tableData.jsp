@@ -5,6 +5,7 @@
     <title>SQLCmd</title>
 </head>
 <body>
+<%@include file="header.jsp" %>
 <h1>Table: ${table}<br></h1>
 <table border="1">
     <tr>

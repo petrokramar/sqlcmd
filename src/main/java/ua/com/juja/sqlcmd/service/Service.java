@@ -10,6 +10,8 @@ import java.util.Set;
 public interface Service {
     void connect(String databaseName, String userName, String password);
 
+    boolean isConnected();
+    String currentDatabase();
     Set<String> getDatabaseNames();
     void createDatabase(String databaseName);
     void dropDatabase(String databaseName);

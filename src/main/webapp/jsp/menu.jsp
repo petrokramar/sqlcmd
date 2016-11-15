@@ -5,6 +5,7 @@
     <title>SQLCmd</title>
 </head>
 <body>
+<%@include file="header.jsp" %>
 <%--<a href="jsp/clearTable.jsp">Clear table</a><br>--%>
 <%--<a href="jsp/createDatabase.jsp">Create database</a><br>--%>
 <%--<a href="jsp/createRecord.jsp">Create record</a><br>--%>
@@ -23,5 +24,8 @@
 <%--<c:forEach items="${commands}" var="command">--%>
     <%--<a href="${command}">${command}</a><br>--%>
 <%--</c:forEach>--%>
+<br>
+<br>
+Copyright JuJa 2016
 </body>
 </html>

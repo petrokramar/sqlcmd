@@ -1,10 +1,12 @@
 package ua.com.juja.sqlcmd.model;
 
+import org.springframework.stereotype.Component;
 import ua.com.juja.sqlcmd.controller.PropertyHandler;
 
 import java.sql.*;
 import java.util.*;
 
+@Component
 public class PostgreSQLManager implements DatabaseManager {
     private final String DATABASE_JDBC_DRIVER = "jdbc:postgresql://";
     private Connection connection;
@@ -52,6 +54,21 @@ public class PostgreSQLManager implements DatabaseManager {
     @Override
     public boolean isConnected() {
         return connection != null;
+    }
+
+    @Override
+    public String currentDatabase() {
+        String databaseName = "";
+        try (Statement statement = connection.createStatement();
+             ResultSet rs = statement.executeQuery("SELECT current_database()")) {
+             if (rs.next()) {
+                 databaseName = rs.getString(1);
+             }
+             return rs.getString(1);
+        } catch (SQLException e) {
+            throw new DatabaseManagerException(
+                    String.format("Error getting current database."), e);
+        }
     }
 
     @Override

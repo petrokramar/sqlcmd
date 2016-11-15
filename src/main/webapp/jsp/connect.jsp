@@ -5,6 +5,7 @@
     <title>SQLCmd</title>
 </head>
 <body>
+    <%@include file="header.jsp" %>
     <form action="connect" method="post">
         <table>
             <tr>

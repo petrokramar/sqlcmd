@@ -5,6 +5,7 @@
     <title>SQLCmd</title>
 </head>
 <body>
+<%@include file="header.jsp" %>
 <h1>Drop database</h1><br>
 <form action="dropdatabase" method="post">
     <input type="hidden" name = "database" value="${database}">

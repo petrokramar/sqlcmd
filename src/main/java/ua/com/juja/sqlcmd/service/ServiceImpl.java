@@ -1,5 +1,7 @@
 package ua.com.juja.sqlcmd.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ua.com.juja.sqlcmd.model.DataSet;
 import ua.com.juja.sqlcmd.model.DatabaseManager;
 import ua.com.juja.sqlcmd.model.PostgreSQLManager;
@@ -7,9 +9,17 @@ import ua.com.juja.sqlcmd.model.PostgreSQLManager;
 import java.lang.reflect.Array;
 import java.util.*;
 
+@Component
 public class ServiceImpl implements Service {
 
-    private DatabaseManager manager = new PostgreSQLManager();
+    @Autowired
+    private DatabaseManager manager;
+//    private DatabaseManager manager = new PostgreSQLManager();
+//    private DatabaseManager manager;
+//
+//    public ServiceImpl() {
+//        this.manager = new PostgreSQLManager();
+//    }
 
     @Override
     public void connect(String databaseName, String userName, String password) {
@@ -17,8 +27,18 @@ public class ServiceImpl implements Service {
     }
 
     @Override
+    public boolean isConnected() {
+        return manager.isConnected();
+    }
+
+    @Override
+    public String currentDatabase() {
+        return manager.currentDatabase();
+    }
+
+    @Override
     public Set<String> getDatabaseNames() {
-        manager.connect("sqlcmd", "postgres", "123456");
+//        manager.connect("sqlcmd", "postgres", "123456");
         return manager.getDatabaseNames();
     }
 
@@ -34,19 +54,19 @@ public class ServiceImpl implements Service {
 
     @Override
     public Set<String> getTableNames() {
-        manager.connect("sqlcmd", "postgres", "123456");
+//        manager.connect("sqlcmd", "postgres", "123456");
         return manager.getTableNames();
     }
 
     @Override
     public Set<String> getTableColumns(String tableName) {
-        manager.connect("sqlcmd", "postgres", "123456");
+//        manager.connect("sqlcmd", "postgres", "123456");
         return manager.getTableColumns(tableName);
     }
 
     @Override
     public List<List<String>> getTableData(String tableName) {
-        manager.connect("sqlcmd", "postgres", "123456");
+//        manager.connect("sqlcmd", "postgres", "123456");
         Set<String> columns = manager.getTableColumns(tableName);
         List<DataSet> data = manager.getTableData(tableName);
         List<List<String>> tableData = new ArrayList<>();
@@ -63,7 +83,7 @@ public class ServiceImpl implements Service {
 
     @Override
     public Map<String, String> getRecordData(String tableName, int id) {
-        manager.connect("sqlcmd", "postgres", "123456");
+//        manager.connect("sqlcmd", "postgres", "123456");
         DataSet set = manager.getRecordData(tableName, id);
         Map<String, Object> data = set.getData();
         Map<String, String> record = new TreeMap<>();
@@ -76,7 +96,7 @@ public class ServiceImpl implements Service {
 
     @Override
     public void createRecord(String tableName, Map<String, String[]> parameters) {
-        manager.connect("sqlcmd", "postgres", "123456");
+//        manager.connect("sqlcmd", "postgres", "123456");
         DataSet dataSet = new DataSet();
         for (Map.Entry<String, String[]> entry : parameters.entrySet()) {
             if (!("tableName".equals(entry.getKey()) || "id".equals(entry.getKey()))) {
@@ -88,13 +108,13 @@ public class ServiceImpl implements Service {
 
     @Override
     public void deleteRecord(String tableName, int id) {
-        manager.connect("sqlcmd", "postgres", "123456");
+//        manager.connect("sqlcmd", "postgres", "123456");
         manager.deleteRecord(tableName, id);
     }
 
     @Override
     public void updateRecord(String tableName, int id, Map<String, String[]> parameters) {
-        manager.connect("sqlcmd", "postgres", "123456");
+//        manager.connect("sqlcmd", "postgres", "123456");
         DataSet dataSet = new DataSet();
         for (Map.Entry<String, String[]> entry : parameters.entrySet()) {
             if (!("tableName".equals(entry.getKey()) || "id".equals(entry.getKey()))) {

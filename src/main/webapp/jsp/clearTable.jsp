@@ -5,6 +5,7 @@
     <title>SQLCmd</title>
 </head>
 <body>
+<%@include file="header.jsp" %>
 Clear table<br>
 <%@include file="footer.jsp" %>
 </body>
