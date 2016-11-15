@@ -12,9 +12,24 @@ public class ServiceImpl implements Service {
     private DatabaseManager manager = new PostgreSQLManager();
 
     @Override
+    public void connect(String databaseName, String userName, String password) {
+        manager.connect(databaseName, userName, password);
+    }
+
+    @Override
     public Set<String> getDatabaseNames() {
         manager.connect("sqlcmd", "postgres", "123456");
         return manager.getDatabaseNames();
+    }
+
+    @Override
+    public void createDatabase(String databaseName) {
+        manager.createDatabase(databaseName);
+    }
+
+    @Override
+    public void dropDatabase(String databaseName) {
+        manager.dropDatabase(databaseName);
     }
 
     @Override

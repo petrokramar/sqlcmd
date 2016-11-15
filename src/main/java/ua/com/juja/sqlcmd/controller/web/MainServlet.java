@@ -28,10 +28,19 @@ public class MainServlet extends HttpServlet {
             if (action.startsWith("/menu") || action.equals("/")) {
                 req.getRequestDispatcher("jsp/menu.jsp").forward(req, resp);
 
+
             } else if (action.startsWith("/databases")) {
                 Set<String> databases= service.getDatabaseNames();
                 req.setAttribute("databases", databases);
                 req.getRequestDispatcher("jsp/databaseNames.jsp").forward(req, resp);
+
+            } else if (action.startsWith("/createdatabase")) {
+                req.getRequestDispatcher("jsp/createDatabase.jsp").forward(req, resp);
+
+            } else if (action.startsWith("/dropdatabase")) {
+                String databaseName = req.getParameter("name");
+                req.setAttribute("database", databaseName);
+                req.getRequestDispatcher("jsp/dropDatabase.jsp").forward(req, resp);
 
             } else if (action.startsWith("/tables")) {
                 Set<String> tables = service.getTableNames();
@@ -41,9 +50,19 @@ public class MainServlet extends HttpServlet {
             } else if (action.startsWith("/table")) {
                 String tableName = req.getParameter("name");
                 Set<String> columns = service.getTableColumns(tableName);
+                int idIndex = -1;
+                int index = 0;
+                for (String column : columns) {
+                    if ("id".equals(column)) {
+                        idIndex = index;
+                        break;
+                    }
+                    index++;
+                }
                 List<List<String>> tableData = service.getTableData(tableName);
                 req.setAttribute("table", tableName);
                 req.setAttribute("columns", columns);
+                req.setAttribute("idindex", idIndex);
                 req.setAttribute("tableData", tableData);
                 req.getRequestDispatcher("jsp/tableData.jsp").forward(req, resp);
 
@@ -96,15 +115,17 @@ public class MainServlet extends HttpServlet {
             String databaseName = req.getParameter("dbname");
             String userName = req.getParameter("username");
             String password = req.getParameter("password");
+            service.connect(databaseName, userName, password);
 
+        } else if (action.startsWith("/createdatabase")) {
+            String databaseName = req.getParameter("database");
+            service.createDatabase(databaseName);
+            resp.sendRedirect(resp.encodeRedirectURL("databases"));
+        } else if (action.startsWith("/dropdatabase")) {
+            String databaseName = req.getParameter("database");
+            service.dropDatabase(databaseName);
+            resp.sendRedirect(resp.encodeRedirectURL("databases"));
 
-//            try {
-//                service.connect(databaseName, userName, password);
-//                resp.sendRedirect(resp.encodeRedirectURL("menu"));
-//            } catch (Exception e) {
-//                req.setAttribute("message", e.getMessage());
-//                req.getRequestDispatcher("error.jsp").forward(req, resp);
-//            }
         } else if (action.startsWith("/createrecord")) {
             Map<String, String[]> parameters = req.getParameterMap();
             String tableName = req.getParameter("tableName");
@@ -121,6 +142,7 @@ public class MainServlet extends HttpServlet {
             Map<String, String[]> parameters = req.getParameterMap();
             service.updateRecord(tableName, id, parameters);
             resp.sendRedirect(resp.encodeRedirectURL("table?name=" + tableName));
+
         }
     }
 

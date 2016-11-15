@@ -5,7 +5,8 @@
     <title>SQLCmd</title>
 </head>
 <body>
-Drop table<br>
+<h1>Drop table</h1><br>
+
 <%@include file="footer.jsp" %>
 </body>
 </html>

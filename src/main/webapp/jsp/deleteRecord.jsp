@@ -10,6 +10,10 @@
     <input type="hidden" name = "tableName" value="${table}">
     <input type="hidden" name = "id" value="${id}">
     <table>
+        <tr>
+            <td>id</td>
+            <td>${id}</td>
+        </tr>
         <c:forEach var="entry" items="${record}">
             <tr>
                 <td>${entry.key}</td>

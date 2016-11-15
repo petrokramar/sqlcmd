@@ -16,7 +16,7 @@ Databases<br>
 
     </c:forEach>
 </table>
-
+<a href="createdatabase">Add database</a><br>
 <%@include file="footer.jsp" %>
 </body>
 </html>

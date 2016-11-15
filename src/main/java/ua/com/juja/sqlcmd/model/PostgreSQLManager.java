@@ -78,7 +78,7 @@ public class PostgreSQLManager implements DatabaseManager {
         Set<String> databases = new LinkedHashSet<>();
         try (Statement statement = connection.createStatement();
              ResultSet rs = statement.executeQuery(
-                     "SELECT datname AS db_name FROM pg_database WHERE datistemplate = false;")) {
+                     "SELECT datname AS db_name FROM pg_database WHERE datistemplate = false ORDER BY datname")) {
             while (rs.next()) {
                 databases.add(rs.getString("db_name"));
             }

@@ -8,7 +8,12 @@ import java.util.Map;
 import java.util.Set;
 
 public interface Service {
+    void connect(String databaseName, String userName, String password);
+
     Set<String> getDatabaseNames();
+    void createDatabase(String databaseName);
+    void dropDatabase(String databaseName);
+
     Set<String> getTableNames();
 
     Set<String> getTableColumns(String tableName);

@@ -5,7 +5,20 @@
     <title>SQLCmd</title>
 </head>
 <body>
-Drop database<br>
+<h1>Drop database</h1><br>
+<form action="dropdatabase" method="post">
+    <input type="hidden" name = "database" value="${database}">
+    <table>
+        <tr>
+            <td>Database name</td>
+            <td>${database}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Drop database"/></td>
+        </tr>
+    </table>
+</form>
 <%@include file="footer.jsp" %>
 </body>
 </html>

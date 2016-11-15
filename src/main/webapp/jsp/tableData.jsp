@@ -13,13 +13,14 @@
         </c:forEach>
         <td></td>
         <td></td>
+        <c:set var="idindex" scope="page" value="${idIndex}"/>
         <c:forEach items="${tableData}" var="row">
             <tr>
                 <c:forEach items="${row}" var="column">
                     <td>${column}</td>
                 </c:forEach>
-                <td><a href="updateecord?name=${column}">update</a><br></td>
-                <td><a href="deleterecord?name=${column}">delete</a><br></td>
+                <td><a href="updaterecord?table=${table}&id=${row[idindex]}">update</a><br></td>
+                <td><a href="deleterecord?table=${table}&id=${row[idindex]}">delete</a><br></td>
             </tr>
         </c:forEach>
     </tr>
