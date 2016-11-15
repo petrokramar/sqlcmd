@@ -5,7 +5,21 @@
     <title>SQLCmd</title>
 </head>
 <body>
-Create database<br>
+<h1>Create database</h1><br>
+<form action="createdatabase" method="post">
+    <table>
+        <tr>
+            <td>
+                Database name
+            </td>
+            <td><input type="text" name="database"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Create database"/></td>
+        </tr>
+    </table>
+</form>
 <%@include file="footer.jsp" %>
 </body>
 </html>
