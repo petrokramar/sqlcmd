@@ -62,7 +62,6 @@ public class MainServlet extends HttpServlet {
                 String tableName = (String) req.getParameter("table");
                 manager.connect("sqlcmd", "postgres", "123456");
                 Set<String> columns = manager.getTableColumns(tableName);
-                columns.remove("id");
                 req.setAttribute("table", tableName);
                 req.setAttribute("columns", columns);
                 req.getRequestDispatcher("jsp/createRecord.jsp").forward(req, resp);
@@ -70,24 +69,32 @@ public class MainServlet extends HttpServlet {
                 String tableName = (String) req.getParameter("table");
                 int id = Integer.parseInt(req.getParameter("id"));
                 manager.connect("sqlcmd", "postgres", "123456");
-//                Set<String> columns = manager.getTableColumns(tableName);
                 DataSet set = manager.getRecordData(tableName, id);
                 Map<String, Object> data = set.getData();
                 Map<String, String> record = new TreeMap<>();
                 for (Map.Entry<String, Object> entry : data.entrySet()) {
                     record.put(entry.getKey(), entry.getValue().toString());
                 }
-//                List<List<String>> tableRecord = new ArrayList<>();
-//                for (Map.Entry<String, Object> entry : data.entrySet())  {
-//                    List<String> field = new ArrayList<>();
-//                    field.add(entry.getKey());
-//                    field.add(entry.getValue().toString());
-//                    tableRecord.add(field);
-//                }
+                record.remove("id");
                 req.setAttribute("table", tableName);
                 req.setAttribute("id", id);
                 req.setAttribute("record", record);
                 req.getRequestDispatcher("jsp/deleteRecord.jsp").forward(req, resp);
+            } else if (action.startsWith("/updaterecord")) {
+                String tableName = (String) req.getParameter("table");
+                int id = Integer.parseInt(req.getParameter("id"));
+                manager.connect("sqlcmd", "postgres", "123456");
+                DataSet set = manager.getRecordData(tableName, id);
+                Map<String, Object> data = set.getData();
+                Map<String, String> record = new TreeMap<>();
+                for (Map.Entry<String, Object> entry : data.entrySet()) {
+                    record.put(entry.getKey(), entry.getValue().toString());
+                }
+                record.remove("id");
+                req.setAttribute("table", tableName);
+                req.setAttribute("id", id);
+                req.setAttribute("record", record);
+                req.getRequestDispatcher("jsp/updateRecord.jsp").forward(req, resp);
             } else if (action.startsWith("/help")) {
                 req.getRequestDispatcher("jsp/help.jsp").forward(req, resp);
             } else if (action.startsWith("/connect")) {
@@ -135,20 +142,28 @@ public class MainServlet extends HttpServlet {
             manager.createRecord(tableName, dataSet);
             resp.sendRedirect(resp.encodeRedirectURL("table?name=" + tableName));
         } else if (action.startsWith("/deleterecord")) {
-//            manager.connect("sqlcmd", "postgres", "123456");
-//            String tableName = req.getParameter("tableName");
-//            Map<String, String[]> parameters = req.getParameterMap();
-//            DataSet dataSet = new DataSet();
-//            String tableName = "";
-//            for (Map.Entry<String, String[]> entry : parameters.entrySet()) {
-//                if ("tableName".equals(entry.getKey())) {
-//                    tableName = entry.getValue()[0];
-//                } else{
-//                    dataSet.put(entry.getKey(), entry.getValue()[0]);
-//                }
-//            }
-//            manager.deleteRecord(tableName, id);
-//            resp.sendRedirect(resp.encodeRedirectURL("table?name=" + tableName));
+            manager.connect("sqlcmd", "postgres", "123456");
+            String tableName = req.getParameter("tableName");
+            int id = Integer.parseInt(req.getParameter("id"));
+            manager.deleteRecord(tableName, id);
+            resp.sendRedirect(resp.encodeRedirectURL("table?name=" + tableName));
+        } else if (action.startsWith("/updaterecord")) {
+            manager.connect("sqlcmd", "postgres", "123456");
+            Map<String, String[]> parameters = req.getParameterMap();
+            DataSet dataSet = new DataSet();
+            String tableName = "";
+            int id = 0;
+            for (Map.Entry<String, String[]> entry : parameters.entrySet()) {
+                if ("tableName".equals(entry.getKey())) {
+                    tableName = entry.getValue()[0];
+                } else if ("id".equals(entry.getKey())) {
+                    id = Integer.parseInt(entry.getValue()[0]);
+                } else{
+                    dataSet.put(entry.getKey(), entry.getValue()[0]);
+                }
+            }
+            manager.updateRecord(tableName, id, dataSet);
+            resp.sendRedirect(resp.encodeRedirectURL("table?name=" + tableName));
         }
     }
 

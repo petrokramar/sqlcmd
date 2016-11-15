@@ -5,8 +5,7 @@
     <title>SQLCmd</title>
 </head>
 <body>
-Delete record<br>
-Table '${table}'. Delete record.<br>
+<h1>Table '${table}'. Delete record.<br></h1>
 <form action="deleterecord" method="post">
     <input type="hidden" name = "tableName" value="${table}">
     <input type="hidden" name = "id" value="${id}">
