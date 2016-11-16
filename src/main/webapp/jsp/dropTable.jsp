@@ -6,7 +6,7 @@
 </head>
 <body>
 <%@include file="header.jsp" %>
-<h1>Drop table</h1><br>
+<h2>Drop table</h2><br>
 <form action="droptable" method="post">
     <input type="hidden" name = "table" value="${table}">
     <table>

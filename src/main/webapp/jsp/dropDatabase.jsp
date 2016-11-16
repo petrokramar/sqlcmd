@@ -6,7 +6,7 @@
 </head>
 <body>
 <%@include file="header.jsp" %>
-<h1>Drop database</h1><br>
+<h2>Drop database</h2><br>
 <form action="dropdatabase" method="post">
     <input type="hidden" name = "database" value="${database}">
     <table>

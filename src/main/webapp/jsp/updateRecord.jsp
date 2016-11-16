@@ -6,7 +6,7 @@
 </head>
 <body>
 <%@include file="header.jsp" %>
-<h1>Table '${table}'. Update record.</h1><br>
+<h2>Table '${table}'. Update record.</h2><br>
 <form action="updaterecord" method="post">
     <input type="hidden" name = "tableName" value="${table}">
     <input type="hidden" name = "id" value="${id}">

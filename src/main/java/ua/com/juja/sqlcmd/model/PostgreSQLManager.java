@@ -144,6 +144,7 @@ public class PostgreSQLManager implements DatabaseManager {
     @Override
     public List<DataSet> getTableData(String tableName) {
         try (Statement statement = connection.createStatement();
+             //TODO tables without id
              ResultSet rs = statement.executeQuery(String.format("SELECT * FROM %s ORDER BY id", tableName))) {
             return getDataSets(rs);
         } catch (SQLException e) {

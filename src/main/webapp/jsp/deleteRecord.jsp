@@ -6,7 +6,7 @@
 </head>
 <body>
 <%@include file="header.jsp" %>
-<h1>Table '${table}'. Delete record.<br></h1>
+<h2>Table '${table}'. Delete record.</h2><br>
 <form action="deleterecord" method="post">
     <input type="hidden" name = "tableName" value="${table}">
     <input type="hidden" name = "id" value="${id}">

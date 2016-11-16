@@ -6,7 +6,20 @@
 </head>
 <body>
 <%@include file="header.jsp" %>
-Clear table<br>
+<h2>Clear table</h2><br>
+<form action="cleartable" method="post">
+    <input type="hidden" name = "table" value="${table}">
+    <table>
+        <tr>
+            <td>Table name</td>
+            <td>${table}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Clear table"/></td>
+        </tr>
+    </table>
+</form>
 <%@include file="footer.jsp" %>
 </body>
 </html>

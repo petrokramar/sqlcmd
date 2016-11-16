@@ -12,7 +12,6 @@ public class DataSet {
         data.put(name, value);
     }
 
-    //TODO безопасно ли возвращать коллекцию
     public Map<String, Object> getData() {
         return data;
     }

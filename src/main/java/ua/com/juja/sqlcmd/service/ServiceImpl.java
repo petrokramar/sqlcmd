@@ -14,12 +14,6 @@ public class ServiceImpl implements Service {
 
     @Autowired
     private DatabaseManager manager;
-//    private DatabaseManager manager = new PostgreSQLManager();
-//    private DatabaseManager manager;
-//
-//    public ServiceImpl() {
-//        this.manager = new PostgreSQLManager();
-//    }
 
     @Override
     public void connect(String databaseName, String userName, String password) {
@@ -38,7 +32,6 @@ public class ServiceImpl implements Service {
 
     @Override
     public Set<String> getDatabaseNames() {
-//        manager.connect("sqlcmd", "postgres", "123456");
         return manager.getDatabaseNames();
     }
 
@@ -54,7 +47,6 @@ public class ServiceImpl implements Service {
 
     @Override
     public Set<String> getTableNames() {
-//        manager.connect("sqlcmd", "postgres", "123456");
         return manager.getTableNames();
     }
 
@@ -64,19 +56,22 @@ public class ServiceImpl implements Service {
     }
 
     @Override
+    public void clearTable(String tableName) {
+        manager.clearTable(tableName);
+    }
+
+    @Override
     public void dropTable(String tableName) {
         manager.dropTable(tableName);
     }
 
     @Override
     public Set<String> getTableColumns(String tableName) {
-//        manager.connect("sqlcmd", "postgres", "123456");
         return manager.getTableColumns(tableName);
     }
 
     @Override
     public List<List<String>> getTableData(String tableName) {
-//        manager.connect("sqlcmd", "postgres", "123456");
         Set<String> columns = manager.getTableColumns(tableName);
         List<DataSet> data = manager.getTableData(tableName);
         List<List<String>> tableData = new ArrayList<>();
@@ -93,7 +88,6 @@ public class ServiceImpl implements Service {
 
     @Override
     public Map<String, String> getRecordData(String tableName, int id) {
-//        manager.connect("sqlcmd", "postgres", "123456");
         DataSet set = manager.getRecordData(tableName, id);
         Map<String, Object> data = set.getData();
         Map<String, String> record = new TreeMap<>();
@@ -106,7 +100,6 @@ public class ServiceImpl implements Service {
 
     @Override
     public void createRecord(String tableName, Map<String, String[]> parameters) {
-//        manager.connect("sqlcmd", "postgres", "123456");
         DataSet dataSet = new DataSet();
         for (Map.Entry<String, String[]> entry : parameters.entrySet()) {
             if (!("tableName".equals(entry.getKey()) || "id".equals(entry.getKey()))) {
@@ -118,13 +111,11 @@ public class ServiceImpl implements Service {
 
     @Override
     public void deleteRecord(String tableName, int id) {
-//        manager.connect("sqlcmd", "postgres", "123456");
         manager.deleteRecord(tableName, id);
     }
 
     @Override
     public void updateRecord(String tableName, int id, Map<String, String[]> parameters) {
-//        manager.connect("sqlcmd", "postgres", "123456");
         DataSet dataSet = new DataSet();
         for (Map.Entry<String, String[]> entry : parameters.entrySet()) {
             if (!("tableName".equals(entry.getKey()) || "id".equals(entry.getKey()))) {
@@ -138,17 +129,19 @@ public class ServiceImpl implements Service {
     public List<List<String>> executeQuery(String query) {
         List<List<String>> result = new ArrayList<>();
         List<DataSet> data = manager.executeQuery(query);
-        Set<String> columns = new LinkedHashSet<>(data.get(0).getNames());
-        List<String> columnRow = new ArrayList<>();
-        columnRow.addAll(columns);
-        result.add(columnRow);
-        for (DataSet set : data) {
-            List<Object> row = set.getValues();
-            List<String> tableRow = new ArrayList<>();
-            for (Object o: row) {
-                tableRow.add(o.toString());
+        if (!data.isEmpty()) {
+            Set<String> columns = new LinkedHashSet<>(data.get(0).getNames());
+            List<String> columnRow = new ArrayList<>();
+            columnRow.addAll(columns);
+            result.add(columnRow);
+            for (DataSet set : data) {
+                List<Object> row = set.getValues();
+                List<String> tableRow = new ArrayList<>();
+                for (Object o: row) {
+                    tableRow.add(o.toString());
+                }
+                result.add(tableRow);
             }
-            result.add(tableRow);
         }
         return result;
     }

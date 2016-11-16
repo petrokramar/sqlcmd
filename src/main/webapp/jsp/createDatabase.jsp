@@ -6,7 +6,7 @@
 </head>
 <body>
 <%@include file="header.jsp" %>
-<h1>Create database</h1><br>
+<h2>Create database</h2><br>
 <form action="createdatabase" method="post">
     <table>
         <tr>

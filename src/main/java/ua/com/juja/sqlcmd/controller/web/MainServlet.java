@@ -59,6 +59,11 @@ public class MainServlet extends HttpServlet {
             } else if (action.startsWith("/createtable")) {
                 req.getRequestDispatcher("jsp/createTable.jsp").forward(req, resp);
 
+            } else if (action.startsWith("/cleartable")) {
+                String tableName = req.getParameter("name");
+                req.setAttribute("table", tableName);
+                req.getRequestDispatcher("jsp/clearTable.jsp").forward(req, resp);
+
             } else if (action.startsWith("/droptable")) {
                 String tableName = req.getParameter("name");
                 req.setAttribute("table", tableName);
@@ -110,6 +115,9 @@ public class MainServlet extends HttpServlet {
                 req.getRequestDispatcher("jsp/updateRecord.jsp").forward(req, resp);
 
             } else if (action.startsWith("/query")) {
+                if (!service.isConnected()) {
+                    req.getRequestDispatcher("jsp/connect.jsp").forward(req, resp);
+                }
                 req.getRequestDispatcher("jsp/query.jsp").forward(req, resp);
 
             } else if (action.startsWith("/help")) {
@@ -155,8 +163,13 @@ public class MainServlet extends HttpServlet {
                 service.createTable(tableName, query);
                 resp.sendRedirect(resp.encodeRedirectURL("tables"));
 
+            } else if (action.startsWith("/cleartable")) {
+                String tableName = req.getParameter("table");
+                service.clearTable(tableName);
+                resp.sendRedirect(resp.encodeRedirectURL("tables"));
+
             } else if (action.startsWith("/droptable")) {
-                String tableName = req.getParameter("name");
+                String tableName = req.getParameter("table");
                 service.dropTable(tableName);
                 resp.sendRedirect(resp.encodeRedirectURL("tables"));
 

@@ -6,6 +6,7 @@
 </head>
 <body>
     <%@include file="header.jsp" %>
+    <h2>Connect to database</h2><br>
     <form action="connect" method="post">
         <table>
             <tr>

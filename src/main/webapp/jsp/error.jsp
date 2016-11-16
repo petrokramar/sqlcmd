@@ -6,7 +6,9 @@
 </head>
 <body>
 <%@include file="header.jsp" %>
-Error ${message}<br>
+<h2>Error</h2><br>
+${message}
+<br>
 <%@include file="footer.jsp" %>
 </body>
 </html>

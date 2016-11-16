@@ -6,7 +6,7 @@
 </head>
 <body>
 <%@include file="header.jsp" %>
-<h1>Table: ${table}<br></h1>
+<h2>Table: ${table}<br></h2>
 <table border="1">
     <tr>
         <c:forEach items="${columns}" var="column">
@@ -26,8 +26,15 @@
         </c:forEach>
     </tr>
 </table>
-<td><a href="createrecord?table=${table}">Create record</a><br></td>
-<td><a href="tables">Back to tables</a><br></td>
+<br>
+<table>
+    <tr>
+        <td><a href="createrecord?table=${table}">Create record</a><br></td>
+        <td><a href="cleartable?name=${table}">Clear table</a><br></td>
+        <td><a href="droptable?name=${table}">Drop table</a><br></td>
+        <td><a href="tables">Back to list of tables</a><br></td>
+    </tr>
+</table>
 <%@include file="footer.jsp" %>
 </body>
 </html>

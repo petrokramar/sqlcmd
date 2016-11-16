@@ -7,7 +7,7 @@
 </head>
 <body>
 <%@include file="header.jsp" %>
-Databases<br>
+<h2>List of databases</h2><br>
 <table border="1">
     <c:forEach items="${databases}" var="database">
         <tr>

@@ -6,7 +6,7 @@
 </head>
 <body>
 <%@include file="header.jsp" %>
-Create table<br>
+<h2>Create table</h2><br>
 <form action="createtable" method="post">
     <table>
         <tr>

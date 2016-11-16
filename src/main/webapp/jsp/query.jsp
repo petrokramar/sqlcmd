@@ -6,7 +6,7 @@
 </head>
 <body>
 <%@include file="header.jsp" %>
-Query<br>
+<h2>Query</h2><br>
 <form action="query" method="post">
     <table>
         <tr>

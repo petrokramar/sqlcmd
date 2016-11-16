@@ -6,7 +6,7 @@
 </head>
 <body>
 <%@include file="header.jsp" %>
-<h1>Query : ${query}<br></h1>
+<h2>Query : ${query}<br></h2>
 <table border="1">
     <tr>
         <c:forEach items="${querydata}" var="row">

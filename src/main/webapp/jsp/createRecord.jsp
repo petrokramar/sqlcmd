@@ -6,7 +6,7 @@
 </head>
 <body>
     <%@include file="header.jsp" %>
-    Table '${table}'. New record.<br>
+    <h2>Table '${table}'. New record.</h2><br>
     <form action="createrecord" method="post">
         <input type="hidden" name = "tableName" value="${table}">
         <table>

@@ -18,6 +18,7 @@ public interface Service {
 
     Set<String> getTableNames();
     void createTable(String tableName, String query);
+    void clearTable(String tableName);
     void dropTable(String tableName);
 
     Set<String> getTableColumns(String tableName);
