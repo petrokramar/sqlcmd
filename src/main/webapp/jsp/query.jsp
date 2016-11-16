@@ -7,6 +7,18 @@
 <body>
 <%@include file="header.jsp" %>
 Query<br>
+<form action="query" method="post">
+    <table>
+        <tr>
+            <td>Query</td>
+            <td ><input type="text" name="query"/></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Execute"/></td>
+        </tr>
+    </table>
+</form>
 <%@include file="footer.jsp" %>
 </body>
 </html>

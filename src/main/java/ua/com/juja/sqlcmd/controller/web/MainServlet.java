@@ -56,6 +56,14 @@ public class MainServlet extends HttpServlet {
                 req.setAttribute("tables", tables);
                 req.getRequestDispatcher("jsp/tableNames.jsp").forward(req, resp);
 
+            } else if (action.startsWith("/createtable")) {
+                req.getRequestDispatcher("jsp/createTable.jsp").forward(req, resp);
+
+            } else if (action.startsWith("/droptable")) {
+                String tableName = req.getParameter("name");
+                req.setAttribute("table", tableName);
+                req.getRequestDispatcher("jsp/dropTable.jsp").forward(req, resp);
+
             } else if (action.startsWith("/table")) {
                 String tableName = req.getParameter("name");
                 Set<String> columns = service.getTableColumns(tableName);
@@ -101,14 +109,14 @@ public class MainServlet extends HttpServlet {
                 req.setAttribute("record", record);
                 req.getRequestDispatcher("jsp/updateRecord.jsp").forward(req, resp);
 
+            } else if (action.startsWith("/query")) {
+                req.getRequestDispatcher("jsp/query.jsp").forward(req, resp);
+
             } else if (action.startsWith("/help")) {
                 req.getRequestDispatcher("jsp/help.jsp").forward(req, resp);
 
             } else if (action.startsWith("/connect")) {
                 req.getRequestDispatcher("jsp/connect.jsp").forward(req, resp);
-
-            } else if (action.startsWith("/cur")) {
-                throw new RuntimeException(service.currentDatabase());
 
             } else {
                 req.getRequestDispatcher("jsp/menu.jsp").forward(req, resp);
@@ -135,27 +143,49 @@ public class MainServlet extends HttpServlet {
                 String databaseName = req.getParameter("database");
                 service.createDatabase(databaseName);
                 resp.sendRedirect(resp.encodeRedirectURL("databases"));
+
             } else if (action.startsWith("/dropdatabase")) {
                 String databaseName = req.getParameter("database");
                 service.dropDatabase(databaseName);
                 resp.sendRedirect(resp.encodeRedirectURL("databases"));
+
+            } else if (action.startsWith("/createtable")) {
+                String tableName = req.getParameter("name");
+                String query = req.getParameter("query");
+                service.createTable(tableName, query);
+                resp.sendRedirect(resp.encodeRedirectURL("tables"));
+
+            } else if (action.startsWith("/droptable")) {
+                String tableName = req.getParameter("name");
+                service.dropTable(tableName);
+                resp.sendRedirect(resp.encodeRedirectURL("tables"));
 
             } else if (action.startsWith("/createrecord")) {
                 Map<String, String[]> parameters = req.getParameterMap();
                 String tableName = req.getParameter("tableName");
                 service.createRecord(tableName, parameters);
                 resp.sendRedirect(resp.encodeRedirectURL("table?name=" + tableName));
+
             } else if (action.startsWith("/deleterecord")) {
                 String tableName = req.getParameter("tableName");
                 int id = Integer.parseInt(req.getParameter("id"));
                 service.deleteRecord(tableName, id);
                 resp.sendRedirect(resp.encodeRedirectURL("table?name=" + tableName));
+
             } else if (action.startsWith("/updaterecord")) {
                 String tableName = req.getParameter("tableName");
                 int id = Integer.parseInt(req.getParameter("id"));;
                 Map<String, String[]> parameters = req.getParameterMap();
                 service.updateRecord(tableName, id, parameters);
                 resp.sendRedirect(resp.encodeRedirectURL("table?name=" + tableName));
+
+            } else if (action.startsWith("/query")) {
+                String query = req.getParameter("query");
+                List<List<String>> queryData = service.executeQuery(query);
+                req.setAttribute("query", query);
+                req.setAttribute("querydata", queryData);
+                req.getRequestDispatcher("jsp/queryResult.jsp").forward(req, resp);
+
             }
         } catch (Exception e) {
             req.setAttribute("message", e.getMessage());

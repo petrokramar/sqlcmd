@@ -27,6 +27,7 @@
     </tr>
 </table>
 <td><a href="createrecord?table=${table}">Create record</a><br></td>
+<td><a href="tables">Back to tables</a><br></td>
 <%@include file="footer.jsp" %>
 </body>
 </html>

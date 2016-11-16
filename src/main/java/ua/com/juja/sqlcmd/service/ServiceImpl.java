@@ -59,6 +59,16 @@ public class ServiceImpl implements Service {
     }
 
     @Override
+    public void createTable(String tableName, String query) {
+        manager.createTable(tableName, query);
+    }
+
+    @Override
+    public void dropTable(String tableName) {
+        manager.dropTable(tableName);
+    }
+
+    @Override
     public Set<String> getTableColumns(String tableName) {
 //        manager.connect("sqlcmd", "postgres", "123456");
         return manager.getTableColumns(tableName);
@@ -124,4 +134,22 @@ public class ServiceImpl implements Service {
         manager.updateRecord(tableName, id, dataSet);
     }
 
+    @Override
+    public List<List<String>> executeQuery(String query) {
+        List<List<String>> result = new ArrayList<>();
+        List<DataSet> data = manager.executeQuery(query);
+        Set<String> columns = new LinkedHashSet<>(data.get(0).getNames());
+        List<String> columnRow = new ArrayList<>();
+        columnRow.addAll(columns);
+        result.add(columnRow);
+        for (DataSet set : data) {
+            List<Object> row = set.getValues();
+            List<String> tableRow = new ArrayList<>();
+            for (Object o: row) {
+                tableRow.add(o.toString());
+            }
+            result.add(tableRow);
+        }
+        return result;
+    }
 }

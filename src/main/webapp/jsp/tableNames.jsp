@@ -15,6 +15,7 @@ Tables<br>
         </tr>
     </c:forEach>
 </table>
+<a href="createtable">Create table</a><br>
 <a href="databases">Database list</a><br>
 <%@include file="footer.jsp" %>
 </body>

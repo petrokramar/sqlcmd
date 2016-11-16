@@ -7,7 +7,19 @@
 <body>
 <%@include file="header.jsp" %>
 <h1>Drop table</h1><br>
-
+<form action="droptable" method="post">
+    <input type="hidden" name = "table" value="${table}">
+    <table>
+        <tr>
+            <td>Table name</td>
+            <td>${table}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Drop table"/></td>
+        </tr>
+    </table>
+</form>
 <%@include file="footer.jsp" %>
 </body>
 </html>

@@ -17,6 +17,8 @@ public interface Service {
     void dropDatabase(String databaseName);
 
     Set<String> getTableNames();
+    void createTable(String tableName, String query);
+    void dropTable(String tableName);
 
     Set<String> getTableColumns(String tableName);
     List<List<String>> getTableData(String tableName);
@@ -25,4 +27,6 @@ public interface Service {
     void createRecord(String tableName, Map<String, String[]> parameters);
     void deleteRecord(String tableName, int id);
     void updateRecord(String tableName, int id, Map<String, String[]> parameters);
+
+    List<List<String>> executeQuery(String query);
 }
