@@ -1,6 +1,8 @@
 package ua.com.juja.sqlcmd.model;
 
+import org.junit.Before;
 import org.junit.Test;
+import ua.com.juja.sqlcmd.controller.PropertyHandler;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -13,6 +15,15 @@ public class PostgreSQLManagerTest extends DatabaseManagerTest {
     @Override
     protected DatabaseManager getDatabaseManager() {
         return new PostgreSQLManager();
+    }
+
+    @Before
+    public void setup() throws SQLException {
+        manager = getDatabaseManager();
+        final PropertyHandler settings = PropertyHandler.getInstance();
+        manager.connect(settings.getProperty("database.name"), settings.getProperty("database.user.name"),
+                settings.getProperty("database.user.password"));
+        manager.clearTable("users");
     }
 
     @Test
