@@ -1,33 +1,67 @@
 package ua.com.juja.sqlcmd.model;
 
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import ua.com.juja.sqlcmd.controller.PropertyHandler;
 
 import java.sql.*;
 import java.util.*;
 
-public class H2SQLManager implements DatabaseManager {
-    private final String DATABASE_JDBC_DRIVER = "jdbc:h2:mem:";
+@Component
+public class PostgreJdbcTemplateSQLManager implements DatabaseManager {
+    private final String DATABASE_JDBC_DRIVER = "jdbc:postgresql://";
     private Connection connection;
+    private JdbcTemplate template;
 
     @Override
     public void connect(String databaseName, String userName, String password) {
         try {
-            Class.forName("org.h2.Driver");
+            Class.forName("org.postgresql.Driver");
         } catch (ClassNotFoundException e) {
-            throw new DatabaseManagerException("H2 SQL driver not found", e);
+            throw new DatabaseManagerException("PostgreSQL driver not found", e);
         }
         try {
             if (connection != null) {
                 connection.close();
             }
-            connection = DriverManager.getConnection(DATABASE_JDBC_DRIVER+databaseName,userName, password);
-
+            connection = DriverManager.getConnection(getJdbcUrl() + databaseName, userName, password);
         } catch (SQLException e) {
             connection = null;
             throw new DatabaseManagerException(
                     String.format("Failed to connect to database: %s, user: %s", databaseName, userName), e);
         }
+
+//            try {
+//                Class.forName("org.postgresql.Driver");
+//            } catch (ClassNotFoundException e) {
+//                throw new RuntimeException("Please add jdbc jar to project.", e);
+//            }
+//            try {
+//                if (connection != null) {
+//                    connection.close();
+//                }
+//                connection = DriverManager.getConnection(
+//                        "jdbc:postgresql://localhost:5432/" + database, userName,
+//                        password);
+//                this.database = database;
+//                this.userName = userName;
+//                template = new JdbcTemplate(new SingleConnectionDataSource(connection, false));
+//            } catch (SQLException e) {
+//                connection = null;
+//                template = null;
+//                throw new RuntimeException(
+//                        String.format("Cant get connection for model:%s user:%s",
+//                                database, userName),
+//                        e);
+//            }
+
+    }
+
+    private String getJdbcUrl(){
+        PropertyHandler settings = PropertyHandler.getInstance();
+        return String.format("%s%s:%s/", DATABASE_JDBC_DRIVER,
+                settings.getProperty("database.server.name"),
+                settings.getProperty("database.port"));
     }
 
     @Override
@@ -101,8 +135,7 @@ public class H2SQLManager implements DatabaseManager {
     @Override
     public void createTable(String tableName, String query) {
         try (Statement statement = connection.createStatement()) {
-//            statement.executeUpdate(String.format(" CREATE TABLE public.%s (%s)", tableName, query));
-            statement.executeUpdate(String.format(" CREATE TABLE %s (%s)", tableName, query));
+            statement.executeUpdate(String.format(" CREATE TABLE public.%s (%s)", tableName, query));
         } catch (SQLException e) {
             throw new DatabaseManagerException(String.format("Error creating table '%s'. Query: %s",
                     tableName, query));
@@ -121,32 +154,13 @@ public class H2SQLManager implements DatabaseManager {
     @Override
     public Set<String> getTableColumns(String tableName) {
         Set<String> columns = new LinkedHashSet<>();
-
-
-
-
         try (Statement statement = connection.createStatement();
-
-
-
-//             DatabaseMetaData metadata = connection.getMetaData();
-//             ResultSet resultSet = metadata.getColumns(null, null, tableName, null);
-//    while (resultSet.next())
-//        columns.add(resultSet.getString("COLUMN_NAME"));
-//        return columns;
-
-
              ResultSet rs = statement.executeQuery(
-//                     String.format("SELECT column_name FROM information_schema.columns" +
-//                             " WHERE  table_schema = 'public' and table_name = '%s'", tableName))) {
-            //TODO query does not work
-            String.format("SELECT column_name FROM information_schema.columns" +
-                    " WHERE  table_name = '%s'", tableName))) {
+                     String.format("SELECT column_name FROM information_schema.columns" +
+                             " WHERE  table_schema = 'public' and table_name = '%s'", tableName))) {
             while ((rs.next())) {
                 columns.add(rs.getString("column_name"));
             }
-
-
             return columns;
         } catch (SQLException e) {
             throw new DatabaseManagerException(
@@ -320,8 +334,7 @@ public class H2SQLManager implements DatabaseManager {
             while ((rs.next())) {
                 DataSet dataSet = new DataSet();
                 for (int index = 1; index <= rsmd.getColumnCount(); index++) {
-                    //TODO h2 columns names is Upper case
-                    dataSet.put(rsmd.getColumnName(index).toLowerCase(), rs.getObject(index));
+                    dataSet.put(rsmd.getColumnName(index), rs.getObject(index));
                 }
                 result.add(dataSet);
             }
