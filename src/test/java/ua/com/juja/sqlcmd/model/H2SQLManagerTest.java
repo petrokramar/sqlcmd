@@ -32,14 +32,4 @@ public class H2SQLManagerTest extends DatabaseManagerTest{
         needInitTables = false;
         manager.clearTable("users");
     }
-
-    @Test
-    public void Test() {
-
-    }
-
-    @Test
-    public void Test2() {
-
-    }
 }

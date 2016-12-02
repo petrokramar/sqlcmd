@@ -6,7 +6,6 @@ import ua.com.juja.sqlcmd.controller.PropertyHandler;
 import java.sql.*;
 import java.util.*;
 
-@Component
 public class PostgreSQLManager implements DatabaseManager {
     private final String DATABASE_JDBC_DRIVER = "jdbc:postgresql://";
     private Connection connection;
