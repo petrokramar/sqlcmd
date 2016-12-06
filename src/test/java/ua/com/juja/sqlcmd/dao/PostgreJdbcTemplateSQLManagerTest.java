@@ -1,11 +1,9 @@
-package ua.com.juja.sqlcmd.model;
+package ua.com.juja.sqlcmd.dao;
 
 import org.junit.Before;
 import ua.com.juja.sqlcmd.controller.PropertyHandler;
 
 import java.sql.SQLException;
-
-import static org.junit.Assert.*;
 
 public class PostgreJdbcTemplateSQLManagerTest extends DatabaseManagerTest{
     @Override

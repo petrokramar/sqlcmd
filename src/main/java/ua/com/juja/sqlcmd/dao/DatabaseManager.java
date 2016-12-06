@@ -1,5 +1,6 @@
-package ua.com.juja.sqlcmd.model;
+package ua.com.juja.sqlcmd.dao;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -43,4 +44,6 @@ public interface DatabaseManager {
     void deleteRecord(String tableName, int id);
 
     List<DataSet> executeQuery(String query);
+
+    void createAction(Date date, String userName, String dbName, String action);
 }

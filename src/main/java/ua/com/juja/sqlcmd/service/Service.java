@@ -1,8 +1,5 @@
 package ua.com.juja.sqlcmd.service;
 
-import ua.com.juja.sqlcmd.model.DataSet;
-import ua.com.juja.sqlcmd.model.DatabaseManager;
-
 import java.util.List;
 import java.util.Map;
 import java.util.Set;

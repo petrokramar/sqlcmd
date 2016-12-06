@@ -1,4 +1,4 @@
-package ua.com.juja.sqlcmd.model;
+package ua.com.juja.sqlcmd.dao;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -8,6 +8,7 @@ import ua.com.juja.sqlcmd.controller.PropertyHandler;
 
 import java.sql.*;
 import java.util.*;
+import java.util.Date;
 
 @Component
 public class PostgreJdbcTemplateSQLManager implements DatabaseManager {
@@ -217,5 +218,10 @@ public class PostgreJdbcTemplateSQLManager implements DatabaseManager {
             template.execute(query);
             return new ArrayList<>();
         }
+    }
+
+    @Override
+    public void createAction(Date date, String userName, String dbName, String action) {
+
     }
 }

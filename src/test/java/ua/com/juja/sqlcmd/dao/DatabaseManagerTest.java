@@ -1,4 +1,4 @@
-package ua.com.juja.sqlcmd.model;
+package ua.com.juja.sqlcmd.dao;
 
 import org.junit.Before;
 import org.junit.Test;

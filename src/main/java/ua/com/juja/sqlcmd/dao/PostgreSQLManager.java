@@ -1,10 +1,10 @@
-package ua.com.juja.sqlcmd.model;
+package ua.com.juja.sqlcmd.dao;
 
-import org.springframework.stereotype.Component;
 import ua.com.juja.sqlcmd.controller.PropertyHandler;
 
 import java.sql.*;
 import java.util.*;
+import java.util.Date;
 
 //@Component
 public class PostgreSQLManager implements DatabaseManager {
@@ -297,6 +297,11 @@ public class PostgreSQLManager implements DatabaseManager {
                         String.format("Error execute query '%s'", query), e);
             }
         }
+    }
+
+    @Override
+    public void createAction(Date date, String userName, String dbName, String action) {
+
     }
 
     private List<DataSet> getDataSets(ResultSet rs) {

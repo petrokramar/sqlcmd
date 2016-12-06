@@ -1,4 +1,4 @@
-package ua.com.juja.sqlcmd.model;
+package ua.com.juja.sqlcmd.dao;
 
 import org.junit.Test;
 import static org.junit.Assert.*;

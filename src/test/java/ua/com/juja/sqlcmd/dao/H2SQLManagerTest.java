@@ -1,13 +1,8 @@
-package ua.com.juja.sqlcmd.model;
+package ua.com.juja.sqlcmd.dao;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import ua.com.juja.sqlcmd.controller.PropertyHandler;
 
 import java.sql.SQLException;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by peter.kramar on 30.11.2016.
