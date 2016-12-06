@@ -6,6 +6,7 @@ import ua.com.juja.sqlcmd.controller.PropertyHandler;
 import java.sql.*;
 import java.util.*;
 
+//@Component
 public class PostgreSQLManager implements DatabaseManager {
     private final String DATABASE_JDBC_DRIVER = "jdbc:postgresql://";
     private Connection connection;
@@ -205,12 +206,11 @@ public class PostgreSQLManager implements DatabaseManager {
     }
 
     @Override
-    //TODO can be id string?
     public DataSet getRecordData(String tableName, int id) {
         DataSet dataSet = new DataSet();
         try (Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(String.format(
-                     "SELECT * FROM %s WHERE id = %d", tableName, id))) {
+                     "SELECT * FROM %s WHERE id = %s", tableName, id))) {
             ResultSetMetaData rsmd = rs.getMetaData();
             if (rs.next()) {
                 for (int index = 1; index <= rsmd.getColumnCount(); index++) {

@@ -1,1 +1,1 @@
-Console database client.
+Web database client.

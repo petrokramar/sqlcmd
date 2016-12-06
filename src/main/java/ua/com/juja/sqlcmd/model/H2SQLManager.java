@@ -6,6 +6,7 @@ import ua.com.juja.sqlcmd.controller.PropertyHandler;
 import java.sql.*;
 import java.util.*;
 
+//@Component
 public class H2SQLManager implements DatabaseManager {
     private final String DATABASE_JDBC_DRIVER = "jdbc:h2:mem:";
     private Connection connection;
@@ -50,6 +51,7 @@ public class H2SQLManager implements DatabaseManager {
     }
 
     @Override
+    //TODO At start list of databases is empty
     public String currentDatabase() {
         String databaseName = "";
         try (Statement statement = connection.createStatement();
@@ -201,7 +203,6 @@ public class H2SQLManager implements DatabaseManager {
     }
 
     @Override
-    //TODO can be id string?
     public DataSet getRecordData(String tableName, int id) {
         DataSet dataSet = new DataSet();
         try (Statement statement = connection.createStatement();

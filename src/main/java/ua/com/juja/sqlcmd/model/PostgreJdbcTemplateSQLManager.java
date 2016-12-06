@@ -65,17 +65,7 @@ public class PostgreJdbcTemplateSQLManager implements DatabaseManager {
 
     @Override
     public String currentDatabase() {
-        String databaseName = "";
-        try (Statement statement = connection.createStatement();
-             ResultSet rs = statement.executeQuery("SELECT current_database()")) {
-            if (rs.next()) {
-                databaseName = rs.getString(1);
-            }
-            return rs.getString(1);
-        } catch (SQLException e) {
-            throw new DatabaseManagerException(
-                    String.format("Error getting current database."), e);
-        }
+        return template.queryForObject("SELECT current_database()", String.class);
     }
 
     @Override
@@ -168,22 +158,12 @@ public class PostgreJdbcTemplateSQLManager implements DatabaseManager {
     }
 
     @Override
-    //TODO can be id string?
     public DataSet getRecordData(String tableName, int id) {
         DataSet dataSet = new DataSet();
-        try (Statement statement = connection.createStatement();
-             ResultSet rs = statement.executeQuery(String.format(
-                     "SELECT * FROM %s WHERE id = %d", tableName, id))) {
-            ResultSetMetaData rsmd = rs.getMetaData();
-            if (rs.next()) {
-                for (int index = 1; index <= rsmd.getColumnCount(); index++) {
-                    dataSet.put(rsmd.getColumnName(index), rs.getObject(index));
-                }
-            }
-        } catch (SQLException e) {
-            throw new DatabaseManagerException(
-                    String.format("Error getting record from table '%s' where id = %s",
-                            tableName, id), e);
+        Map<String, Object> data = template.queryForMap(String.format(
+                "SELECT * FROM %s WHERE id = %s", tableName, id));
+        for (Map.Entry<String, Object> entry : data.entrySet()) {
+            dataSet.put(entry.getKey(), entry.getValue());
         }
         return dataSet;
     }
@@ -206,22 +186,11 @@ public class PostgreJdbcTemplateSQLManager implements DatabaseManager {
     @Override
     public void updateRecord(String tableName, int id, DataSet input) {
         String fields = "";
-        for (String name : input.getNames()) {
-            fields += String.format("%s =? ", name) + ",";
+        for (Map.Entry<String, Object> entry: input.getData().entrySet()) {
+            fields += String.format("%s ='%s' ", entry.getKey(), entry.getValue()) + ",";
         }
         fields = fields.substring(0, fields.length() - 1);
-        try (PreparedStatement preparedStatement = connection.prepareStatement(
-                String.format("UPDATE %s SET %s WHERE id=?", tableName, fields))) {
-            int index = 1;
-            for (Object value : input.getValues()) {
-                preparedStatement.setObject(index++, value);
-            }
-            preparedStatement.setInt(index, id);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new DatabaseManagerException(
-                    String.format("Error update record in table '%s' where id = %d, input: %s", tableName, id, input), e);
-        }
+        template.execute(String.format("UPDATE %s SET %s WHERE id=%s", tableName, fields, id));
     }
 
     @Override
@@ -232,38 +201,21 @@ public class PostgreJdbcTemplateSQLManager implements DatabaseManager {
     @Override
     public List<DataSet> executeQuery(String query) {
         if (query.toLowerCase().startsWith("select")) {
-            try (Statement statement = connection.createStatement();
-                 ResultSet rs = statement.executeQuery(query)) {
-                return getDataSets(rs);
-            } catch (SQLException e) {
-                throw new DatabaseManagerException(
-                        String.format("Error execute query '%s'", query), e);
-            }
+            return template.query(query,
+                    new RowMapper<DataSet>() {
+                        public DataSet mapRow(ResultSet rs, int rowNum) throws SQLException {
+                            ResultSetMetaData rsmd = rs.getMetaData();
+                            DataSet dataSet = new DataSet();
+                            for (int i = 0; i < rsmd.getColumnCount(); i++) {
+                                dataSet.put(rsmd.getColumnName(i + 1), rs.getObject(i + 1));
+                            }
+                            return dataSet;
+                        }
+                    }
+            );
         } else {
-            try (Statement statement = connection.createStatement()) {
-                statement.executeUpdate(query);
-                return new ArrayList<>();
-            } catch (SQLException e) {
-                throw new DatabaseManagerException(
-                        String.format("Error execute query '%s'", query), e);
-            }
+            template.execute(query);
+            return new ArrayList<>();
         }
-    }
-
-    private List<DataSet> getDataSets(ResultSet rs) {
-        List<DataSet> result = new ArrayList<>();
-        try {
-            ResultSetMetaData rsmd = rs.getMetaData();
-            while ((rs.next())) {
-                DataSet dataSet = new DataSet();
-                for (int index = 1; index <= rsmd.getColumnCount(); index++) {
-                    dataSet.put(rsmd.getColumnName(index), rs.getObject(index));
-                }
-                result.add(dataSet);
-            }
-        } catch (SQLException e) {
-            throw new DatabaseManagerException("Error getting dataSets", e);
-        }
-        return result;
     }
 }
