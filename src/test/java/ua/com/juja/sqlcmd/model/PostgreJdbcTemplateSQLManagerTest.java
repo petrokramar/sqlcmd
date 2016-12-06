@@ -7,9 +7,6 @@ import java.sql.SQLException;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by peter.kramar on 02.12.2016.
- */
 public class PostgreJdbcTemplateSQLManagerTest extends DatabaseManagerTest{
     @Override
     protected DatabaseManager getDatabaseManager() {
@@ -22,6 +19,6 @@ public class PostgreJdbcTemplateSQLManagerTest extends DatabaseManagerTest{
         final PropertyHandler settings = PropertyHandler.getInstance();
         manager.connect(settings.getProperty("database.name"), settings.getProperty("database.user.name"),
                 settings.getProperty("database.user.password"));
-        manager.clearTable("users");
+        manager.clearTable(TEST_TABLE_NAME);
     }
 }

@@ -101,7 +101,6 @@ public class H2SQLManager implements DatabaseManager {
     @Override
     public void createTable(String tableName, String query) {
         try (Statement statement = connection.createStatement()) {
-//            statement.executeUpdate(String.format(" CREATE TABLE public.%s (%s)", tableName, query));
             statement.executeUpdate(String.format(" CREATE TABLE %s (%s)", tableName, query));
         } catch (SQLException e) {
             throw new DatabaseManagerException(String.format("Error creating table '%s'. Query: %s",
@@ -121,29 +120,12 @@ public class H2SQLManager implements DatabaseManager {
     @Override
     public Set<String> getTableColumns(String tableName) {
         Set<String> columns = new LinkedHashSet<>();
-
-
-
-
         try (Statement statement = connection.createStatement();
-
-
-
-//             DatabaseMetaData metadata = connection.getMetaData();
-//             ResultSet resultSet = metadata.getColumns(null, null, tableName, null);
-//    while (resultSet.next())
-//        columns.add(resultSet.getString("COLUMN_NAME"));
-//        return columns;
-
-
              ResultSet rs = statement.executeQuery(
-//                     String.format("SELECT column_name FROM information_schema.columns" +
-//                             " WHERE  table_schema = 'public' and table_name = '%s'", tableName))) {
-            //TODO query does not work
             String.format("SELECT column_name FROM information_schema.columns" +
-                    " WHERE  table_name = '%s'", tableName))) {
+                    " WHERE  table_name = '%s'", tableName.toUpperCase()))) {
             while ((rs.next())) {
-                columns.add(rs.getString("column_name"));
+                columns.add(rs.getString("column_name").toLowerCase());
             }
 
 
@@ -182,10 +164,10 @@ public class H2SQLManager implements DatabaseManager {
     public Set<String> getTableNames() {
         Set<String> tables = new TreeSet<>();
         try (Statement statement = connection.createStatement();
-             ResultSet rs = statement.executeQuery("SELECT table_name FROM information_schema.tables" +
-                     " WHERE table_schema = 'public' AND table_type = 'BASE TABLE'")) {
+             ResultSet rs = statement.executeQuery(
+                     "SELECT table_name FROM information_schema.tables WHERE table_type = 'TABLE'")) {
             while ((rs.next())) {
-                tables.add(rs.getString("table_name"));
+                tables.add(rs.getString("table_name").toLowerCase());
             }
             return tables;
         } catch (SQLException e) {

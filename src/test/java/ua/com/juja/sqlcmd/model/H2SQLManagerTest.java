@@ -27,9 +27,9 @@ public class H2SQLManagerTest extends DatabaseManagerTest{
         manager.connect("test", "sa", "");
         if (needInitTables) {
             manager.createTable(
-                    "users", "id INTEGER PRIMARY KEY, name VARCHAR(45) NOT NULL, password  VARCHAR(45) NOT NULL");
+                    TEST_TABLE_NAME, "id INTEGER PRIMARY KEY, name VARCHAR(45) NOT NULL, password  VARCHAR(45) NOT NULL");
         }
         needInitTables = false;
-        manager.clearTable("users");
+        manager.clearTable(TEST_TABLE_NAME);
     }
 }

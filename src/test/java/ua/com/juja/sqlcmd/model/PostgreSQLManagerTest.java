@@ -23,25 +23,25 @@ public class PostgreSQLManagerTest extends DatabaseManagerTest {
         final PropertyHandler settings = PropertyHandler.getInstance();
         manager.connect(settings.getProperty("database.name"), settings.getProperty("database.user.name"),
                 settings.getProperty("database.user.password"));
-        manager.clearTable("users");
+        manager.clearTable(TEST_TABLE_NAME);
     }
 
     @Test
     public void testExecuteQuery() throws SQLException {
-        List<DataSet> result = manager.executeQuery("SELECT * FROM users");
+        List<DataSet> result = manager.executeQuery(String.format("SELECT * FROM %s", TEST_TABLE_NAME));
         assertEquals(0, result.size());
 
         DataSet input = new DataSet();
         input.put("id", 1);
         input.put("name", "John");
         input.put("password", "pass");
-        manager.createRecord("users", input);
+        manager.createRecord(TEST_TABLE_NAME, input);
 
         DataSet inputTwo = new DataSet();
         inputTwo.put("id", 2);
         inputTwo.put("name", "Max");
         inputTwo.put("password", "1234");
-        manager.createRecord("users", inputTwo);
+        manager.createRecord(TEST_TABLE_NAME, inputTwo);
 
         result = manager.executeQuery("SELECT * FROM users");
         assertEquals(2, result.size());

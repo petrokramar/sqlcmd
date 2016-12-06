@@ -10,15 +10,16 @@ import java.util.*;
 import static org.junit.Assert.assertEquals;
 
 public abstract class DatabaseManagerTest {
+    protected static final String TEST_TABLE_NAME = "users_test";
     protected DatabaseManager manager;
 
     @Before
     public void setup() throws SQLException {
         manager = getDatabaseManager();
         final PropertyHandler settings = PropertyHandler.getInstance();
-        manager.connect(settings.getProperty("database.name"), settings.getProperty("database.user.name"),
+        manager.connect(TEST_TABLE_NAME, settings.getProperty("database.user.name"),
                 settings.getProperty("database.user.password"));
-        manager.clearTable("users");
+        manager.clearTable(TEST_TABLE_NAME);
     }
 
     protected abstract DatabaseManager getDatabaseManager();
@@ -27,6 +28,7 @@ public abstract class DatabaseManagerTest {
     public void testGetTableNames() throws SQLException, ClassNotFoundException {
         Set<String> testTables = new LinkedHashSet<>();
         testTables.add("users");
+        testTables.add(TEST_TABLE_NAME);
         Set<String> tables = manager.getTableNames();
         assertEquals(testTables, tables);
     }
@@ -37,7 +39,7 @@ public abstract class DatabaseManagerTest {
         testColumns.add("id");
         testColumns.add("name");
         testColumns.add("password");
-        Set<String> columns = manager.getTableColumns("users");
+        Set<String> columns = manager.getTableColumns(TEST_TABLE_NAME);
         assertEquals(testColumns, columns);
     }
 
@@ -47,9 +49,9 @@ public abstract class DatabaseManagerTest {
         input.put("id", 1);
         input.put("name", "John");
         input.put("password", "pass");
-        manager.createRecord("users", input);
+        manager.createRecord(TEST_TABLE_NAME, input);
 
-        List<DataSet> users = manager.getTableData("users");
+        List<DataSet> users = manager.getTableData(TEST_TABLE_NAME);
         assertEquals(1, users.size());
 
         DataSet user = users.get(0);
@@ -63,14 +65,14 @@ public abstract class DatabaseManagerTest {
         input.put("id", 1);
         input.put("name", "John");
         input.put("password", "pass");
-        manager.createRecord("users", input);
+        manager.createRecord(TEST_TABLE_NAME, input);
 
         DataSet newValue = new DataSet();
         newValue.put("name", "John2");
         newValue.put("password", "pass2");
-        manager.updateRecord("users", 1, newValue);
+        manager.updateRecord(TEST_TABLE_NAME, 1, newValue);
 
-        List<DataSet> users = manager.getTableData("users");
+        List<DataSet> users = manager.getTableData(TEST_TABLE_NAME);
         assertEquals(1, users.size());
 
         DataSet user = users.get(0);
@@ -84,31 +86,31 @@ public abstract class DatabaseManagerTest {
         input.put("id", 1);
         input.put("name", "John");
         input.put("password", "pass");
-        manager.createRecord("users", input);
+        manager.createRecord(TEST_TABLE_NAME, input);
 
-        manager.deleteRecord("users", 1);
+        manager.deleteRecord(TEST_TABLE_NAME, 1);
 
-        List<DataSet> users = manager.getTableData("users");
+        List<DataSet> users = manager.getTableData(TEST_TABLE_NAME);
         assertEquals(0, users.size());
     }
 
     @Test
     public void testGetSize() throws SQLException {
-        assertEquals(0, manager.getTableSize("users"));
+        assertEquals(0, manager.getTableSize(TEST_TABLE_NAME));
 
         DataSet input = new DataSet();
         input.put("id", 1);
         input.put("name", "John");
         input.put("password", "pass");
-        manager.createRecord("users", input);
+        manager.createRecord(TEST_TABLE_NAME, input);
 
         DataSet inputTwo = new DataSet();
         inputTwo.put("id", 2);
         inputTwo.put("name", "Max");
         inputTwo.put("password", "1234");
-        manager.createRecord("users", inputTwo);
+        manager.createRecord(TEST_TABLE_NAME, inputTwo);
 
-        assertEquals(2, manager.getTableSize("users"));
+        assertEquals(2, manager.getTableSize(TEST_TABLE_NAME));
     }
 
     @Test
