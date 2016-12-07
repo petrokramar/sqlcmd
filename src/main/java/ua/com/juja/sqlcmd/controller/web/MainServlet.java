@@ -1,6 +1,9 @@
 package ua.com.juja.sqlcmd.controller.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import ua.com.juja.sqlcmd.service.Service;
 
@@ -12,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
 
+@Controller
 public class MainServlet extends HttpServlet {
 
     @Autowired
@@ -23,6 +27,11 @@ public class MainServlet extends HttpServlet {
         SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
                 config.getServletContext());
     }
+
+//    @RequestMapping(value = "/help", method = RequestMethod.GET)
+//    public String help() {
+//        return "jsp/help";
+//    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -133,7 +142,9 @@ public class MainServlet extends HttpServlet {
             req.setAttribute("message", e.getMessage());
             req.getRequestDispatcher("jsp/error.jsp").forward(req, resp);
         }
-  }
+    }
+
+
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
