@@ -3,7 +3,7 @@ package ua.com.juja.sqlcmd.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ua.com.juja.sqlcmd.dao.DataSet;
-import ua.com.juja.sqlcmd.dao.DatabaseManager;
+import ua.com.juja.sqlcmd.dao.manager.DatabaseManager;
 
 import java.util.*;
 

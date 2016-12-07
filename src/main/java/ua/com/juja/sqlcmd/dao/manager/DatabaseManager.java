@@ -1,4 +1,6 @@
-package ua.com.juja.sqlcmd.dao;
+package ua.com.juja.sqlcmd.dao.manager;
+
+import ua.com.juja.sqlcmd.dao.DataSet;
 
 import java.util.Date;
 import java.util.List;

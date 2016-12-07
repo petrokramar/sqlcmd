@@ -1,8 +1,10 @@
-package ua.com.juja.sqlcmd.dao;
+package ua.com.juja.sqlcmd.dao.manager;
 
 import org.junit.Before;
 import org.junit.Test;
 import ua.com.juja.sqlcmd.controller.PropertyHandler;
+import ua.com.juja.sqlcmd.dao.DataSet;
+import ua.com.juja.sqlcmd.dao.manager.DatabaseManager;
 
 import java.sql.SQLException;
 import java.util.*;

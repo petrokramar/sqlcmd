@@ -1,4 +1,4 @@
-package ua.com.juja.sqlcmd.dao;
+package ua.com.juja.sqlcmd.dao.manager;
 
 import org.junit.Before;
 import ua.com.juja.sqlcmd.controller.PropertyHandler;

@@ -1,13 +1,14 @@
-package ua.com.juja.sqlcmd.dao;
+package ua.com.juja.sqlcmd.dao.manager;
 
 import ua.com.juja.sqlcmd.controller.PropertyHandler;
+import ua.com.juja.sqlcmd.dao.DataSet;
 
 import java.sql.*;
 import java.util.*;
 import java.util.Date;
 
 //@Component
-public class SpringDataManager implements DatabaseManager {
+public class PostgreSQLManager implements DatabaseManager {
     private final String DATABASE_JDBC_DRIVER = "jdbc:postgresql://";
     private Connection connection;
 

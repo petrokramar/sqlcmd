@@ -1,32 +1,41 @@
-package ua.com.juja.sqlcmd.dao;
+package ua.com.juja.sqlcmd.dao.manager;
+
+import ua.com.juja.sqlcmd.controller.PropertyHandler;
+import ua.com.juja.sqlcmd.dao.DataSet;
 
 import java.sql.*;
 import java.util.*;
 import java.util.Date;
 
 //@Component
-public class H2SQLManager implements DatabaseManager {
-    private final String DATABASE_JDBC_DRIVER = "jdbc:h2:mem:";
+public class SpringDataManager implements DatabaseManager {
+    private final String DATABASE_JDBC_DRIVER = "jdbc:postgresql://";
     private Connection connection;
 
     @Override
     public void connect(String databaseName, String userName, String password) {
         try {
-            Class.forName("org.h2.Driver");
+            Class.forName("org.postgresql.Driver");
         } catch (ClassNotFoundException e) {
-            throw new DatabaseManagerException("H2 SQL driver not found", e);
+            throw new DatabaseManagerException("PostgreSQL driver not found", e);
         }
         try {
             if (connection != null) {
                 connection.close();
             }
-            connection = DriverManager.getConnection(DATABASE_JDBC_DRIVER+databaseName,userName, password);
-
+            connection = DriverManager.getConnection(getJdbcUrl() + databaseName, userName, password);
         } catch (SQLException e) {
             connection = null;
             throw new DatabaseManagerException(
                     String.format("Failed to connect to database: %s, user: %s", databaseName, userName), e);
         }
+    }
+
+    private String getJdbcUrl(){
+        PropertyHandler settings = PropertyHandler.getInstance();
+        return String.format("%s%s:%s/", DATABASE_JDBC_DRIVER,
+                settings.getProperty("database.server.name"),
+                settings.getProperty("database.port"));
     }
 
     @Override
@@ -49,7 +58,6 @@ public class H2SQLManager implements DatabaseManager {
     }
 
     @Override
-    //TODO At start list of databases is empty
     public String currentDatabase() {
         String databaseName = "";
         try (Statement statement = connection.createStatement();
@@ -101,7 +109,7 @@ public class H2SQLManager implements DatabaseManager {
     @Override
     public void createTable(String tableName, String query) {
         try (Statement statement = connection.createStatement()) {
-            statement.executeUpdate(String.format(" CREATE TABLE %s (%s)", tableName, query));
+            statement.executeUpdate(String.format(" CREATE TABLE public.%s (%s)", tableName, query));
         } catch (SQLException e) {
             throw new DatabaseManagerException(String.format("Error creating table '%s'. Query: %s",
                     tableName, query));
@@ -122,13 +130,11 @@ public class H2SQLManager implements DatabaseManager {
         Set<String> columns = new LinkedHashSet<>();
         try (Statement statement = connection.createStatement();
              ResultSet rs = statement.executeQuery(
-            String.format("SELECT column_name FROM information_schema.columns" +
-                    " WHERE  table_name = '%s'", tableName.toUpperCase()))) {
+                     String.format("SELECT column_name FROM information_schema.columns" +
+                             " WHERE  table_schema = 'public' and table_name = '%s'", tableName))) {
             while ((rs.next())) {
-                columns.add(rs.getString("column_name").toLowerCase());
+                columns.add(rs.getString("column_name"));
             }
-
-
             return columns;
         } catch (SQLException e) {
             throw new DatabaseManagerException(
@@ -164,10 +170,10 @@ public class H2SQLManager implements DatabaseManager {
     public Set<String> getTableNames() {
         Set<String> tables = new TreeSet<>();
         try (Statement statement = connection.createStatement();
-             ResultSet rs = statement.executeQuery(
-                     "SELECT table_name FROM information_schema.tables WHERE table_type = 'TABLE'")) {
+             ResultSet rs = statement.executeQuery("SELECT table_name FROM information_schema.tables" +
+                     " WHERE table_schema = 'public' AND table_type = 'BASE TABLE'")) {
             while ((rs.next())) {
-                tables.add(rs.getString("table_name").toLowerCase());
+                tables.add(rs.getString("table_name"));
             }
             return tables;
         } catch (SQLException e) {
@@ -205,7 +211,7 @@ public class H2SQLManager implements DatabaseManager {
         DataSet dataSet = new DataSet();
         try (Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(String.format(
-                     "SELECT * FROM %s WHERE id = %d", tableName, id))) {
+                     "SELECT * FROM %s WHERE id = %s", tableName, id))) {
             ResultSetMetaData rsmd = rs.getMetaData();
             if (rs.next()) {
                 for (int index = 1; index <= rsmd.getColumnCount(); index++) {
@@ -306,8 +312,7 @@ public class H2SQLManager implements DatabaseManager {
             while ((rs.next())) {
                 DataSet dataSet = new DataSet();
                 for (int index = 1; index <= rsmd.getColumnCount(); index++) {
-                    //TODO h2 columns names is Upper case
-                    dataSet.put(rsmd.getColumnName(index).toLowerCase(), rs.getObject(index));
+                    dataSet.put(rsmd.getColumnName(index), rs.getObject(index));
                 }
                 result.add(dataSet);
             }

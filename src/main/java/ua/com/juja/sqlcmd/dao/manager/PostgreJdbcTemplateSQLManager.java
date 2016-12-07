@@ -1,10 +1,11 @@
-package ua.com.juja.sqlcmd.dao;
+package ua.com.juja.sqlcmd.dao.manager;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 import org.springframework.stereotype.Component;
 import ua.com.juja.sqlcmd.controller.PropertyHandler;
+import ua.com.juja.sqlcmd.dao.DataSet;
 
 import java.sql.*;
 import java.util.*;

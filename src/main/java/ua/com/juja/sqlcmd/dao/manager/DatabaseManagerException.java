@@ -1,4 +1,4 @@
-package ua.com.juja.sqlcmd.dao;
+package ua.com.juja.sqlcmd.dao.manager;
 
 class DatabaseManagerException extends RuntimeException {
     DatabaseManagerException(String message) {
