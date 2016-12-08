@@ -4,6 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ua.com.juja.sqlcmd.dao.DataSet;
 import ua.com.juja.sqlcmd.dao.manager.DatabaseManager;
+import ua.com.juja.sqlcmd.dao.repository.ConnectionRepository;
+import ua.com.juja.sqlcmd.dao.repository.UserActionRepository;
+import ua.com.juja.sqlcmd.dao.repository.UserRepository;
+import ua.com.juja.sqlcmd.model.User;
 
 import java.util.*;
 
@@ -12,6 +16,15 @@ public class ServiceImpl implements Service {
 
     @Autowired
     private DatabaseManager manager;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private ConnectionRepository connectionRepository;
+
+    @Autowired
+    private UserActionRepository userActionRepository;
 
     @Override
     public void connect(String databaseName, String userName, String password) {
@@ -142,5 +155,10 @@ public class ServiceImpl implements Service {
             }
         }
         return result;
+    }
+
+    @Override
+    public User saveUser(User user) {
+        return userRepository.save(user);
     }
 }

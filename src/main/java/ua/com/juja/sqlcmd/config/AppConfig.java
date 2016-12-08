@@ -3,6 +3,7 @@ package ua.com.juja.sqlcmd.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -20,6 +21,7 @@ import java.util.Properties;
 
 @Configuration
 @EnableWebMvc
+@EnableJpaRepositories("ua.com.juja.sqlcmd")
 @ComponentScan("ua.com.juja.sqlcmd")
 public class AppConfig {
     @Bean
@@ -52,7 +54,7 @@ public class AppConfig {
         //TODO move to properties
         //TODO replace create with validate
         jpaProperties.put("hibernate.hbm2ddl.auto", "create");
-        jpaProperties.put("hibernate.dialect", "org.hibernate.dialect.HSQLDialect");
+        jpaProperties.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
 
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
         factory.setDataSource(logDataSource());

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import ua.com.juja.sqlcmd.model.User;
 import ua.com.juja.sqlcmd.service.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +27,11 @@ public class MainController{
 
     @RequestMapping(value = "/menu", method = RequestMethod.GET)
     public String menu() {
+        User user = new User();
+        user.setLogin("test");
+        user.setPassword("2222");
+        user.setEmail("1@1.com");
+        service.saveUser(user);
         return "menu";
     }
 

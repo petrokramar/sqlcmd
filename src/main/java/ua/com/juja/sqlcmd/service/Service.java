@@ -1,5 +1,7 @@
 package ua.com.juja.sqlcmd.service;
 
+import ua.com.juja.sqlcmd.model.User;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -27,4 +29,6 @@ public interface Service {
     void updateRecord(String tableName, int id, Map<String, String[]> parameters);
 
     List<List<String>> executeQuery(String query);
+
+    User saveUser(User user);
 }
