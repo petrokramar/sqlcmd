@@ -1,4 +1,7 @@
+-- Database sqlcmd_log
+DROP TABLE IF EXISTS user_actions;
 DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS connections;
 
 CREATE  TABLE users (
   id SERIAL PRIMARY KEY,
@@ -13,15 +16,11 @@ INSERT INTO users (login, password, email) VALUES('login3', 'password3', 'addres
 INSERT INTO users (login, password, email) VALUES('login4', 'password4', 'address4@zzz.com');
 INSERT INTO users (login, password, email) VALUES('login5', 'password5', 'address5@zzz.com');
 
-DROP TABLE IF EXISTS connections;
-
 CREATE  TABLE connections (
   id SERIAL PRIMARY KEY,
   db_name VARCHAR (45),
   db_user_name VARCHAR (45)
 );
-
-DROP TABLE IF EXISTS user_actions;
 
 CREATE  TABLE user_actions (
   id SERIAL PRIMARY KEY,
@@ -31,10 +30,10 @@ CREATE  TABLE user_actions (
   action VARCHAR (200)
 );
 
-DROP TABLE IF EXISTS users_test;
-
-CREATE  TABLE users_test (
-  id SERIAL PRIMARY KEY,
-  name varchar(45) NOT NULL,
-  password varchar(45) NOT NULL
-);
+-- DROP TABLE IF EXISTS users_test;
+--
+-- CREATE  TABLE users_test (
+--   id SERIAL PRIMARY KEY,
+--   name varchar(45) NOT NULL,
+--   password varchar(45) NOT NULL
+-- );
