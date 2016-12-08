@@ -1,6 +1,8 @@
 package ua.com.juja.sqlcmd.service;
 
+import ua.com.juja.sqlcmd.model.DatabaseConnection;
 import ua.com.juja.sqlcmd.model.User;
+import ua.com.juja.sqlcmd.model.UserAction;
 
 import java.util.List;
 import java.util.Map;
@@ -31,4 +33,6 @@ public interface Service {
     List<List<String>> executeQuery(String query);
 
     User saveUser(User user);
+    DatabaseConnection saveDatabaseConnection(DatabaseConnection connection);
+    UserAction saveUserAction(UserAction action);
 }

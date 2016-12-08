@@ -2,16 +2,20 @@ package ua.com.juja.sqlcmd.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import ua.com.juja.sqlcmd.dao.DataSet;
 import ua.com.juja.sqlcmd.dao.manager.DatabaseManager;
 import ua.com.juja.sqlcmd.dao.repository.ConnectionRepository;
 import ua.com.juja.sqlcmd.dao.repository.UserActionRepository;
 import ua.com.juja.sqlcmd.dao.repository.UserRepository;
+import ua.com.juja.sqlcmd.model.DatabaseConnection;
 import ua.com.juja.sqlcmd.model.User;
+import ua.com.juja.sqlcmd.model.UserAction;
 
 import java.util.*;
 
 @Component
+@Transactional
 public class ServiceImpl implements Service {
 
     @Autowired
@@ -160,5 +164,15 @@ public class ServiceImpl implements Service {
     @Override
     public User saveUser(User user) {
         return userRepository.save(user);
+    }
+
+    @Override
+    public DatabaseConnection saveDatabaseConnection(DatabaseConnection connection) {
+        return connectionRepository.save(connection);
+    }
+
+    @Override
+    public UserAction saveUserAction(UserAction action) {
+        return userActionRepository.save(action);
     }
 }

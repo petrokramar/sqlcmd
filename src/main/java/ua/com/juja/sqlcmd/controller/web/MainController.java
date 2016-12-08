@@ -5,10 +5,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import ua.com.juja.sqlcmd.model.DatabaseConnection;
 import ua.com.juja.sqlcmd.model.User;
+import ua.com.juja.sqlcmd.model.UserAction;
 import ua.com.juja.sqlcmd.service.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -31,7 +34,18 @@ public class MainController{
         user.setLogin("test");
         user.setPassword("2222");
         user.setEmail("1@1.com");
-        service.saveUser(user);
+
+        DatabaseConnection connection = new DatabaseConnection();
+        connection.setDatabaseName("database 1");
+        connection.setUserName("database user 1");
+
+        UserAction action = new UserAction();
+        action.setUser(user);
+        action.setDatabaseConnection(connection);
+        action.setAction("test action");
+        action.setDate(new Date());
+        service.saveUserAction(action);
+
         return "menu";
     }
 
