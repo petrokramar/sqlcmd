@@ -5,17 +5,18 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.juja.sqlcmd.dao.DataSet;
 import ua.com.juja.sqlcmd.dao.manager.DatabaseManager;
-import ua.com.juja.sqlcmd.dao.repository.ConnectionRepository;
-import ua.com.juja.sqlcmd.dao.repository.UserActionRepository;
-import ua.com.juja.sqlcmd.dao.repository.UserRepository;
+import ua.com.juja.sqlcmd.dao.repository.jpa.ConnectionRepository;
+import ua.com.juja.sqlcmd.dao.repository.jpa.UserActionRepository;
+import ua.com.juja.sqlcmd.dao.repository.jpa.UserRepository;
 import ua.com.juja.sqlcmd.model.DatabaseConnection;
 import ua.com.juja.sqlcmd.model.User;
 import ua.com.juja.sqlcmd.model.UserAction;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import java.util.*;
 
 @Component
-@Transactional
 public class ServiceImpl implements Service {
 
     @Autowired
@@ -29,6 +30,15 @@ public class ServiceImpl implements Service {
 
     @Autowired
     private UserActionRepository userActionRepository;
+
+    @Autowired
+    EntityManager em;
+
+    @Autowired
+    EntityManagerFactory emf;
+
+//    @Autowired
+//    private EntityManagerFactory emf;
 
     @Override
     public void connect(String databaseName, String userName, String password) {
@@ -52,6 +62,7 @@ public class ServiceImpl implements Service {
 
     @Override
     public void createDatabase(String databaseName) {
+        //TODO check exist database
         manager.createDatabase(databaseName);
     }
 
@@ -172,7 +183,45 @@ public class ServiceImpl implements Service {
     }
 
     @Override
-    public UserAction saveUserAction(UserAction action) {
+    @Transactional
+    public UserAction saveUserAction(String description) {
+        //TODO refactor!!!!
+//        User repositoryUser = userRepository.findByLogin("test");
+        User user = new User();
+//        if (repositoryUser == null) {
+            user.setLogin("test");
+            user.setPassword("2222");
+            user.setEmail("1@1.com");
+//        } else {
+//            user.setPassword(repositoryUser.getPassword());
+//            user.setLogin(repositoryUser.getLogin());
+//            user.setPassword(repositoryUser.getPassword());
+//            user.setEmail(repositoryUser.getEmail());
+//        }
+//        User user2 = new User();
+////        if (repositoryUser == null) {
+//        user2.setLogin("test8");
+//        user2.setPassword("22228");
+//        user2.setEmail("1@18.com");
+//        em = emf.createEntityManager();
+//        em.getTransaction().begin();
+//        emf.createEntityManager().persist(user2);
+//        em.getTransaction().commit();
+//        EntityManager em = emf.createEntityManager()
+//        em.merge(user);
+//        em.p
+//        DatabaseConnection connection = connectionRepository.findByDatabaseNameAndUserName("database1", "database user 1");
+//        if (connection == null) {
+            DatabaseConnection connection = new DatabaseConnection();
+            connection.setDatabaseName("database 1");
+            connection.setUserName("database user 1");
+//        }
+
+        UserAction action = new UserAction();
+        action.setUser(user);
+        action.setDatabaseConnection(connection);
+        action.setAction(description);
+        action.setDate(new Date());
         return userActionRepository.save(action);
     }
 }

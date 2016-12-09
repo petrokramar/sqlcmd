@@ -1,9 +1,7 @@
 package ua.com.juja.sqlcmd.service;
 
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import ua.com.juja.sqlcmd.dao.repository.UserRepository;
-import ua.com.juja.sqlcmd.model.User;
+import ua.com.juja.sqlcmd.dao.repository.jpa.UserRepository;
 
 /**
  * Created by peter.kramar on 08.12.2016.

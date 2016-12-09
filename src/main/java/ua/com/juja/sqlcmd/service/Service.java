@@ -34,5 +34,5 @@ public interface Service {
 
     User saveUser(User user);
     DatabaseConnection saveDatabaseConnection(DatabaseConnection connection);
-    UserAction saveUserAction(UserAction action);
+    UserAction saveUserAction(String description);
 }

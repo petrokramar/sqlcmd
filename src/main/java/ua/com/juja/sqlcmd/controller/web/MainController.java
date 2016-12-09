@@ -5,13 +5,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import ua.com.juja.sqlcmd.model.DatabaseConnection;
-import ua.com.juja.sqlcmd.model.User;
-import ua.com.juja.sqlcmd.model.UserAction;
 import ua.com.juja.sqlcmd.service.Service;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -25,32 +21,19 @@ public class MainController{
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String start() {
+        service.saveUserAction("get menu");
         return "menu";
     }
 
     @RequestMapping(value = "/menu", method = RequestMethod.GET)
     public String menu() {
-        User user = new User();
-        user.setLogin("test");
-        user.setPassword("2222");
-        user.setEmail("1@1.com");
-
-        DatabaseConnection connection = new DatabaseConnection();
-        connection.setDatabaseName("database 1");
-        connection.setUserName("database user 1");
-
-        UserAction action = new UserAction();
-        action.setUser(user);
-        action.setDatabaseConnection(connection);
-        action.setAction("test action");
-        action.setDate(new Date());
-        service.saveUserAction(action);
-
+        service.saveUserAction("get menu");
         return "menu";
     }
 
     @RequestMapping(value = "/connect", method = RequestMethod.GET)
     public String connect() {
+        service.saveUserAction("get connect");
         return "connect";
     }
 
@@ -60,16 +43,19 @@ public class MainController{
         String userName = req.getParameter("username");
         String password = req.getParameter("password");
         service.connect(databaseName, userName, password);
+        service.saveUserAction("connected. database name - " + databaseName + ". username - " + userName);
         return "redirect:databases";
     }
 
     @RequestMapping(value = "/help", method = RequestMethod.GET)
     public String help() {
+        service.saveUserAction("get help");
         return "help";
     }
 
     @RequestMapping(value = "/databases", method = RequestMethod.GET)
     public String databases(Model model) {
+        service.saveUserAction("get databases");
         if (!service.isConnected()) {
             return "connect";
         }
@@ -77,11 +63,13 @@ public class MainController{
         Set<String> databases= service.getDatabaseNames();
         model.addAttribute("databases", databases);
         model.addAttribute("current", currentDatabase);
+        service.saveUserAction("get databases");
         return "databaseNames";
     }
 
     @RequestMapping(value = "/createdatabase", method = RequestMethod.GET)
     public String createDatabase() {
+        service.saveUserAction("get createdatabase");
         return "createDatabase";
     }
 
@@ -89,6 +77,7 @@ public class MainController{
     public String creatingDatabase(HttpServletRequest req) {
         String databaseName = req.getParameter("database");
         service.createDatabase(databaseName);
+        service.saveUserAction("database " + databaseName + "created");
         return "redirect:databases";
     }
 
@@ -96,6 +85,7 @@ public class MainController{
     public String dropDatabase(HttpServletRequest req) {
         String databaseName = req.getParameter("name");
         req.setAttribute("database", databaseName);
+        service.saveUserAction("get dropdatabase " + databaseName);
         return "dropDatabase";
     }
 
@@ -103,20 +93,21 @@ public class MainController{
     public String droppingDatabase(HttpServletRequest req) {
         String databaseName = req.getParameter("database");
         service.dropDatabase(databaseName);
-        return "redirectdatabases";
+        service.saveUserAction("database " + databaseName + "dropped");
+        return "redirect:databases";
     }
-
-
 
     @RequestMapping(value = "/tables", method = RequestMethod.GET)
     public String tables(HttpServletRequest req) {
         Set<String> tables = service.getTableNames();
         req.setAttribute("tables", tables);
+        service.saveUserAction("get tables");
         return "tableNames";
     }
 
     @RequestMapping(value = "/createtable", method = RequestMethod.GET)
     public String createTable() {
+        service.saveUserAction("get create table");
         return "createTable";
     }
 
@@ -125,6 +116,7 @@ public class MainController{
         String tableName = req.getParameter("name");
         String query = req.getParameter("query");
         service.createTable(tableName, query);
+        service.saveUserAction("table created " + tableName + " " + query);
         return "redirect:tables";
     }
 
@@ -132,6 +124,7 @@ public class MainController{
     public String clearTable(HttpServletRequest req) {
         String tableName = req.getParameter("name");
         req.setAttribute("table", tableName);
+        service.saveUserAction("clear table " + tableName);
         return "clearTable";
     }
 
@@ -139,6 +132,7 @@ public class MainController{
     public String clearing(HttpServletRequest req) {
         String tableName = req.getParameter("table");
         service.clearTable(tableName);
+        service.saveUserAction("table " + tableName + " cleared");
         return "redirect:tables";
     }
 
@@ -146,6 +140,7 @@ public class MainController{
     public String dropTable(HttpServletRequest req) {
         String tableName = req.getParameter("name");
         req.setAttribute("table", tableName);
+        service.saveUserAction("drop table " + tableName);
         return "dropTable";
     }
 
@@ -153,6 +148,7 @@ public class MainController{
     public String droppingTable(HttpServletRequest req) {
         String tableName = req.getParameter("table");
         service.dropTable(tableName);
+        service.saveUserAction("table " + tableName + " dropped");
         return "redirect:tables";
     }
 
@@ -174,6 +170,7 @@ public class MainController{
         req.setAttribute("columns", columns);
         req.setAttribute("idindex", idIndex);
         req.setAttribute("tableData", tableData);
+        service.saveUserAction("get table data " + tableName);
         return "tableData";
     }
 
@@ -184,6 +181,7 @@ public class MainController{
         columns.remove("id");
         req.setAttribute("table", tableName);
         req.setAttribute("columns", columns);
+        service.saveUserAction("get create record. table - " + tableName);
         return "createRecord";
     }
 
@@ -192,6 +190,7 @@ public class MainController{
         Map<String, String[]> parameters = req.getParameterMap();
         String tableName = req.getParameter("tableName");
         service.createRecord(tableName, parameters);
+        service.saveUserAction("record in table " + tableName + " created");
         return "redirect:table?name=" + tableName;
     }
 
@@ -203,6 +202,7 @@ public class MainController{
         req.setAttribute("table", tableName);
         req.setAttribute("id", id);
         req.setAttribute("record", record);
+        service.saveUserAction("get delete record. table - " + tableName);
         return "deleteRecord";
     }
 
@@ -211,6 +211,7 @@ public class MainController{
         String tableName = req.getParameter("tableName");
         int id = Integer.parseInt(req.getParameter("id"));
         service.deleteRecord(tableName, id);
+        service.saveUserAction("record in table " + tableName + " deleted");
         return "redirect:table?name=" + tableName;
     }
 
@@ -222,6 +223,7 @@ public class MainController{
         req.setAttribute("table", tableName);
         req.setAttribute("id", id);
         req.setAttribute("record", record);
+        service.saveUserAction("get update record. table - " + tableName);
         return "updateRecord";
     }
 
@@ -231,6 +233,7 @@ public class MainController{
         int id = Integer.parseInt(req.getParameter("id"));;
         Map<String, String[]> parameters = req.getParameterMap();
         service.updateRecord(tableName, id, parameters);
+        service.saveUserAction("record in table " + tableName + " updated");
         return "redirect:table?name=" + tableName;
     }
 
@@ -240,6 +243,7 @@ public class MainController{
         if (!service.isConnected()) {
             return "connect";
         }
+        service.saveUserAction("get query");
         return "query";
     }
 
@@ -249,6 +253,7 @@ public class MainController{
         List<List<String>> queryData = service.executeQuery(query);
         req.setAttribute("query", query);
         req.setAttribute("querydata", queryData);
+        service.saveUserAction("query " + query + " executed");
         return "queryResult";
     }
 }
