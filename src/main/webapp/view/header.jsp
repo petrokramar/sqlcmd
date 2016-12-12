@@ -6,6 +6,7 @@
         <td><a href="databases"> Databases </a></td>
         <td><a href="query"> Query </a></td>
         <td><a href="help"> Help </a></td>
+        <td><a href="login"> Login </a></td>
     </tr>
 </table>
 

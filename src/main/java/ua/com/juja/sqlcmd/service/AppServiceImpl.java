@@ -1,7 +1,7 @@
 package ua.com.juja.sqlcmd.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.juja.sqlcmd.dao.DataSet;
 import ua.com.juja.sqlcmd.dao.manager.DatabaseManager;
@@ -16,8 +16,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import java.util.*;
 
-@Component
-public class ServiceImpl implements Service {
+@Service
+public class AppServiceImpl implements AppService {
 
     @Autowired
     private DatabaseManager manager;

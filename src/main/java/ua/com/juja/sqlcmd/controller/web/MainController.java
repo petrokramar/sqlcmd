@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import ua.com.juja.sqlcmd.service.Service;
+import ua.com.juja.sqlcmd.service.AppService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -17,7 +17,7 @@ public class MainController{
 
     //TODO Catch exceptions
     @Autowired
-    private Service service;
+    private AppService service;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String start() {
@@ -29,6 +29,27 @@ public class MainController{
     public String menu() {
         service.saveUserAction("get menu");
         return "menu";
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String login() {
+        service.saveUserAction("get login");
+        return "login";
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public String loginning() {
+        return "redirect:menu";
+    }
+    @RequestMapping(value = "/registration", method = RequestMethod.GET)
+    public String register() {
+        service.saveUserAction("get registration");
+        return "registration";
+    }
+
+    @RequestMapping(value = "/registration", method = RequestMethod.POST)
+    public String registration() {
+        return "redirect:menu";
     }
 
     @RequestMapping(value = "/connect", method = RequestMethod.GET)

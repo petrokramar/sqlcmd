@@ -15,6 +15,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <org.springframework.version>4.3.3.RELEASE</org.springframework.version>
+        <org.springframework.security.version>4.2.0.RELEASE</org.springframework.security.version>
     </properties>
 
     <build>
@@ -72,25 +73,25 @@
             <version>1.10.4.RELEASE</version>
         </dependency>
 
-        <!--&lt;!&ndash; Spring Security &ndash;&gt;-->
-        <!--<dependency>-->
-            <!--<groupId>org.springframework.security</groupId>-->
-            <!--<artifactId>spring-security-web</artifactId>-->
-            <!--<version>4.0.3.RELEASE</version>-->
-        <!--</dependency>-->
+        <!-- Spring Security -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>${org.springframework.security.version}</version>
+        </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>org.springframework.security</groupId>-->
-            <!--<artifactId>spring-security-config</artifactId>-->
-            <!--<version>4.0.3.RELEASE</version>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>${org.springframework.security.version}</version>
+        </dependency>
 
-        <!--&lt;!&ndash; Spring Security JSP Taglib &ndash;&gt;-->
-        <!--<dependency>-->
-            <!--<groupId>org.springframework.security</groupId>-->
-            <!--<artifactId>spring-security-taglibs</artifactId>-->
-            <!--<version>4.0.3.RELEASE</version>-->
-        <!--</dependency>-->
+        <!-- Spring Security JSP Taglib -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-taglibs</artifactId>
+            <version>${org.springframework.security.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>org.hibernate</groupId>

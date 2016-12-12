@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public interface Service {
+public interface AppService {
     void connect(String databaseName, String userName, String password);
 
     boolean isConnected();

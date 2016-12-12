@@ -20,8 +20,8 @@ CREATE  TABLE roles (
   name VARCHAR (45) NOT NULL
 );
 
-INSERT INTO roles (id, name) VALUES('1', 'administrator');
-INSERT INTO roles (id, name) VALUES('2', 'user');
+INSERT INTO roles (id, name) VALUES('1', 'ADMIN');
+INSERT INTO roles (id, name) VALUES('2', 'USER');
 
 CREATE  TABLE user_roles (
   user_id integer NOT NULL REFERENCES users(id),
