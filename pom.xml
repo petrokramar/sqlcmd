@@ -61,16 +61,36 @@
             <artifactId>spring-tx</artifactId>
             <version>${org.springframework.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-core</artifactId>
-            <version>4.1.3.RELEASE</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.security</groupId>-->
+            <!--<artifactId>spring-security-core</artifactId>-->
+            <!--<version>4.1.3.RELEASE</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-jpa</artifactId>
             <version>1.10.4.RELEASE</version>
         </dependency>
+
+        <!--&lt;!&ndash; Spring Security &ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.security</groupId>-->
+            <!--<artifactId>spring-security-web</artifactId>-->
+            <!--<version>4.0.3.RELEASE</version>-->
+        <!--</dependency>-->
+
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.security</groupId>-->
+            <!--<artifactId>spring-security-config</artifactId>-->
+            <!--<version>4.0.3.RELEASE</version>-->
+        <!--</dependency>-->
+
+        <!--&lt;!&ndash; Spring Security JSP Taglib &ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.security</groupId>-->
+            <!--<artifactId>spring-security-taglibs</artifactId>-->
+            <!--<version>4.0.3.RELEASE</version>-->
+        <!--</dependency>-->
 
         <dependency>
             <groupId>org.hibernate</groupId>

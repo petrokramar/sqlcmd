@@ -1,6 +1,8 @@
 -- Database sqlcmd_log
 DROP TABLE IF EXISTS user_actions;
+DROP TABLE IF EXISTS user_roles;
 DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS roles;
 DROP TABLE IF EXISTS connections;
 
 CREATE  TABLE users (
@@ -10,11 +12,26 @@ CREATE  TABLE users (
   email VARCHAR (45) NOT NULL
 );
 
-INSERT INTO users (login, password, email) VALUES('login1', 'password1', 'address1@zzz.com');
-INSERT INTO users (login, password, email) VALUES('login2', 'password2', 'address2@zzz.com');
-INSERT INTO users (login, password, email) VALUES('login3', 'password3', 'address3@zzz.com');
-INSERT INTO users (login, password, email) VALUES('login4', 'password4', 'address4@zzz.com');
-INSERT INTO users (login, password, email) VALUES('login5', 'password5', 'address5@zzz.com');
+INSERT INTO users (id, login, password, email) VALUES('1', 'admin', 'admin', 'admin@zzz.com');
+INSERT INTO users (id, login, password, email) VALUES('2', 'user', 'user', 'user@zzz.com');
+
+CREATE  TABLE roles (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR (45) NOT NULL
+);
+
+INSERT INTO roles (id, name) VALUES('1', 'administrator');
+INSERT INTO roles (id, name) VALUES('2', 'user');
+
+CREATE  TABLE user_roles (
+  user_id integer NOT NULL REFERENCES users(id),
+  role_id integer NOT NULL REFERENCES roles(id),
+  PRIMARY KEY(user_id, role_id)
+);
+
+INSERT INTO user_roles (user_id, role_id) VALUES('1','1');
+INSERT INTO user_roles (user_id, role_id) VALUES('1','2');
+INSERT INTO user_roles (user_id, role_id) VALUES('2','2');
 
 CREATE  TABLE connections (
   id SERIAL PRIMARY KEY,
@@ -24,8 +41,8 @@ CREATE  TABLE connections (
 
 CREATE  TABLE user_actions (
   id SERIAL PRIMARY KEY,
-  date TIMESTAMP,
-  user_id INTEGER REFERENCES users(id) ,
+  date TIMESTAMP NOT NULL,
+  user_id INTEGER NOT NULL REFERENCES users(id) ,
   connection_id INTEGER REFERENCES connections(id) ,
   action VARCHAR (200)
 );

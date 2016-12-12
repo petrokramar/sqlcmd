@@ -189,6 +189,7 @@ public class ServiceImpl implements Service {
 //        User repositoryUser = userRepository.findByLogin("test");
         User user = new User();
 //        if (repositoryUser == null) {
+//            user.setId(179);
             user.setLogin("test");
             user.setPassword("2222");
             user.setEmail("1@1.com");
