@@ -2,14 +2,14 @@ package ua.com.juja.sqlcmd.model;
 
 import javax.persistence.*;
 
-@Entity
-@Table(name = "roles")
+//@Entity
+//@Table(name = "roles")
 public class Role {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @Column(name = "name")
+//    @Column(name = "name")
     private String name;
 
     public int getId() {

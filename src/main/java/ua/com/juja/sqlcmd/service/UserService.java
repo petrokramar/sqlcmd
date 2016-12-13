@@ -4,6 +4,6 @@ import ua.com.juja.sqlcmd.model.User;
 
 public interface UserService {
 
-    User getUser(String login);
+//    User getUser(String login);
 
 }

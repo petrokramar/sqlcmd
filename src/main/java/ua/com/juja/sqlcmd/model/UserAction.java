@@ -13,7 +13,7 @@ public class UserAction {
     @Column(name = "date")
     private Date date;
 
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_username")
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private User user;
 

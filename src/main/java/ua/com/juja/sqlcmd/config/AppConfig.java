@@ -15,7 +15,7 @@ import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
-import ua.com.juja.sqlcmd.service.UserDetailsServiceImpl;
+//import ua.com.juja.sqlcmd.service.UserDetailsServiceImpl;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
@@ -27,10 +27,6 @@ import java.util.Properties;
 @ComponentScan("ua.com.juja.sqlcmd")
 public class AppConfig {
 
-    @Bean
-    public UserDetailsService getUserDetailsService(){
-        return new UserDetailsServiceImpl();
-    }
     @Bean
     public ViewResolver viewResolver() {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
@@ -78,5 +74,4 @@ public class AppConfig {
         txManager.setEntityManagerFactory(entityManagerFactory());
         return txManager;
     }
-
 }

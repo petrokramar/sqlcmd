@@ -186,43 +186,44 @@ public class AppServiceImpl implements AppService {
     @Transactional
     public UserAction saveUserAction(String description) {
         //TODO refactor!!!!
-//        User repositoryUser = userRepository.findByLogin("test");
-        User user = new User();
-//        if (repositoryUser == null) {
-//            user.setId(179);
-            user.setLogin("test");
-            user.setPassword("2222");
-            user.setEmail("1@1.com");
-//        } else {
-//            user.setPassword(repositoryUser.getPassword());
-//            user.setLogin(repositoryUser.getLogin());
-//            user.setPassword(repositoryUser.getPassword());
-//            user.setEmail(repositoryUser.getEmail());
-//        }
-//        User user2 = new User();
+////        User repositoryUser = userRepository.findByLogin("test");
+//        User user = new User();
 ////        if (repositoryUser == null) {
-//        user2.setLogin("test8");
-//        user2.setPassword("22228");
-//        user2.setEmail("1@18.com");
-//        em = emf.createEntityManager();
-//        em.getTransaction().begin();
-//        emf.createEntityManager().persist(user2);
-//        em.getTransaction().commit();
-//        EntityManager em = emf.createEntityManager()
-//        em.merge(user);
-//        em.p
-//        DatabaseConnection connection = connectionRepository.findByDatabaseNameAndUserName("database1", "database user 1");
-//        if (connection == null) {
-            DatabaseConnection connection = new DatabaseConnection();
-            connection.setDatabaseName("database 1");
-            connection.setUserName("database user 1");
-//        }
-
-        UserAction action = new UserAction();
-        action.setUser(user);
-        action.setDatabaseConnection(connection);
-        action.setAction(description);
-        action.setDate(new Date());
-        return userActionRepository.save(action);
+////            user.setId(179);
+//            user.setUsername("test");
+//            user.setPassword("2222");
+////            user.setEmail("1@1.com");
+////        } else {
+////            user.setPassword(repositoryUser.getPassword());
+////            user.setLogin(repositoryUser.getLogin());
+////            user.setPassword(repositoryUser.getPassword());
+////            user.setEmail(repositoryUser.getEmail());
+////        }
+////        User user2 = new User();
+//////        if (repositoryUser == null) {
+////        user2.setLogin("test8");
+////        user2.setPassword("22228");
+////        user2.setEmail("1@18.com");
+////        em = emf.createEntityManager();
+////        em.getTransaction().begin();
+////        emf.createEntityManager().persist(user2);
+////        em.getTransaction().commit();
+////        EntityManager em = emf.createEntityManager()
+////        em.merge(user);
+////        em.p
+////        DatabaseConnection connection = connectionRepository.findByDatabaseNameAndUserName("database1", "database user 1");
+////        if (connection == null) {
+//            DatabaseConnection connection = new DatabaseConnection();
+//            connection.setDatabaseName("database 1");
+//            connection.setUserName("database user 1");
+////        }
+//
+//        UserAction action = new UserAction();
+//        action.setUser(user);
+//        action.setDatabaseConnection(connection);
+//        action.setAction(description);
+//        action.setDate(new Date());
+//        return userActionRepository.save(action);
+        return new UserAction();
     }
 }
