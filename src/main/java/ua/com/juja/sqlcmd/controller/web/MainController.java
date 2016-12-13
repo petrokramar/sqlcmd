@@ -7,6 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -18,7 +19,7 @@ import java.util.Map;
 import java.util.Set;
 
 @Controller
-public class MainController{
+public class MainController {
 
     //TODO Catch exceptions
     //TODO Replace all with ModelAndView
@@ -47,6 +48,7 @@ public class MainController{
     public String loginning() {
         return "redirect:menu";
     }
+
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String register() {
         service.saveUserAction("get registration");
@@ -87,7 +89,7 @@ public class MainController{
             return "connect";
         }
         String currentDatabase = service.currentDatabase();
-        Set<String> databases= service.getDatabaseNames();
+        Set<String> databases = service.getDatabaseNames();
         model.addAttribute("databases", databases);
         model.addAttribute("current", currentDatabase);
         service.saveUserAction("get databases");
@@ -257,7 +259,8 @@ public class MainController{
     @RequestMapping(value = "/updaterecord", method = RequestMethod.POST)
     public String updatingRecord(HttpServletRequest req) {
         String tableName = req.getParameter("tableName");
-        int id = Integer.parseInt(req.getParameter("id"));;
+        int id = Integer.parseInt(req.getParameter("id"));
+        ;
         Map<String, String[]> parameters = req.getParameterMap();
         service.updateRecord(tableName, id, parameters);
         service.saveUserAction("record in table " + tableName + " updated");
@@ -294,5 +297,11 @@ public class MainController{
         }
         model.setViewName("403");
         return model;
+    }
+
+    @RequestMapping("/db")
+    public String getProduct(Model model) {
+        model.addAttribute("databases", service.getDatabaseNames());
+        return "databases_t";
     }
 }

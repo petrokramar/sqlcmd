@@ -17,6 +17,7 @@ import javax.persistence.EntityManagerFactory;
 import java.util.*;
 
 @Service
+@Transactional
 public class AppServiceImpl implements AppService {
 
     @Autowired
