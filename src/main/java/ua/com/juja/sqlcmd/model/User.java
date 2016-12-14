@@ -7,21 +7,28 @@ import java.util.Set;
 @Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "username", unique = true,
+            nullable = false, length = 45)
     private String username;
 
-    @Column(name = "password")
+    @Column(name = "password",
+            nullable = false, length = 45)
     private String password;
 
-//    @Column(name = "email")
-//    private String email;
+    @Column(name = "email",
+            nullable = false, length = 45)
+    private String email;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "user_roles",
-            joinColumns = @JoinColumn(name = "username"),
-            inverseJoinColumns = @JoinColumn(name = "user_role_id"))
-    private Set<Role> roles;
+    @Column(name = "enabled", nullable = false)
+    private boolean enabled;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private Set<UserRole> userRoles;
+
+    @Column(name = "enabled", nullable = false)
+    public boolean isEnabled() {
+        return this.enabled;
+    }
 
     public String getUsername() {
         return username;
@@ -39,19 +46,15 @@ public class User {
         this.password = password;
     }
 
-//    public String getEmail() {
-//        return email;
-//    }
-//
-//    public void setEmail(String email) {
-//        this.email = email;
-//    }
-
-    public Set<Role> getRoles() {
-        return roles;
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public Set<UserRole> getUserRoles() {
+        return userRoles;
+    }
+
+    public void setUserRoles(Set<UserRole> userRoles) {
+        this.userRoles = userRoles;
     }
 }
