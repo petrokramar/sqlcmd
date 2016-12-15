@@ -6,6 +6,7 @@ import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 import org.springframework.stereotype.Component;
 import ua.com.juja.sqlcmd.controller.PropertyHandler;
 import ua.com.juja.sqlcmd.dao.DataSet;
+import ua.com.juja.sqlcmd.model.DatabaseConnection;
 
 import java.sql.*;
 import java.util.*;
@@ -16,6 +17,12 @@ public class PostgreJdbcTemplateSQLManager implements DatabaseManager {
     private final String DATABASE_JDBC_DRIVER = "jdbc:postgresql://";
     private Connection connection;
     private JdbcTemplate template;
+    private DatabaseConnection databaseConnection;
+
+    @Override
+    public DatabaseConnection getDatabaseConnection() {
+        return databaseConnection;
+    }
 
     @Override
     public void connect(String databaseName, String userName, String password) {
@@ -29,9 +36,13 @@ public class PostgreJdbcTemplateSQLManager implements DatabaseManager {
                 connection.close();
             }
             connection = DriverManager.getConnection(getJdbcUrl() + databaseName, userName, password);
+            databaseConnection = new DatabaseConnection();
+            databaseConnection.setDatabaseName(databaseName);
+            databaseConnection.setUserName(userName);
             template = new JdbcTemplate(new SingleConnectionDataSource(connection, false));
         } catch (SQLException e) {
             connection = null;
+            databaseConnection = null;
             template = null;
             throw new DatabaseManagerException(
                     String.format("Failed to connect to database: %s, user: %s", databaseName, userName), e);
@@ -54,6 +65,7 @@ public class PostgreJdbcTemplateSQLManager implements DatabaseManager {
                 throw new DatabaseManagerException("Failed to disconnect from database", e);
             }
             connection = null;
+            databaseConnection = null;
             template = null;
         } else {
             throw new DatabaseManagerException("Disconnect failed. You are not connected to any database.");

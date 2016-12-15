@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public interface AppService {
+public interface DatabaseService {
     void connect(String databaseName, String userName, String password);
 
     boolean isConnected();
@@ -31,8 +31,4 @@ public interface AppService {
     void updateRecord(String tableName, int id, Map<String, String[]> parameters);
 
     List<List<String>> executeQuery(String query);
-
-    User saveUser(User user);
-    DatabaseConnection saveDatabaseConnection(DatabaseConnection connection);
-    UserAction saveUserAction(String description);
 }

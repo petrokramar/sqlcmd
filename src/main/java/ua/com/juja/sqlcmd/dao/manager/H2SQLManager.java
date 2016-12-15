@@ -1,6 +1,7 @@
 package ua.com.juja.sqlcmd.dao.manager;
 
 import ua.com.juja.sqlcmd.dao.DataSet;
+import ua.com.juja.sqlcmd.model.DatabaseConnection;
 
 import java.sql.*;
 import java.util.*;
@@ -10,6 +11,12 @@ import java.util.Date;
 public class H2SQLManager implements DatabaseManager {
     private final String DATABASE_JDBC_DRIVER = "jdbc:h2:mem:";
     private Connection connection;
+    private DatabaseConnection databaseConnection;
+
+    @Override
+    public DatabaseConnection getDatabaseConnection() {
+        return databaseConnection;
+    }
 
     @Override
     public void connect(String databaseName, String userName, String password) {
@@ -23,9 +30,12 @@ public class H2SQLManager implements DatabaseManager {
                 connection.close();
             }
             connection = DriverManager.getConnection(DATABASE_JDBC_DRIVER+databaseName,userName, password);
-
+            databaseConnection = new DatabaseConnection();
+            databaseConnection.setDatabaseName(databaseName);
+            databaseConnection.setUserName(userName);
         } catch (SQLException e) {
             connection = null;
+            databaseConnection = null;
             throw new DatabaseManagerException(
                     String.format("Failed to connect to database: %s, user: %s", databaseName, userName), e);
         }
@@ -40,6 +50,7 @@ public class H2SQLManager implements DatabaseManager {
                 throw new DatabaseManagerException("Failed to disconnect from database", e);
             }
             connection = null;
+            databaseConnection = null;
         } else {
             throw new DatabaseManagerException("Disconnect failed. You are not connected to any database.");
         }

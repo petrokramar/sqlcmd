@@ -2,50 +2,17 @@ package ua.com.juja.sqlcmd.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ua.com.juja.sqlcmd.dao.DataSet;
-import ua.com.juja.sqlcmd.dao.hibernate.UserActionDao;
-import ua.com.juja.sqlcmd.dao.hibernate.UserDao;
-import ua.com.juja.sqlcmd.dao.jpa.UserActionRepository;
 import ua.com.juja.sqlcmd.dao.manager.DatabaseManager;
-import ua.com.juja.sqlcmd.dao.jpa.ConnectionRepository;
-import ua.com.juja.sqlcmd.dao.jpa.UserRepository;
-import ua.com.juja.sqlcmd.model.DatabaseConnection;
-import ua.com.juja.sqlcmd.model.User;
-import ua.com.juja.sqlcmd.model.UserAction;
-import ua.com.juja.sqlcmd.service.AppService;
+import ua.com.juja.sqlcmd.service.DatabaseService;
 
 import java.util.*;
 
 @Service
-public class AppServiceImpl implements AppService {
+public class DatabaseServiceImpl implements DatabaseService {
 
     @Autowired
     private DatabaseManager manager;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private ConnectionRepository connectionRepository;
-
-    @Autowired
-    private UserActionRepository userActionRepository;
-
-//    @Autowired
-//    EntityManager em;
-//
-//    @Autowired
-//    EntityManagerFactory emf;
-
-    @Autowired
-    UserDao userDao;
-
-    @Autowired
-    UserActionDao userActionDao;
-
-//    @Autowired
-//    private EntityManagerFactory emf;
 
     @Override
     public void connect(String databaseName, String userName, String password) {
@@ -177,90 +144,5 @@ public class AppServiceImpl implements AppService {
             }
         }
         return result;
-    }
-
-    @Override
-    public User saveUser(User user) {
-        return userRepository.save(user);
-    }
-
-    @Override
-    public DatabaseConnection saveDatabaseConnection(DatabaseConnection connection) {
-        return connectionRepository.save(connection);
-    }
-
-    @Override
-    @Transactional
-    public UserAction saveUserAction(String description) {
-        //TODO refactor!!!!
-        User user;
-        user = userRepository.findByUsername("user12140");
-        if (user == null) {
-            user = new User();
-            user.setUsername("test13");
-            user.setEmail("1@1.com");
-        }
-        user.setPassword("8888");
-
-////        } else {
-////            user.setPassword(repositoryUser.getPassword());
-////            user.setLogin(repositoryUser.getLogin());
-////            user.setPassword(repositoryUser.getPassword());
-////            user.setEmail(repositoryUser.getEmail());
-////        }
-////        User user2 = new User();
-//////        if (repositoryUser == null) {
-////        user2.setLogin("test8");
-////        user2.setPassword("22228");
-////        user2.setEmail("1@18.com");
-////        em = emf.createEntityManager();
-////        em.getTransaction().begin();
-////        emf.createEntityManager().persist(user2);
-////        em.getTransaction().commit();
-////        EntityManager em = emf.createEntityManager()
-////        em.merge(user);
-////        em.p
-////        DatabaseConnection connection = connectionRepository.findByDatabaseNameAndUserName("database1", "database user 1");
-////        if (connection == null) {
-            DatabaseConnection connection = new DatabaseConnection();
-            connection.setDatabaseName("database 1");
-            connection.setUserName("database user 1");
-////        }
-//
-        UserAction action = new UserAction();
-        action.setUser(user);
-        action.setDatabaseConnection(connection);
-        action.setAction(description);
-        action.setDate(new Date());
-        return userActionRepository.save(action);
-
-
-
-
-//            User user = new User();
-//            user.setUsername("user1"+(new Random().nextInt(10000)));
-//            user.setPassword("pass1");
-//            user.setEmail("email1");
-
-//            User user = userDao.findByUserName("user19372");
-//            user.setPassword("pass333");
-//            user.setEmail("email333");
-
-
-//            userDao.create(user);
-//            user.setEmail("email2");
-//            userDao.update(user);
-
-//            DatabaseConnection connection = new DatabaseConnection();
-//            connection.setDatabaseName("database 1");
-//            connection.setUserName("database user 1");
-//
-//        UserAction action = new UserAction();
-//        action.setUser(user);
-//        action.setDatabaseConnection(connection);
-//        action.setAction(description);
-//        action.setDate(new Date());
-//
-//        return userActionDao.create(action);
     }
 }
