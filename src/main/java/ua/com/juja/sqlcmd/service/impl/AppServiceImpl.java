@@ -1,23 +1,23 @@
-package ua.com.juja.sqlcmd.service;
+package ua.com.juja.sqlcmd.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.juja.sqlcmd.dao.DataSet;
+import ua.com.juja.sqlcmd.dao.hibernate.UserActionDao;
+import ua.com.juja.sqlcmd.dao.hibernate.UserDao;
+import ua.com.juja.sqlcmd.dao.jpa.UserActionRepository;
 import ua.com.juja.sqlcmd.dao.manager.DatabaseManager;
-import ua.com.juja.sqlcmd.dao.repository.jpa.ConnectionRepository;
-import ua.com.juja.sqlcmd.dao.repository.jpa.UserActionRepository;
-import ua.com.juja.sqlcmd.dao.repository.jpa.UserRepository;
+import ua.com.juja.sqlcmd.dao.jpa.ConnectionRepository;
+import ua.com.juja.sqlcmd.dao.jpa.UserRepository;
 import ua.com.juja.sqlcmd.model.DatabaseConnection;
 import ua.com.juja.sqlcmd.model.User;
 import ua.com.juja.sqlcmd.model.UserAction;
+import ua.com.juja.sqlcmd.service.AppService;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import java.util.*;
 
 @Service
-@Transactional
 public class AppServiceImpl implements AppService {
 
     @Autowired
@@ -32,11 +32,17 @@ public class AppServiceImpl implements AppService {
     @Autowired
     private UserActionRepository userActionRepository;
 
-    @Autowired
-    EntityManager em;
+//    @Autowired
+//    EntityManager em;
+//
+//    @Autowired
+//    EntityManagerFactory emf;
 
     @Autowired
-    EntityManagerFactory emf;
+    UserDao userDao;
+
+    @Autowired
+    UserActionDao userActionDao;
 
 //    @Autowired
 //    private EntityManagerFactory emf;
@@ -187,13 +193,15 @@ public class AppServiceImpl implements AppService {
     @Transactional
     public UserAction saveUserAction(String description) {
         //TODO refactor!!!!
-////        User repositoryUser = userRepository.findByLogin("test");
-//        User user = new User();
-////        if (repositoryUser == null) {
-////            user.setId(179);
-//            user.setUsername("test");
-//            user.setPassword("2222");
-////            user.setEmail("1@1.com");
+        User user;
+        user = userRepository.findByUsername("user12140");
+        if (user == null) {
+            user = new User();
+            user.setUsername("test13");
+            user.setEmail("1@1.com");
+        }
+        user.setPassword("8888");
+
 ////        } else {
 ////            user.setPassword(repositoryUser.getPassword());
 ////            user.setLogin(repositoryUser.getLogin());
@@ -214,17 +222,45 @@ public class AppServiceImpl implements AppService {
 ////        em.p
 ////        DatabaseConnection connection = connectionRepository.findByDatabaseNameAndUserName("database1", "database user 1");
 ////        if (connection == null) {
+            DatabaseConnection connection = new DatabaseConnection();
+            connection.setDatabaseName("database 1");
+            connection.setUserName("database user 1");
+////        }
+//
+        UserAction action = new UserAction();
+        action.setUser(user);
+        action.setDatabaseConnection(connection);
+        action.setAction(description);
+        action.setDate(new Date());
+        return userActionRepository.save(action);
+
+
+
+
+//            User user = new User();
+//            user.setUsername("user1"+(new Random().nextInt(10000)));
+//            user.setPassword("pass1");
+//            user.setEmail("email1");
+
+//            User user = userDao.findByUserName("user19372");
+//            user.setPassword("pass333");
+//            user.setEmail("email333");
+
+
+//            userDao.create(user);
+//            user.setEmail("email2");
+//            userDao.update(user);
+
 //            DatabaseConnection connection = new DatabaseConnection();
 //            connection.setDatabaseName("database 1");
 //            connection.setUserName("database user 1");
-////        }
 //
 //        UserAction action = new UserAction();
 //        action.setUser(user);
 //        action.setDatabaseConnection(connection);
 //        action.setAction(description);
 //        action.setDate(new Date());
-//        return userActionRepository.save(action);
-        return new UserAction();
+//
+//        return userActionDao.create(action);
     }
 }

@@ -1,4 +1,4 @@
-package ua.com.juja.sqlcmd.dao.repository.jpa;
+package ua.com.juja.sqlcmd.dao.jpa;
 
 import org.springframework.data.repository.CrudRepository;
 import ua.com.juja.sqlcmd.model.UserAction;

@@ -7,12 +7,15 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
-import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBuilder;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
@@ -24,21 +27,10 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
-@EnableWebMvc
 @EnableJpaRepositories("ua.com.juja.sqlcmd")
+@EnableTransactionManagement
 @ComponentScan("ua.com.juja.sqlcmd")
 public class AppConfig {
-
-    @Bean
-    public ViewResolver viewResolver() {
-        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-        viewResolver.setViewClass(JstlView.class);
-        //TODO What is correct "/WEB-INF/view/" or "/view/"?
-        viewResolver.setPrefix("/view/");
-        viewResolver.setSuffix(".jsp");
-        return viewResolver;
-    }
-
     @Bean
     public DataSource logDataSource(){
         //TODO Move to properties
@@ -54,10 +46,7 @@ public class AppConfig {
     public EntityManagerFactory entityManagerFactory(){
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         vendorAdapter.setGenerateDdl(true);
-
         Properties jpaProperties = getHibernateProperties();
-        //TODO replace create with validate
-
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
         factory.setDataSource(logDataSource());
         factory.setPackagesToScan("ua.com.juja.sqlcmd");
@@ -76,10 +65,20 @@ public class AppConfig {
         return builder.buildSessionFactory();
     }
 
+//    @Bean
+//    public LocalSessionFactoryBean sessionFactory(){
+//        LocalSessionFactoryBean localSessionFactoryBean = new LocalSessionFactoryBean();
+//        localSessionFactoryBean.setDataSource(logDataSource());
+//        localSessionFactoryBean.setPackagesToScan("ua.com.juja.sqlcmd");
+//        localSessionFactoryBean.setHibernateProperties(getHibernateProperties());
+//        return localSessionFactoryBean;
+//    }
+
     //TODO move to properties
     private Properties getHibernateProperties() {
         Properties prop = new Properties();
-        prop.put("hibernate.hbm2ddl.auto", "create");
+        //TODO replace create with validate
+        prop.put("hibernate.hbm2ddl.auto", "validate");
         prop.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
         prop.put("hibernate.format_sql", "true");
         prop.put("hibernate.show_sql", "true");
@@ -92,4 +91,12 @@ public class AppConfig {
         txManager.setEntityManagerFactory(entityManagerFactory());
         return txManager;
     }
+
+//    @Bean
+//    public HibernateTransactionManager transactionManager(SessionFactory sessionFactory) {
+//        HibernateTransactionManager txManager = new HibernateTransactionManager();
+//        txManager.setSessionFactory(sessionFactory);
+//        return txManager;
+//    }
+
 }
