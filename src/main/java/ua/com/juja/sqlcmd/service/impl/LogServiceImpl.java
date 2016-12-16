@@ -14,6 +14,7 @@ import ua.com.juja.sqlcmd.dao.manager.DatabaseManager;
 import ua.com.juja.sqlcmd.model.DatabaseConnection;
 import ua.com.juja.sqlcmd.model.User;
 import ua.com.juja.sqlcmd.model.UserAction;
+import ua.com.juja.sqlcmd.model.UserRole;
 import ua.com.juja.sqlcmd.service.LogService;
 
 import java.util.*;
@@ -39,10 +40,13 @@ public class LogServiceImpl implements LogService {
     @Autowired
     UserActionDao userActionDao;
 
-
     @Override
     public User getUser(String name) {
-        return userRepository.findByName(name);
+        User user = userRepository.findByName(name);
+        for (UserRole role: user.getUserRoles()) {
+            role.setUser(null);
+        }
+        return user;
     }
 
     @Override
@@ -109,6 +113,10 @@ public class LogServiceImpl implements LogService {
 
     @Override
     public List<UserAction> getUserActions() {
-        return (List<UserAction>) userActionRepository.findAll();
+        List<UserAction> actions = (List<UserAction>) userActionRepository.findAll();
+        for (UserAction action: actions) {
+            action.getUser().setUserRoles(new HashSet<UserRole>());
+        }
+        return actions;
     }
 }
