@@ -38,4 +38,12 @@ public class DatabaseConnection {
     public void setUserName(String userName) {
         this.userName = userName;
     }
+
+    @Override
+    public String toString() {
+        return "DatabaseConnection{" +
+                "database='" + databaseName + '\'' +
+                ", user='" + userName + '\'' +
+                '}';
+    }
 }

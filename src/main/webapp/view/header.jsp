@@ -8,7 +8,7 @@
         <td><a href="help"> Help </a></td>
         <td><a href="login"> Login </a></td>
         <td><a href="users"> Users </a></td>
-        <td><a href="log"> Log </a></td>
+        <td><a href="actions"> User actions </a></td>
     </tr>
 </table>
 

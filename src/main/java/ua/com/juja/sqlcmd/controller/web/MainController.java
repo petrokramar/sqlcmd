@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import ua.com.juja.sqlcmd.model.User;
+import ua.com.juja.sqlcmd.model.UserAction;
 import ua.com.juja.sqlcmd.service.DatabaseService;
 import ua.com.juja.sqlcmd.service.LogService;
 
@@ -305,23 +306,26 @@ public class MainController {
     }
 
     @RequestMapping(value = "/users", method = RequestMethod.GET)
-    public String users(HttpServletRequest req) {
+    public ModelAndView users() {
         List<User> users = logService.getUsers();
-        req.setAttribute("users", users);
+        ModelAndView model = new ModelAndView("users");
+        model.addObject("users", users);
         logService.saveUserAction("get users");
-        return "users";
+        return model;
     }
 
     @RequestMapping(value = "/adduser", method = RequestMethod.GET)
     public ModelAndView createUser() {
         ModelAndView model = new ModelAndView("createUser");
         model.addObject("user", new User());
+        logService.saveUserAction("get add user");
         return model;
     }
 
     @RequestMapping(value = "/adduser", method = RequestMethod.POST)
     public String creatingUser(User user) {
         logService.saveUser(user);
+        logService.saveUserAction("add user " + user.getName());
         return "redirect:users";
     }
 
@@ -336,12 +340,14 @@ public class MainController {
         User user = logService.getUser(name);
         ModelAndView model = new ModelAndView("updateUser");
         model.addObject("user", user);
+        logService.saveUserAction("get update user " + user.getName());
         return model;
     }
 
     @RequestMapping(value = "/updateuser", method = RequestMethod.POST)
     public String updatingUser(User user){
         logService.saveUser(user);
+        logService.saveUserAction("update user " + user.getName());
         return "redirect:users";
     }
 
@@ -351,15 +357,27 @@ public class MainController {
         User user = logService.getUser(name);
         ModelAndView model = new ModelAndView("deleteUser");
         model.addObject("user", user);
+        logService.saveUserAction("get delete user " + user.getName());
         return model;
     }
 
     @RequestMapping(value = "/deleteuser", method = RequestMethod.POST)
     public String deletingUser(User user) {
         logService.deleteUser(user);
+        logService.saveUserAction("delete user " + user.getName());
         return "redirect:users";
     }
 
+    //TODO add filters by user, period ...
+    //TODO make pages
+    @RequestMapping(value = "/actions", method = RequestMethod.GET)
+    public ModelAndView userActions() {
+        List<UserAction> userActions = logService.getUserActions();
+        ModelAndView model = new ModelAndView("userActions");
+        model.addObject("actions", userActions);
+        logService.saveUserAction("get user actions");
+        return model;
+    }
 
 
 

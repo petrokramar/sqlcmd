@@ -14,13 +14,14 @@ public class UserAction {
     private Date date;
 
     @JoinColumn(name = "user_username")
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private User user;
 
     @JoinColumn(name = "connection_id")
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private DatabaseConnection databaseConnection;
 
+    //TODO Rename to description
     @Column(name = "action")
     private String action;
 

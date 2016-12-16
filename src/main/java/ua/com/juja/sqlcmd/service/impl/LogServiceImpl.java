@@ -106,4 +106,9 @@ public class LogServiceImpl implements LogService {
         //Hibernate
 //        return userActionDao.create(action);
     }
+
+    @Override
+    public List<UserAction> getUserActions() {
+        return (List<UserAction>) userActionRepository.findAll();
+    }
 }

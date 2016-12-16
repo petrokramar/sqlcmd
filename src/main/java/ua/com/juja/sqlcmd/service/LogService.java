@@ -19,4 +19,6 @@ public interface LogService {
     DatabaseConnection saveDatabaseConnection(DatabaseConnection connection);
 
     UserAction saveUserAction(String description);
+
+    List<UserAction> getUserActions();
 }
