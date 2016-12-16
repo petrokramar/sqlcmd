@@ -41,8 +41,23 @@ public class LogServiceImpl implements LogService {
 
 
     @Override
+    public User getUser(String name) {
+        return userRepository.findByName(name);
+    }
+
+    @Override
     public User saveUser(User user) {
         return userRepository.save(user);
+    }
+
+    @Override
+    public void deleteUser(User user) {
+        userRepository.delete(user);
+    }
+
+    @Override
+    public List<User> getUsers() {
+        return (List<User>) userRepository.findAll();
     }
 
     @Override
@@ -56,10 +71,10 @@ public class LogServiceImpl implements LogService {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         User user;
-        user = userRepository.findByUsername(username);
+        user = userRepository.findByName(username);
         if (user == null) {
             user = new User();
-            user.setUsername("empty");
+            user.setName("empty");
             user.setPassword("empty");
             user.setEmail("empty");
         }

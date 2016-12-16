@@ -7,9 +7,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import ua.com.juja.sqlcmd.model.User;
 import ua.com.juja.sqlcmd.service.DatabaseService;
 import ua.com.juja.sqlcmd.service.LogService;
 
@@ -301,6 +303,66 @@ public class MainController {
         model.setViewName("403");
         return model;
     }
+
+    @RequestMapping(value = "/users", method = RequestMethod.GET)
+    public String users(HttpServletRequest req) {
+        List<User> users = logService.getUsers();
+        req.setAttribute("users", users);
+        logService.saveUserAction("get users");
+        return "users";
+    }
+
+    @RequestMapping(value = "/adduser", method = RequestMethod.GET)
+    public ModelAndView createUser() {
+        ModelAndView model = new ModelAndView("createUser");
+        model.addObject("user", new User());
+        return model;
+    }
+
+    @RequestMapping(value = "/adduser", method = RequestMethod.POST)
+    public String creatingUser(User user) {
+        logService.saveUser(user);
+        return "redirect:users";
+    }
+
+    @RequestMapping(value = "/updateuser", method = RequestMethod.GET)
+    //TODO boolean do not transferred to wiev
+    //TODO add roles
+    //TODO validate email
+    public ModelAndView updateUser(HttpServletRequest req) {
+        String name = req.getParameter("name");
+//    @RequestMapping(value = "/updateuser/{name}", method = RequestMethod.GET)
+//    public ModelAndView updateUser(@PathVariable String name) {
+        User user = logService.getUser(name);
+        ModelAndView model = new ModelAndView("updateUser");
+        model.addObject("user", user);
+        return model;
+    }
+
+    @RequestMapping(value = "/updateuser", method = RequestMethod.POST)
+    public String updatingUser(User user){
+        logService.saveUser(user);
+        return "redirect:users";
+    }
+
+    @RequestMapping(value = "/deleteuser", method = RequestMethod.GET)
+    public ModelAndView deleteUser(HttpServletRequest req) {
+        String name = req.getParameter("name");
+        User user = logService.getUser(name);
+        ModelAndView model = new ModelAndView("deleteUser");
+        model.addObject("user", user);
+        return model;
+    }
+
+    @RequestMapping(value = "/deleteuser", method = RequestMethod.POST)
+    public String deletingUser(User user) {
+        logService.deleteUser(user);
+        return "redirect:users";
+    }
+
+
+
+
 
     @RequestMapping("/db")
     public String getProduct(Model model) {

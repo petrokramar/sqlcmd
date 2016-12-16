@@ -19,14 +19,16 @@ import static org.junit.Assert.*;
 public class UserDaoImplTest {
 
     @Autowired
-    UserDao userDAO;
+    UserDao userDao;
 
     @Test
     public void create() throws Exception {
         User user = new User();
-        user.setUsername("user1");
+        user.setName("user1");
         user.setPassword("pass1");
-        userDAO.create(user);
+        user.setEmail("email1");
+        user.setEnabled(true);
+        userDao.create(user);
     }
 
     @Test

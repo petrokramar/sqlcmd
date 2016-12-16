@@ -9,7 +9,7 @@ public class User {
     @Id
     @Column(name = "username", unique = true,
             nullable = false, length = 45)
-    private String username;
+    private String name;
 
     @Column(name = "password",
             nullable = false, length = 45)
@@ -25,17 +25,12 @@ public class User {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private Set<UserRole> userRoles;
 
-    @Column(name = "enabled", nullable = false)
-    public boolean isEnabled() {
-        return this.enabled;
+    public String getName() {
+        return name;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPassword() {
@@ -52,6 +47,10 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
     }
 
     public void setEnabled(boolean enabled) {
