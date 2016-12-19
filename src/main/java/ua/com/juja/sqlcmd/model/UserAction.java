@@ -13,12 +13,14 @@ public class UserAction {
     @Column(name = "date")
     private Date date;
 
+    //TODO read about CascadeType
     @JoinColumn(name = "user_username")
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+//    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private User user;
 
     @JoinColumn(name = "connection_id")
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private DatabaseConnection databaseConnection;
 
     //TODO Rename to description

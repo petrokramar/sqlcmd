@@ -21,4 +21,7 @@ public interface LogService {
     UserAction saveUserAction(String description);
 
     List<UserAction> getUserActions();
+
+    void deleteUserActions();
+
 }

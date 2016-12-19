@@ -27,6 +27,10 @@
         </c:forEach>
     </tr>
 </table>
+<form action="deleteactions" method="post">
+    <td><input type="submit" value="Delete actions"/></td>
+</form>
+<a href="menu">Back to main menu</a><br>
 <br>
 <%@include file="footer.jsp" %>
 </body>

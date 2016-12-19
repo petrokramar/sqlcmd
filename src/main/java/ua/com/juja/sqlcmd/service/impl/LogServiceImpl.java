@@ -119,4 +119,9 @@ public class LogServiceImpl implements LogService {
         }
         return actions;
     }
+
+    @Override
+    public void deleteUserActions() {
+        userActionRepository.deleteAll();
+    }
 }

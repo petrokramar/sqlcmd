@@ -379,8 +379,17 @@ public class MainController {
         return model;
     }
 
+    @RequestMapping(value = "/deleteactions", method = RequestMethod.GET)
+    public ModelAndView deleteUserActions(HttpServletRequest req) {
+        ModelAndView model = new ModelAndView("deleteUserActions");
+        return model;
+    }
 
-
+    @RequestMapping(value = "/deleteactions", method = RequestMethod.POST)
+    public String deletingUserActions() {
+        logService.deleteUserActions();
+        return "redirect:menu";
+    }
 
     @RequestMapping("/db")
     public String getProduct(Model model) {
