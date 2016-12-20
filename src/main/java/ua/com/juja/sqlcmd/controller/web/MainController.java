@@ -35,13 +35,13 @@ public class MainController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String start() {
 //        service.saveUserAction("get menu");
-        return "menu";
+        return "home";
     }
 
     @RequestMapping(value = "/menu", method = RequestMethod.GET)
     public String menu() {
 //        service.saveUserAction("get menu");
-        return "menu";
+        return "home";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)

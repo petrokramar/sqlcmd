@@ -3,35 +3,50 @@
 <html>
 <head>
     <title>SQLCmd</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <script
+            src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"
+            type="text/javascript"></script>
+    <script
+            src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="<c:url value="/js/global.js"/>"></script>
 </head>
 <body>
 <%@include file="header.jsp" %>
-<h2>User actions<br></h2>
-<table border="1">
-    <tr>
-        <td>Id</td>
-        <td>Date</td>
-        <td>User</td>
-        <td>Database</td>
-        <td>Database user</td>
-        <td>Action</td>
-        <c:forEach items="${actions}" var="action">
+<div class="container">
+    <h2>User actions<br></h2>
+    <table class="table">
+        <thead>
             <tr>
-                <td>${action.id}</td>
-                <td>${action.date}</td>
-                <td>${action.user.name}</td>
-                <td>${action.databaseConnection.databaseName}</td>
-                <td>${action.databaseConnection.userName}</td>
-                <td>${action.action}</td>
+                <td>Id</td>
+                <td>Date</td>
+                <td>User</td>
+                <td>Database</td>
+                <td>Database user</td>
+                <td>Action</td>
             </tr>
-        </c:forEach>
-    </tr>
-</table>
-<form action="deleteactions" method="post">
-    <td><input type="submit" value="Delete actions"/></td>
-</form>
-<a href="menu">Back to main menu</a><br>
-<br>
-<%@include file="footer.jsp" %>
+        </thead>
+        <tbody>
+            <c:forEach items="${actions}" var="action">
+                <tr>
+                    <td>${action.id}</td>
+                    <td>${action.date}</td>
+                    <td>${action.user.name}</td>
+                    <td>${action.databaseConnection.databaseName}</td>
+                    <td>${action.databaseConnection.userName}</td>
+                    <td>${action.action}</td>
+                </tr>
+            </c:forEach>
+        </tbody>
+    </table>
+    <form action="deleteactions" method="post">
+        <td><input type="submit" value="Delete actions"/></td>
+    </form>
+    <a href="menu">Back to main menu</a><br>
+    <%@include file="footer.jsp" %>
+</div>
 </body>
 </html>

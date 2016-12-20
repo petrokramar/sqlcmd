@@ -4,36 +4,48 @@
 <html>
 <head>
     <title>SQLCmd</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <script
+            src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"
+            type="text/javascript"></script>
+    <script
+            src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="<c:url value="/js/global.js"/>"></script>
 </head>
 <body>
 <%@include file="header.jsp" %>
-<h2>Edit user</h2><br>
-<form action="updateuser" method="post">
-    <input type="hidden" name = "name" value="${user.name}">
-    <table>
-        <tr>
-            <td>Name</td>
-            <td>${user.name}</td>
-        </tr>
-        <tr>
-            <td>Password</td>
-            <td><input type="text" name="password" value="${user.password}"></td>
-        </tr>
-        <tr>
-            <td>E-mail</td>
-            <td><input type="text" name="email" value="${user.email}"/></td>
-        </tr>
-        <tr>
-            <td>Enabled</td>
-            <td><input type="checkbox" name="enabled" value="${user.enabled}"/></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><input type="submit" value="Save"></td>
-        </tr>
-    </table>
-</form>
-<td><a href="users">Back to users</a><br></td>
-<%@include file="footer.jsp" %>
+<div class="container">
+    <h2>Edit user</h2><br>
+    <form action="updateuser" method="post" class="form-horizontal">
+        <input type="hidden" name = "name" value="${user.name}">
+        <div class="form-group">
+            <label for="name" class="col-sm-2 control-label">Name</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="name" type="text" value="${user.name}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="password" class="col-sm-2 control-label">Password</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="password" type="text" value="${user.password}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="email" class="col-sm-2 control-label">E-mail</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="email" type="text" value="${user.email}">
+            </div>
+        </div>
+        <div class="checkbox col-sm-2">
+            <label><input type="checkbox" value="${user.enabled}">Enabled</label>
+        </div>
+        <input type="submit" class="btn btn-primary" value="Save"/>
+    </form>
+    <a href="users">Back to users</a>
+    <%@include file="footer.jsp" %>
+</div>
 </body>
 </html>

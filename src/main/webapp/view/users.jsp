@@ -3,30 +3,45 @@
 <html>
 <head>
     <title>SQLCmd</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <script
+            src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"
+            type="text/javascript"></script>
+    <script
+            src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="<c:url value="/js/global.js"/>"></script>
 </head>
 <body>
 <%@include file="header.jsp" %>
-<h2>Users<br></h2>
-<table border="1">
-    <tr>
-        <td>Name</td>
-        <td>Password</td>
-        <td>E-mail</td>
-        <td>Enabled</td>
-        <c:forEach items="${users}" var="user">
+<div class="container">
+    <h2>Users<br></h2>
+    <table class="table">
+        <thead>
             <tr>
-                <td>${user.name}</td>
-                <td>${user.password}</td>
-                <td>${user.email}</td>
-                <td>${user.enabled}</td>
-                <td><a href="updateuser?name=${user.name}">update</a><br></td>
-                <td><a href="deleteuser?name=${user.name}">delete</a><br></td>
+                <td>Name</td>
+                <td>Password</td>
+                <td>E-mail</td>
+                <td>Enabled</td>
             </tr>
-        </c:forEach>
-    </tr>
-</table>
-<td><a href="adduser">add</a><br></td>
-<br>
-<%@include file="footer.jsp" %>
+        </thead>
+        <tbody>
+            <c:forEach items="${users}" var="user">
+                <tr>
+                    <td>${user.name}</td>
+                    <td>${user.password}</td>
+                    <td>${user.email}</td>
+                    <td>${user.enabled}</td>
+                    <td><a href="updateuser?name=${user.name}">update</a><br></td>
+                    <td><a href="deleteuser?name=${user.name}">delete</a><br></td>
+                </tr>
+            </c:forEach>
+        </tbody>
+    </table>
+    <a href="adduser">add</a>
+    <%@include file="footer.jsp" %>
+</div>
 </body>
 </html>

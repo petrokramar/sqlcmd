@@ -36,7 +36,7 @@ public class AppConfig {
         //TODO Move to properties
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.postgresql.Driver");
-        dataSource.setUrl("jdbc:postgresql://localhost:8757/sqlcmd_log");
+        dataSource.setUrl("jdbc:postgresql://localhost:5432/sqlcmd_log");
         dataSource.setUsername("postgres");
         dataSource.setPassword("123456");
         return dataSource;
