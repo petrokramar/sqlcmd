@@ -16,32 +16,42 @@
 </head>
 <body>
     <%@include file="header.jsp" %>
-    <h2>New user.</h2><br>
-    <form action="adduser" method="post">
-        <table>
-            <tr>
-                <td>Name</td>
-                <td><input type="text" name="name"></td>
-            </tr>
-            <tr>
-                <td>Password</td>
-                <td><input type="text" name="password"></td>
-            </tr>
-            <tr>
-                <td>E-mail</td>
-                <td><input type="text" name="email"></td>
-            </tr>
-            <tr>
-                <td>Enabled</td>
-                <td><input type="checkbox" name="enabled"></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td><input type="submit" value="Create"></td>
-            </tr>
-        </table>
-    </form>
-    <td><a href="users">Back to users</a><br></td>
-    <%@include file="footer.jsp" %>
+    <div class="container">
+        <h2>New user.</h2><br>
+        <form action="adduser" method="post" class="form-horizontal">
+            <div class="form-group">
+                <label for="name" class="col-sm-2 control-label">Name</label>
+                <div class="col-sm-10">
+                    <input class="form-control" id="name" type="text" name="name">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="password" class="col-sm-2 control-label">Password</label>
+                <div class="col-sm-10">
+                    <input class="form-control" id="password" type="text" name="password">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="email" class="col-sm-2 control-label">E-mail</label>
+                <div class="col-sm-10">
+                    <input class="form-control" id="email" type="text" name="email">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="enabled"></label>
+                <div class="checkbox col-sm-10">
+                    <label><input id="enabled" name="enabled" type="checkbox">Enabled</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="btn_add_user"></label>
+                <div class="col-sm-10">
+                    <button id="btn_add_user" name="btn_add_user" class="btn btn-default">Add</button>
+                </div>
+            </div>
+            <a href="users">Back to users</a>
+            <%@include file="footer.jsp" %>
+        </form>
+    </div>
 </body>
 </html>

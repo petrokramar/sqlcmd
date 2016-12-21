@@ -43,7 +43,11 @@
         </tbody>
     </table>
     <form action="deleteactions" method="post">
-        <td><input type="submit" value="Delete actions"/></td>
+        <div class="form-group">
+            <div class="col-sm-10">
+                <button id="btn_delete_actions" name="btn_delete_actions" class="btn btn-default">Delete actions</button>
+            </div>
+        </div>
     </form>
     <a href="menu">Back to main menu</a><br>
     <%@include file="footer.jsp" %>

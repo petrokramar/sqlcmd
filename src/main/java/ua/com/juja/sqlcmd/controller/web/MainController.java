@@ -266,7 +266,6 @@ public class MainController {
     public String updatingRecord(HttpServletRequest req) {
         String tableName = req.getParameter("tableName");
         int id = Integer.parseInt(req.getParameter("id"));
-        ;
         Map<String, String[]> parameters = req.getParameterMap();
         service.updateRecord(tableName, id, parameters);
         logService.saveUserAction("record in table " + tableName + " updated");

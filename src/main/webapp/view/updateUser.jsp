@@ -24,28 +24,34 @@
         <div class="form-group">
             <label for="name" class="col-sm-2 control-label">Name</label>
             <div class="col-sm-10">
-                <input class="form-control" id="name" type="text" value="${user.name}">
+                <input class="form-control" id="name" name="name" type="text" value="${user.name}">
             </div>
         </div>
         <div class="form-group">
             <label for="password" class="col-sm-2 control-label">Password</label>
             <div class="col-sm-10">
-                <input class="form-control" id="password" type="text" value="${user.password}">
+                <input class="form-control" id="password" name="password" type="text" value="${user.password}">
             </div>
         </div>
         <div class="form-group">
             <label for="email" class="col-sm-2 control-label">E-mail</label>
             <div class="col-sm-10">
-                <input class="form-control" id="email" type="text" value="${user.email}">
+                <input class="form-control" id="email" name="email" type="text" value="${user.email}">
             </div>
         </div>
-        <div class="checkbox col-sm-2">
-            <label><input type="checkbox" value="${user.enabled}">Enabled</label>
+        <div class="form-group">
+            <div class="checkbox col-sm-offset-2 col-sm-10">
+                <label><input id="enabled" name="enabled" type="checkbox" value="${user.enabled}">Enabled</label>
+            </div>
         </div>
-        <input type="submit" class="btn btn-primary" value="Save"/>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button id="btn_save_user" name="btn_save_user" class="btn btn-default">Save</button>
+            </div>
+        </div>
+        <a href="users">Back to users</a>
+        <%@include file="footer.jsp" %>
     </form>
-    <a href="users">Back to users</a>
-    <%@include file="footer.jsp" %>
 </div>
 </body>
 </html>

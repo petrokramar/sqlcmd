@@ -37,8 +37,12 @@
             </tr>
         </c:forEach>
     </table>
-    <a href="connect">Connect database</a><br>
-    <a href="createdatabase">Add database</a><br>
+    <table class="table">
+        <tr>
+            <td><a href="connect">Connect database</a></td>
+            <td><a href="createdatabase">Add database</a></td>
+        </tr>
+    </table>
     <%@include file="footer.jsp" %>
 </div>
 </body>
