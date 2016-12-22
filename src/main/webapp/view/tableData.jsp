@@ -7,12 +7,6 @@
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-    <script
-            src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"
-            type="text/javascript"></script>
-    <script
-            src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script src="<c:url value="/js/global.js"/>"></script>
 </head>
 <body>
 <%@include file="header.jsp" %>
@@ -35,8 +29,8 @@
                     <c:forEach items="${row}" var="column">
                         <td>${column}</td>
                     </c:forEach>
-                    <td><a href="updaterecord?table=${table}&id=${row[idindex]}">update</a><br></td>
-                    <td><a href="deleterecord?table=${table}&id=${row[idindex]}">delete</a><br></td>
+                    <td><a href="updaterecord?table=${table}&id=${row[idindex]}">update</a></td>
+                    <td><a href="deleterecord?table=${table}&id=${row[idindex]}">delete</a></td>
                 </tr>
             </c:forEach>
         </tbody>

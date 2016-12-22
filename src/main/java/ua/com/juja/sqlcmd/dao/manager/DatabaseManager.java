@@ -36,6 +36,8 @@ public interface DatabaseManager {
 
     int getTableSize(String tableName);
 
+    //TODO sort by name
+    //TODO remove from this list sqlcmd_log
     Set<String> getTableNames();
 
     void clearTable(String tableName);

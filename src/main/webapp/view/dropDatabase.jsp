@@ -7,29 +7,27 @@
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-    <script
-            src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"
-            type="text/javascript"></script>
-    <script
-            src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script src="<c:url value="/js/global.js"/>"></script>
 </head>
 <body>
 <%@include file="header.jsp" %>
-<h2>Drop database</h2><br>
-<form action="dropdatabase" method="post">
-    <input type="hidden" name = "database" value="${database}">
-    <table>
-        <tr>
-            <td>Database name</td>
-            <td>${database}</td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><input type="submit" value="Drop database"/></td>
-        </tr>
-    </table>
-</form>
-<%@include file="footer.jsp" %>
+<div class="container">
+    <h2>Drop database</h2><br>
+    <form action="dropdatabase" method="post" class="form-horizontal">
+        <input type="hidden" name = "database" value="${database}">
+        <div class="form-group">
+            <label for="${database}" class="col-sm-2 control-label">Database name</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="${database}" name="${database}" type="text" value="${database}" disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button id="btn_drop_database" name="btn_drop_database" class="btn btn-default">Drop database</button>
+            </div>
+        </div>
+        <a href="databases">Back to databases</a>
+    </form>
+    <%@include file="footer.jsp" %>
+</div>
 </body>
 </html>

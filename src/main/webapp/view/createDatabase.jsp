@@ -7,30 +7,26 @@
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-    <script
-            src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"
-            type="text/javascript"></script>
-    <script
-            src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script src="<c:url value="/js/global.js"/>"></script>
 </head>
 <body>
 <%@include file="header.jsp" %>
-<h2>Create database</h2><br>
-<form action="createdatabase" method="post">
-    <table>
-        <tr>
-            <td>
-                Database name
-            </td>
-            <td><input type="text" name="database"></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><input type="submit" value="Create database"/></td>
-        </tr>
-    </table>
-</form>
-<%@include file="footer.jsp" %>
+<div class="container">
+    <h2>Create database</h2><br>
+    <form action="createdatabase" method="post" class="form-horizontal">
+        <div class="form-group">
+            <label for="database" class="col-sm-2 control-label">Database name</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="database" name="database" type="text">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button id="btn_create_database" name="btn_create_database" class="btn btn-default">Create database</button>
+            </div>
+        </div>
+        <a href="databases">Back to databases</a>
+    </form>
+    <%@include file="footer.jsp" %>
+</div>
 </body>
 </html>

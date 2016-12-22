@@ -7,29 +7,27 @@
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-    <script
-            src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"
-            type="text/javascript"></script>
-    <script
-            src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script src="<c:url value="/js/global.js"/>"></script>
 </head>
 <body>
 <%@include file="header.jsp" %>
-<h2>Drop table</h2><br>
-<form action="droptable" method="post">
-    <input type="hidden" name = "table" value="${table}">
-    <table>
-        <tr>
-            <td>Table name</td>
-            <td>${table}</td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><input type="submit" value="Drop table"/></td>
-        </tr>
-    </table>
-</form>
-<%@include file="footer.jsp" %>
+<div class="container">
+    <h2>Drop table</h2><br>
+    <form action="droptable" method="post" class="form-horizontal">
+        <input type="hidden" name = "table" value="${table}">
+        <div class="form-group">
+            <label for="${table}" class="col-sm-2 control-label">Table name</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="${table}" name="${table}" type="text" value="${table}" disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button id="btn_drop_table" name="btn_drop_table" class="btn btn-default">Drop table</button>
+            </div>
+        </div>
+        <a href="table?name=${table}">Back to table ${table}</a>
+    </form>
+    <%@include file="footer.jsp" %>
+</div>
 </body>
 </html>
