@@ -16,7 +16,7 @@ public interface LogService {
 
     List<User> getUsers();
 
-    DatabaseConnection saveDatabaseConnection(DatabaseConnection connection);
+//    DatabaseConnection saveDatabaseConnection(DatabaseConnection connection);
 
     UserAction saveUserAction(String description);
 

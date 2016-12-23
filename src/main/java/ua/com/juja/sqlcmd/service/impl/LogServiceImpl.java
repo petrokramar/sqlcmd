@@ -64,10 +64,10 @@ public class LogServiceImpl implements LogService {
         return (List<User>) userRepository.findAll();
     }
 
-    @Override
-    public DatabaseConnection saveDatabaseConnection(DatabaseConnection connection) {
-        return connectionRepository.save(connection);
-    }
+//    @Override
+//    public DatabaseConnection saveDatabaseConnection(DatabaseConnection connection) {
+//        return connectionRepository.save(connection);
+//    }
 
     @Override
     @Transactional
