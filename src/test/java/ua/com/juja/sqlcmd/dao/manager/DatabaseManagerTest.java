@@ -1,5 +1,6 @@
 package ua.com.juja.sqlcmd.dao.manager;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import ua.com.juja.sqlcmd.controller.PropertyHandler;
@@ -10,29 +11,27 @@ import java.sql.SQLException;
 import java.util.*;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public abstract class DatabaseManagerTest {
     protected static final String TEST_TABLE_NAME = "users_test";
     protected DatabaseManager manager;
 
-    @Before
-    public void setup() throws SQLException {
-        manager = getDatabaseManager();
-        final PropertyHandler settings = PropertyHandler.getInstance();
-        manager.connect(TEST_TABLE_NAME, settings.getProperty("database.user.name"),
-                settings.getProperty("database.user.password"));
-        manager.clearTable(TEST_TABLE_NAME);
-    }
+//    @Before
+//    public void setup() throws SQLException {
+//        manager = getDatabaseManager();
+//        final PropertyHandler settings = PropertyHandler.getInstance();
+//        manager.connect(TEST_TABLE_NAME, settings.getProperty("database.user.name"),
+//                settings.getProperty("database.user.password"));
+//        manager.clearTable(TEST_TABLE_NAME);
+//    }
 
     protected abstract DatabaseManager getDatabaseManager();
 
     @Test
     public void testGetTableNames() throws SQLException, ClassNotFoundException {
-        Set<String> testTables = new LinkedHashSet<>();
-        testTables.add("users");
-        testTables.add(TEST_TABLE_NAME);
         Set<String> tables = manager.getTableNames();
-        assertEquals(testTables, tables);
+        assertTrue(tables.contains(TEST_TABLE_NAME));
     }
 
     @Test

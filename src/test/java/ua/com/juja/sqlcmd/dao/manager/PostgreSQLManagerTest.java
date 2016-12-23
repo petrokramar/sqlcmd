@@ -1,7 +1,6 @@
 package ua.com.juja.sqlcmd.dao.manager;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import ua.com.juja.sqlcmd.controller.PropertyHandler;
 import ua.com.juja.sqlcmd.dao.DataSet;
 
@@ -19,12 +18,16 @@ public class PostgreSQLManagerTest extends DatabaseManagerTest {
     }
 
     @Before
+    //TODO Remove duplicate code
     public void setup() throws SQLException {
         manager = getDatabaseManager();
         final PropertyHandler settings = PropertyHandler.getInstance();
         manager.connect(settings.getProperty("database.name"), settings.getProperty("database.user.name"),
                 settings.getProperty("database.user.password"));
-        manager.clearTable(TEST_TABLE_NAME);
+        manager.dropTable(TEST_TABLE_NAME);
+        manager.createTable(
+                TEST_TABLE_NAME,
+                "id INTEGER PRIMARY KEY, name VARCHAR(45) NOT NULL, password  VARCHAR(45) NOT NULL");
     }
 
     @Test
@@ -44,7 +47,7 @@ public class PostgreSQLManagerTest extends DatabaseManagerTest {
         inputTwo.put("password", "1234");
         manager.createRecord(TEST_TABLE_NAME, inputTwo);
 
-        result = manager.executeQuery("SELECT * FROM users");
+        result = manager.executeQuery(String.format("SELECT * FROM %s", TEST_TABLE_NAME));
         assertEquals(2, result.size());
     }
 
