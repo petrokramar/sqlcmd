@@ -72,32 +72,8 @@ public class LogServiceImpl implements LogService {
     @Override
     @Transactional
     public UserAction saveUserAction(String description) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();
-        User user;
-        user = userRepository.findByName(username);
-        if (user == null) {
-            user = new User();
-            user.setName("empty");
-            user.setPassword("empty");
-            user.setEmail("empty");
-        }
-        DatabaseConnection connection = manager.getDatabaseConnection();
-        if (connection == null) {
-            connection = new DatabaseConnection();
-            connection.setDatabaseName("empty");
-            connection.setUserName("empty");
-        } else {
-            String databaseName = connection.getDatabaseName();
-            String databaseUserName = connection.getUserName();
-            connection =  connectionRepository.findByDatabaseNameAndUserName(
-                    databaseName, databaseUserName);
-            if (connection == null) {
-                connection = new DatabaseConnection();
-                connection.setDatabaseName(databaseName);
-                connection.setUserName(databaseUserName);
-            }
-        }
+        User user = getActiveUser();
+        DatabaseConnection connection = getDatabaseConnection();
         UserAction action = new UserAction();
         action.setUser(user);
         action.setDatabaseConnection(connection);
@@ -109,6 +85,55 @@ public class LogServiceImpl implements LogService {
 
         //Hibernate
 //        return userActionDao.create(action);
+    }
+
+    private User getActiveUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user;
+        if (auth == null) {
+            user = new User();
+            user.setName("empty");
+            user.setPassword("empty");
+            user.setEmail("empty");
+        } else {
+            String username = auth.getName();
+            user = userRepository.findByName(username);
+            if (user == null) {
+                user = new User();
+                user.setName("empty");
+                user.setPassword("empty");
+                user.setEmail("empty");
+            }
+        }
+        return user;
+    }
+
+    private DatabaseConnection getDatabaseConnection() {
+        DatabaseConnection connection = manager.getDatabaseConnection();
+        if (connection == null) {
+            connection =  connectionRepository.findByDatabaseNameAndUserName(
+                    "empty", "empty");
+            if (connection == null) {
+                connection = new DatabaseConnection();
+                connection.setDatabaseName("empty");
+                connection.setUserName("empty");
+                //TODO remove next line
+            connectionRepository.save(connection);
+            }
+        } else {
+            String databaseName = connection.getDatabaseName();
+            String databaseUserName = connection.getUserName();
+            connection =  connectionRepository.findByDatabaseNameAndUserName(
+                    databaseName, databaseUserName);
+            if (connection == null) {
+                connection = new DatabaseConnection();
+                connection.setDatabaseName(databaseName);
+                connection.setUserName(databaseUserName);
+                //TODO remove next line
+                connectionRepository.save(connection);
+            }
+        }
+        return connection;
     }
 
     @Override
