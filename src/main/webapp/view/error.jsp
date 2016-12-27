@@ -10,9 +10,11 @@
 </head>
 <body>
 <%@include file="header.jsp" %>
-<h2>Error</h2><br>
-${message}
-<br>
-<%@include file="footer.jsp" %>
+<div class="container">
+    <h2>Error</h2><br>
+    ${message}
+    <br>
+    <%@include file="footer.jsp" %>
+</div>
 </body>
 </html>

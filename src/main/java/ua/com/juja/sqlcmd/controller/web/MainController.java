@@ -7,6 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -394,5 +395,12 @@ public class MainController {
     public String getProduct(Model model) {
         model.addAttribute("databases", service.getDatabaseNames());
         return "databases_t";
+    }
+
+    @ExceptionHandler(RuntimeException.class)
+    public ModelAndView handleCustomException(RuntimeException e) {
+        ModelAndView model = new ModelAndView("error");
+        model.addObject("message", e.getMessage());
+        return model;
     }
 }
