@@ -19,11 +19,8 @@
                         <p class="navbar-text">
                             Welcome
                             <sec:authentication property="name"/>
-                            <a id="logout" href="#">Logout</a>
+                            <a id="logout" href="<c:url value="j_spring_security_logout" />">Logout</a>
                         </p>
-                        <form id="logout-form" action="<c:url value="/logout"/>" method="post">
-                            <sec:csrfInput/>
-                        </form>
                     </li>
                 </c:when>
                 <c:otherwise>

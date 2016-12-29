@@ -397,8 +397,8 @@ public class MainController {
         return "databases_t";
     }
 
-    @ExceptionHandler(RuntimeException.class)
-    public ModelAndView handleCustomException(RuntimeException e) {
+    @ExceptionHandler(Exception.class)
+    public ModelAndView handleCustomException(Exception e) {
         ModelAndView model = new ModelAndView("error");
         model.addObject("message", e.getMessage());
         return model;

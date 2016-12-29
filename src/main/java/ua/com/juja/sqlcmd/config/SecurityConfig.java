@@ -63,8 +63,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .and()
 //                .formLogin().loginPage("/login").failureUrl("/login?error")
 //                .usernameParameter("username").passwordParameter("password")
-//                .and()
-//                .logout().logoutSuccessUrl("/login?logout")
+                .and()
+                .logout().logoutSuccessUrl("/menu").logoutUrl("/j_spring_security_logout")
                 .and()
                 .exceptionHandling().accessDeniedPage("/403");
     }
