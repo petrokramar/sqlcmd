@@ -6,31 +6,35 @@
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-    <script
-            src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"
-            type="text/javascript"></script>
-    <script
-            src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script src="<c:url value="/js/global.js"/>"></script>
 </head>
 <body>
+<%@include file="header.jsp" %>
+<div class="container">
     <h2>Login</h2><br>
-    <form action="login" method="post">
-        <table>
-            <tr>
-                <td>Login</td>
-                <td><input type="text" name="login"></td>
-            </tr>
-            <tr>
-                <td>Password</td>
-                <td><input type="password" name="password"></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td><input type="submit" value="Login"></td>
-            </tr>
-        </table>
-    </form><br>
+    <c:if test="${not empty error}">
+        <div class="col-sm-offset-2 col-sm-10 label label-danger">${error}</div>
+    </c:if>
+    <form action="login" method="post" class="form-horizontal">
+        <div class="form-group">
+            <label for="username" class="col-sm-2 control-label">Username</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="username" type="text" name="username">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="password" class="col-sm-2 control-label">Password</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="password" type="password" name="password">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="btn_login"></label>
+            <div class="col-sm-10">
+                <button id="btn_login" name="btn_login" class="btn btn-default">Login</button>
+            </div>
+        </div>
+    </form>
     <%@include file="footer.jsp" %>
+</div>
 </body>
 </html>
