@@ -12,7 +12,7 @@
 <div class="container">
     <h2>Login</h2><br>
     <c:if test="${not empty error}">
-        <div class="col-sm-offset-2 col-sm-10 label label-danger">${error}</div>
+        <h3><div class="col-sm-offset-2 col-sm-10 label label-danger">${error}</div></h3>
     </c:if>
     <form action="login" method="post" class="form-horizontal">
         <div class="form-group">
