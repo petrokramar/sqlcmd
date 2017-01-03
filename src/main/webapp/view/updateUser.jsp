@@ -13,8 +13,7 @@
 <%@include file="header.jsp" %>
 <div class="container">
     <h2>Edit user</h2><br>
-    <form action="updateuser" method="post" class="form-horizontal">
-        <input type="hidden" name = "name" value="${user.name}">
+    <form:form action="updateuser" method="post" commandName="user" class="form-horizontal">
         <div class="form-group">
             <label for="name" class="col-sm-2 control-label">Name</label>
             <div class="col-sm-10">
@@ -35,7 +34,7 @@
         </div>
         <div class="form-group">
             <div class="checkbox col-sm-offset-2 col-sm-10">
-                <label><input id="enabled" name="enabled" type="checkbox" value="${user.enabled}">Enabled</label>
+                <form:checkbox id="enabled" path="enabled" label="Enabled"/>
             </div>
         </div>
         <div class="form-group">
@@ -45,7 +44,7 @@
         </div>
         <a href="users">Back to users</a>
         <%@include file="footer.jsp" %>
-    </form>
+    </form:form>
 </div>
 </body>
 </html>

@@ -332,13 +332,10 @@ public class MainController {
     }
 
     @RequestMapping(value = "/updateuser", method = RequestMethod.GET)
-    //TODO boolean do not transferred to wiev
     //TODO add roles
     //TODO validate email
     public ModelAndView updateUser(HttpServletRequest req) {
         String name = req.getParameter("name");
-//    @RequestMapping(value = "/updateuser/{name}", method = RequestMethod.GET)
-//    public ModelAndView updateUser(@PathVariable String name) {
         User user = logService.getUser(name);
         ModelAndView model = new ModelAndView("updateUser");
         model.addObject("user", user);
