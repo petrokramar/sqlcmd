@@ -1,5 +1,7 @@
 package ua.com.juja.sqlcmd.model;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -20,6 +22,8 @@ public class User {
     private String email;
 
     @Column(name = "enabled", nullable = false)
+    //TODO not work
+//    @Type(type = "integer")
     private boolean enabled;
 
     //TODO Lazy

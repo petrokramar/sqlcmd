@@ -17,8 +17,9 @@ public class UserRole {
     @JoinColumn(name = "username", nullable = false)
     private User user;
 
-    @Column(name = "role", nullable = false, length = 45)
-    private String role;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role", nullable = false)
+    private Role role;
 
     public Integer getUserRoleId() {
         return userRoleId;
@@ -36,11 +37,11 @@ public class UserRole {
         this.user = user;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 }

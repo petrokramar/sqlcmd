@@ -77,7 +77,6 @@ public class AppConfig {
     //TODO move to properties
     private Properties getHibernateProperties() {
         Properties prop = new Properties();
-        //TODO replace create with validate
         prop.put("hibernate.hbm2ddl.auto", "validate");
         prop.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
         prop.put("hibernate.format_sql", "true");
