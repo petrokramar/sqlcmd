@@ -9,12 +9,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import ua.com.juja.sqlcmd.model.Role;
 import ua.com.juja.sqlcmd.model.User;
 import ua.com.juja.sqlcmd.model.UserAction;
+import ua.com.juja.sqlcmd.model.UserRole;
 import ua.com.juja.sqlcmd.service.DatabaseService;
 import ua.com.juja.sqlcmd.service.LogService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -44,7 +47,7 @@ public class MainController {
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView login(@RequestParam(value = "error", required = false) String error) {
-        logService.saveUserAction("get login");
+//        logService.saveUserAction("get login");
         ModelAndView model = new ModelAndView();
         if (error != null) {
             model.addObject("error", "Invalid username and password!");
@@ -339,6 +342,13 @@ public class MainController {
         User user = logService.getUser(name);
         ModelAndView model = new ModelAndView("updateUser");
         model.addObject("user", user);
+        Map<String, Boolean> roles = new HashMap<>();
+        roles.put(Role.ROLE_USER.toString(), false);
+        roles.put(Role.ROLE_ADMIN.toString(), false);
+        for (UserRole role: user.getUserRoles()) {
+            roles.put(role.toString(), true);
+        }
+        model.addObject("roles", roles);
         logService.saveUserAction("get update user " + user.getName());
         return model;
     }

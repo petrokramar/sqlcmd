@@ -38,6 +38,16 @@
             </div>
         </div>
         <div class="form-group">
+            <div class="checkbox col-sm-offset-2 col-sm-10">
+                <form:checkboxes path="roles" items="${roles}" />
+            </div>
+        </div>
+
+
+        <form:checkboxes path="courses" items="${courses}" />
+
+
+        <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <button id="btn_save_user" name="btn_save_user" class="btn btn-default">Save</button>
             </div>
