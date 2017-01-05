@@ -3,6 +3,7 @@ package ua.com.juja.sqlcmd.model;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -27,8 +28,11 @@ public class User {
     private boolean enabled;
 
     //TODO Lazy
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user",cascade = CascadeType.ALL)
     private Set<UserRole> userRoles;
+
+    @Transient
+    private List<String> roleNames;
 
     public String getName() {
         return name;
@@ -68,6 +72,14 @@ public class User {
 
     public void setUserRoles(Set<UserRole> userRoles) {
         this.userRoles = userRoles;
+    }
+
+    public List<String> getRoleNames() {
+        return roleNames;
+    }
+
+    public void setRoleNames(List<String> roleNames) {
+        this.roleNames = roleNames;
     }
 
     @Override

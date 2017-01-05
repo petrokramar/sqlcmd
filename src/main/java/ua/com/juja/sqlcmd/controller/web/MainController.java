@@ -17,10 +17,7 @@ import ua.com.juja.sqlcmd.service.DatabaseService;
 import ua.com.juja.sqlcmd.service.LogService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 public class MainController {
@@ -334,27 +331,56 @@ public class MainController {
         return "redirect:users";
     }
 
+    @ModelAttribute("roleNames")
+    //TODO Delete hardcode
+    public List getFavouriteSports()
+    {
+        List<String> roleNames = new ArrayList<>();
+        roleNames.add(Role.ROLE_USER.toString());
+        roleNames.add(Role.ROLE_ADMIN.toString());
+        return roleNames;
+    }
+
     @RequestMapping(value = "/updateuser", method = RequestMethod.GET)
     //TODO add roles
     //TODO validate email
     public ModelAndView updateUser(HttpServletRequest req) {
         String name = req.getParameter("name");
         User user = logService.getUser(name);
+        List<String> roleNames = new ArrayList<>();
+        for (UserRole role: user.getUserRoles()) {
+            roleNames.add(role.getRole().toString());
+        }
+        user.setRoleNames(roleNames);
         ModelAndView model = new ModelAndView("updateUser");
         model.addObject("user", user);
-        Map<String, Boolean> roles = new HashMap<>();
-        roles.put(Role.ROLE_USER.toString(), false);
-        roles.put(Role.ROLE_ADMIN.toString(), false);
-        for (UserRole role: user.getUserRoles()) {
-            roles.put(role.toString(), true);
-        }
-        model.addObject("roles", roles);
+//        Map<String, Boolean> roles = new HashMap<>();
+//        roles.put(Role.ROLE_USER.toString(), false);
+//        roles.put(Role.ROLE_ADMIN.toString(), false);
+//        for (UserRole role: user.getUserRoles()) {
+//            roles.put(role.getRole().toString(), true);
+//        }
+//        model.addObject("roles", roles);
+
+//        List<String> roleNames = new ArrayList<>();
+//        roleNames.add(Role.ROLE_USER.toString());
+//        roleNames.add(Role.ROLE_ADMIN.toString());
+////        user.setRoleNames(roleNames);
+//        model.addObject("roles", roleNames);
+
+//        List<String> hobbies = new ArrayList<>();
+//        hobbies.add("z");
+//        hobbies.add("x");
+//        hobbies.add("c");
+//        model.addObject("availableHobbies", hobbies);
+
         logService.saveUserAction("get update user " + user.getName());
         return model;
     }
 
     @RequestMapping(value = "/updateuser", method = RequestMethod.POST)
     public String updatingUser(User user){
+        user.setUserRoles(null);
         logService.saveUser(user);
         logService.saveUserAction("update user " + user.getName());
         return "redirect:users";

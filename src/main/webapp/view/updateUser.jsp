@@ -32,20 +32,27 @@
                 <input class="form-control" id="email" name="email" type="text" value="${user.email}">
             </div>
         </div>
+        <%--<div class="form-group">--%>
+            <%--<label for="enabled" class="col-sm-2 control-label">Enabled</label>--%>
+            <%--<div class="col-sm-10">--%>
+                <%--<input class="form-control" id="enabled" name="enabled" type="checkbox" checked value="${user.enabled}">--%>
+            <%--</div>--%>
+        <%--</div>--%>
         <div class="form-group">
-            <div class="checkbox col-sm-offset-2 col-sm-10">
+            <div class="check-box-table-cell col-sm-offset-2 col-sm-10">
                 <form:checkbox id="enabled" path="enabled" label="Enabled"/>
             </div>
         </div>
         <div class="form-group">
-            <div class="checkbox col-sm-offset-2 col-sm-10">
-                <form:checkboxes path="roles" items="${roles}" />
+            <div class="check-box-table-cell col-sm-offset-2 col-sm-10">
+                <form:checkboxes path="roleNames" items="${roleNames}"/>
+                <%--<form:checkboxes path="roleNames" items="${rolenames}"/>--%>
+                <%--<form:checkboxes path="h&lt;%&ndash;&lt;%&ndash;&ndash;%&gt;&ndash;%&gt;obbies" items="${availableHobbies}" />--%>
+                <%--<c:forEach var="role"	items="${roles}">--%>
+                <%--${role.key}${role.value} <br />--%>
+                <%--</c:forEach>--%>
             </div>
         </div>
-
-
-        <form:checkboxes path="courses" items="${courses}" />
-
 
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
