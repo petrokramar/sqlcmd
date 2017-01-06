@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
+import ua.com.juja.sqlcmd.controller.PropertyHandler;
 //import ua.com.juja.sqlcmd.service.UserDetailsServiceImpl;
 
 import javax.persistence.EntityManagerFactory;
@@ -31,14 +32,15 @@ import java.util.Properties;
 @EnableTransactionManagement
 @ComponentScan("ua.com.juja.sqlcmd")
 public class AppConfig {
+    PropertyHandler settings = PropertyHandler.getInstance();
+
     @Bean
     public DataSource logDataSource(){
-        //TODO Move to properties
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("org.postgresql.Driver");
-        dataSource.setUrl("jdbc:postgresql://localhost:5432/sqlcmd_log");
-        dataSource.setUsername("postgres");
-        dataSource.setPassword("123456");
+        dataSource.setDriverClassName(settings.getProperty("log.database.driver"));
+        dataSource.setUrl(settings.getProperty("log.database.url"));
+        dataSource.setUsername(settings.getProperty("log.database.user.name"));
+        dataSource.setPassword(settings.getProperty("log.database.user.password"));
         return dataSource;
     }
 
@@ -77,10 +79,10 @@ public class AppConfig {
     //TODO move to properties
     private Properties getHibernateProperties() {
         Properties prop = new Properties();
-        prop.put("hibernate.hbm2ddl.auto", "validate");
-        prop.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
-        prop.put("hibernate.format_sql", "true");
-        prop.put("hibernate.show_sql", "true");
+        prop.put("hibernate.hbm2ddl.auto", settings.getProperty("hibernate.hbm2ddl.auto"));
+        prop.put("hibernate.dialect", settings.getProperty("hibernate.dialect"));
+        prop.put("hibernate.format_sql", settings.getProperty("hibernate.format_sql"));
+        prop.put("hibernate.show_sql", settings.getProperty("hibernate.show_sql"));
         return prop;
     }
 

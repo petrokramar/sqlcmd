@@ -10,11 +10,9 @@ import ua.com.juja.sqlcmd.dao.hibernate.UserDao;
 import ua.com.juja.sqlcmd.dao.jpa.ConnectionRepository;
 import ua.com.juja.sqlcmd.dao.jpa.UserActionRepository;
 import ua.com.juja.sqlcmd.dao.jpa.UserRepository;
+import ua.com.juja.sqlcmd.dao.jpa.UserRoleRepository;
 import ua.com.juja.sqlcmd.dao.manager.DatabaseManager;
-import ua.com.juja.sqlcmd.model.DatabaseConnection;
-import ua.com.juja.sqlcmd.model.User;
-import ua.com.juja.sqlcmd.model.UserAction;
-import ua.com.juja.sqlcmd.model.UserRole;
+import ua.com.juja.sqlcmd.model.*;
 import ua.com.juja.sqlcmd.service.LogService;
 
 import java.util.*;
@@ -27,6 +25,9 @@ public class LogServiceImpl implements LogService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserRoleRepository userRoleRepository;
 
     @Autowired
     private ConnectionRepository connectionRepository;
@@ -50,7 +51,9 @@ public class LogServiceImpl implements LogService {
     }
 
     @Override
+    @Transactional
     public User saveUser(User user) {
+        setUserRoles(user);
         return userRepository.save(user);
     }
 
@@ -62,6 +65,23 @@ public class LogServiceImpl implements LogService {
     @Override
     public List<User> getUsers() {
         return (List<User>) userRepository.findAll();
+    }
+
+    @Override
+    public User setUserRoles(User user) {
+        userRoleRepository.deleteByUser(user);
+        //TODO remove null
+        if (user.getRoleNames() != null) {
+            Set<UserRole> userRoles = new HashSet<>();
+            for (String name: user.getRoleNames()) {
+                UserRole role = new UserRole();
+                role.setUser(user);
+                role.setRole(Role.valueOf(name));
+                userRoles.add(role);
+            }
+            user.setUserRoles(userRoles);
+        }
+        return user;
     }
 
 //    @Override

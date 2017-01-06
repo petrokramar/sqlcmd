@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 import ua.com.juja.sqlcmd.config.TestAppConfig;
 import ua.com.juja.sqlcmd.model.*;
 import ua.com.juja.sqlcmd.service.LogService;
@@ -28,25 +29,33 @@ public class LogServiceImplTest {
     @Before
     public void setup(){
         user = new User();
-        user.setName("test user");
-        user.setEmail("test_email@test.com");
-        user.setPassword("123");
+        user.setName("test user333");
+        user.setEmail("test_email333@test.com");
+        user.setPassword("123456");
         user.setEnabled(true);
 
-        UserRole role = new UserRole();
-        role.setUser(user);
-        role.setRole(Role.ROLE_USER);
-        Set<UserRole> userRoles = new HashSet<>();
-        userRoles.add(role);
-        user.setUserRoles(userRoles);
+//        UserRole role = new UserRole();
+//        role.setUser(user);
+//        role.setRole(Role.ROLE_USER);
+//        Set<UserRole> userRoles = new HashSet<>();
+//        userRoles.add(role);
+//        user.setUserRoles(userRoles);
     }
 
     @Test
+    @Transactional
     public void testGetUser() throws Exception {
-//        service.saveUser(user);
-        user.setUserRoles(null);
-        user.setEmail("test_email888@test.com");
+//        service.setUserRoles(user);
+//        UserRole role = new UserRole();
+//        role.setUser(user);
+//        role.setRole(Role.ROLE_USER);
+//        Set<UserRole> userRoles = new HashSet<>();
+//        userRoles.add(role);
+//        user.setUserRoles(userRoles);
         service.saveUser(user);
+//        service.deleteUserRoles(user);
+//        user.setEmail("test_email888@test.com");
+//        service.saveUser(user);
 //        service.saveUser(user);
 //        User dbUser = service.getUser("test user");
 //        assertEquals(user.getName(), dbUser.getName());

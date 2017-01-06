@@ -380,7 +380,6 @@ public class MainController {
 
     @RequestMapping(value = "/updateuser", method = RequestMethod.POST)
     public String updatingUser(User user){
-        user.setUserRoles(null);
         logService.saveUser(user);
         logService.saveUserAction("update user " + user.getName());
         return "redirect:users";
