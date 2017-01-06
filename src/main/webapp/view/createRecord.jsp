@@ -25,7 +25,6 @@
                 </c:forEach>
                <div class="form-group">
                    <div class="col-sm-offset-2 col-sm-10">
-                       <%--TODO remove name from buttons--%>
                        <button id="btn_create_record" class="btn btn-default">Create</button>
                    </div>
                </div>

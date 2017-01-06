@@ -7,6 +7,7 @@
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
 </head>
+<%--TODO Registration --%>
 <body>
     <h2>New user</h2><br>
     <form action="registration" method="post">

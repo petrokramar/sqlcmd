@@ -33,7 +33,7 @@
         <div class="form-group">
             <label class="col-sm-2 control-label" for="btn_create_table"></label>
             <div class="col-sm-10">
-                <button id="btn_create_table" name="btn_create_table" class="btn btn-default">Create</button>
+                <button id="btn_create_table" class="btn btn-default">Create</button>
             </div>
         </div>
         <a href="tables">Back to tables</a>

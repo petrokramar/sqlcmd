@@ -40,7 +40,7 @@
     <form action="deleteactions" method="post">
         <div class="form-group">
             <div class="col-sm-10">
-                <button id="btn_delete_actions" name="btn_delete_actions" class="btn btn-default">Delete actions</button>
+                <button id="btn_delete_actions" class="btn btn-default">Delete actions</button>
             </div>
         </div>
     </form>

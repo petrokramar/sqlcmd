@@ -22,7 +22,7 @@
         <div class="form-group">
             <label class="col-sm-2 control-label" for="btn_query"></label>
             <div class="col-sm-10">
-                <button id="btn_query" name="btn_query" class="btn btn-default">Query</button>
+                <button id="btn_query" class="btn btn-default">Query</button>
             </div>
         </div>
     </form>

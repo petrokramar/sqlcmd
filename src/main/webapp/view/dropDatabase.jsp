@@ -22,7 +22,7 @@
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button id="btn_drop_database" name="btn_drop_database" class="btn btn-default">Drop database</button>
+                <button id="btn_drop_database" class="btn btn-default">Drop database</button>
             </div>
         </div>
         <a href="databases">Back to databases</a>

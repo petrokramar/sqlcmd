@@ -30,7 +30,7 @@
         <div class="form-group">
             <label class="col-sm-2 control-label" for="btn_login"></label>
             <div class="col-sm-10">
-                <button id="btn_login" name="btn_login" class="btn btn-default">Login</button>
+                <button id="btn_login" class="btn btn-default">Login</button>
             </div>
         </div>
     </form>

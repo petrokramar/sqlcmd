@@ -40,7 +40,7 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label" for="btn_add_user"></label>
                 <div class="col-sm-10">
-                    <button id="btn_add_user" name="btn_add_user" class="btn btn-default">Add</button>
+                    <button id="btn_add_user" class="btn btn-default">Add</button>
                 </div>
             </div>
             <a href="users">Back to users</a>

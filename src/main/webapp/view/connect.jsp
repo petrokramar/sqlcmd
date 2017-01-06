@@ -34,7 +34,7 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label" for="btn_connect"></label>
                 <div class="col-sm-10">
-                    <button id="btn_connect" name="btn_connect" class="btn btn-default">Connect</button>
+                    <button id="btn_connect" class="btn btn-default">Connect</button>
                 </div>
             </div>
             <%@include file="footer.jsp" %>

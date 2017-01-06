@@ -56,7 +56,7 @@
 
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button id="btn_save_user" name="btn_save_user" class="btn btn-default">Save</button>
+                <button id="btn_save_user" class="btn btn-default">Save</button>
             </div>
         </div>
         <a href="users">Back to users</a>

@@ -33,7 +33,6 @@
         </table>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <%--TODO remove name from buttons--%>
                 <button id="btn_save_record" class="btn btn-default">Save</button>
             </div>
         </div>
