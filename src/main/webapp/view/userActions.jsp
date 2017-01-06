@@ -7,13 +7,19 @@
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/r/bs-3.3.5/jq-2.1.4,dt-1.10.8/datatables.min.css"/>
+    <script type="text/javascript" src="https://cdn.datatables.net/r/bs-3.3.5/jqc-1.11.3,dt-1.10.8/datatables.min.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function() {
+            $('#actions').DataTable();
+        } );
+    </script>
 </head>
 <body>
 <%@include file="header.jsp" %>
-<%--TODO create pages--%>
 <div class="container">
     <h2>User actions<br></h2>
-    <table class="table">
+    <table id="actions" class="display" cellspacing="0" width="100%">
         <thead>
             <tr>
                 <td>Id</td>
@@ -47,5 +53,9 @@
     <a href="menu">Back to main menu</a>
     <%@include file="footer.jsp" %>
 </div>
-</body>
+<script type="text/javascript">
+    $('#actions')
+            .removeClass( 'display' )
+            .addClass('table table-striped table-bordered');
+</script></body>
 </html>
