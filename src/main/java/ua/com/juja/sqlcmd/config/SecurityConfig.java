@@ -15,6 +15,7 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 @ComponentScan("ua.com.juja.sqlcmd")
 //TODO Change User Schema to Group Schema
+//TODO https://hellokoding.com/registration-and-login-example-with-spring-security-spring-boot-spring-data-jpa-hsql-jsp/
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired

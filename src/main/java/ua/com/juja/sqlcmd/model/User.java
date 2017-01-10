@@ -18,6 +18,9 @@ public class User {
             nullable = false, length = 45)
     private String password;
 
+    @Transient
+    private String passwordConfirm;
+
     @Column(name = "email",
             nullable = false, length = 45)
     private String email;
@@ -48,6 +51,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
     }
 
     public String getEmail() {

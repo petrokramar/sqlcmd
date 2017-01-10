@@ -58,10 +58,16 @@ public class MainController {
         return "redirect:menu";
     }
 
+//    @RequestMapping(value = "/registration", method = RequestMethod.GET)
+//    public String register() {
+//    //TODO make all logs
+////        logService.saveUserAction("get registration");
+//        return "registration";
+//    }
+
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
-    public String register() {
-    //TODO make all logs
-//        logService.saveUserAction("get registration");
+    public String registration(Model model) {
+        model.addAttribute("userForm", new User());
         return "registration";
     }
 
