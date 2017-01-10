@@ -60,7 +60,8 @@ public class MainController {
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String register() {
-        logService.saveUserAction("get registration");
+    //TODO make all logs
+//        logService.saveUserAction("get registration");
         return "registration";
     }
 
@@ -318,7 +319,8 @@ public class MainController {
 
     @RequestMapping(value = "/adduser", method = RequestMethod.GET)
     public ModelAndView createUser() {
-        ModelAndView model = new ModelAndView("createUser");
+//        ModelAndView model = new ModelAndView("updateUser");
+        ModelAndView model = new ModelAndView("updateUser");
         model.addObject("user", new User());
         logService.saveUserAction("get add user");
         return model;
@@ -403,7 +405,6 @@ public class MainController {
     }
 
     //TODO add filters by user, period ...
-    //TODO make pages
     @RequestMapping(value = "/actions", method = RequestMethod.GET)
     public ModelAndView userActions() {
         List<UserAction> userActions = logService.getUserActions();

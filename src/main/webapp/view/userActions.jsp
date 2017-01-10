@@ -57,5 +57,6 @@
     $('#actions')
             .removeClass( 'display' )
             .addClass('table table-striped table-bordered');
-</script></body>
+</script>
+</body>
 </html>
