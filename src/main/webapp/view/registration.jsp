@@ -16,8 +16,15 @@
 
     <title>Create an account</title>
 
-    <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
-    <link href="${contextPath}/resources/css/common.css" rel="stylesheet">
+    <%--TODO Why don't work--%>
+    <%--<link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">--%>
+    <%--<link href="${contextPath}/resources/css/common.css" rel="stylesheet">--%>
+
+    <style>
+        <%@include file='../resources/css/bootstrap.min.css' %>
+        <%@include file='../resources/css/common.css' %>
+    </style>
+    <%--<script src="../resources/js/bootstrap.min.js" type="text/javascript"></script>--%>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -27,36 +34,40 @@
 </head>
 
 <body>
-
+<%@include file="header.jsp" %>
 <div class="container">
-
     <form:form method="POST" modelAttribute="userForm" class="form-signin">
         <h2 class="form-signin-heading">Create your account</h2>
-        <%--<spring:bind path="username">--%>
-            <%--<div class="form-group ${status.error ? 'has-error' : ''}">--%>
-            <div class="form-group">
-                <form:input type="text" path="name" class="form-control" placeholder="Username"
+        <spring:bind path="username">
+            <div class="form-group ${status.error ? 'has-error' : ''}">
+                <form:input type="text" path="username" class="form-control" placeholder="Username"
                             autofocus="true"></form:input>
-                <%--<form:errors path="username"></form:errors>--%>
+                <form:errors path="username"></form:errors>
             </div>
-        <%--</spring:bind>--%>
+        </spring:bind>
 
-        <%--<spring:bind path="password">--%>
-        <%--<div class="form-group ${status.error ? 'has-error' : ''}">--%>
-        <div class="form-group">
+        <spring:bind path="password">
+            <div class="form-group ${status.error ? 'has-error' : ''}">
                 <form:input type="password" path="password" class="form-control" placeholder="Password"></form:input>
-                <%--<form:errors path="password"></form:errors>--%>
-        </div>
-        <%--</spring:bind>--%>
+                <form:errors path="password"></form:errors>
+            </div>
+        </spring:bind>
 
-        <%--<spring:bind path="passwordConfirm">--%>
-            <%--<div class="form-group ${status.error ? 'has-error' : ''}">--%>
-            <div class="form-group">
+        <spring:bind path="passwordConfirm">
+            <div class="form-group ${status.error ? 'has-error' : ''}">
                 <form:input type="password" path="passwordConfirm" class="form-control"
                             placeholder="Confirm your password"></form:input>
-                <%--<form:errors path="passwordConfirm"></form:errors>--%>
+                <form:errors path="passwordConfirm"></form:errors>
             </div>
-        <%--</spring:bind>--%>
+        </spring:bind>
+
+        <spring:bind path="email">
+            <div class="form-group ${status.error ? 'has-error' : ''}">
+                <form:input type="text" path="email" class="form-control" placeholder="E-mail"
+                            autofocus="true"></form:input>
+                <form:errors path="email"></form:errors>
+            </div>
+        </spring:bind>
 
         <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
     </form:form>
@@ -65,80 +76,6 @@
 <!-- /container -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="${contextPath}/resources/js/bootstrap.min.js"></script>
+<%--<script src="../resources/js/jquery-1.11.3.min.js" type="text/javascript"></script>--%>
 </body>
 </html>
-
-<%--<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>--%>
-<%--<c:set var="contextPath" value="${pageContext.request.contextPath}"/>--%>
-<%--<html>--%>
-<%--<head>--%>
-    <%--<title>SQLCmd</title>--%>
-    <%--<link rel="stylesheet"--%>
-          <%--href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">--%>
-    <%--<link rel="stylesheet"--%>
-          <%--href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">--%>
-<%--</head>--%>
-<%--&lt;%&ndash;TODO Registration &ndash;%&gt;--%>
-<%--<body>--%>
-    <%--&lt;%&ndash;<h2>New user</h2><br>&ndash;%&gt;--%>
-    <%--&lt;%&ndash;<form action="registration" method="post">&ndash;%&gt;--%>
-        <%--&lt;%&ndash;<table>&ndash;%&gt;--%>
-            <%--&lt;%&ndash;<tr>&ndash;%&gt;--%>
-                <%--&lt;%&ndash;<td>Login</td>&ndash;%&gt;--%>
-                <%--&lt;%&ndash;<td><input type="text" name="login"></td>&ndash;%&gt;--%>
-            <%--&lt;%&ndash;</tr>&ndash;%&gt;--%>
-            <%--&lt;%&ndash;<tr>&ndash;%&gt;--%>
-                <%--&lt;%&ndash;<td>Password</td>&ndash;%&gt;--%>
-                <%--&lt;%&ndash;<td><input type="password" name="password"></td>&ndash;%&gt;--%>
-            <%--&lt;%&ndash;</tr>&ndash;%&gt;--%>
-            <%--&lt;%&ndash;<tr>&ndash;%&gt;--%>
-                <%--&lt;%&ndash;<td>E-mail</td>&ndash;%&gt;--%>
-                <%--&lt;%&ndash;<td><input type="text" name="email"></td>&ndash;%&gt;--%>
-            <%--&lt;%&ndash;</tr>&ndash;%&gt;--%>
-            <%--&lt;%&ndash;<tr>&ndash;%&gt;--%>
-                <%--&lt;%&ndash;<td></td>&ndash;%&gt;--%>
-                <%--&lt;%&ndash;<td><input type="submit" value="Registration"></td>&ndash;%&gt;--%>
-            <%--&lt;%&ndash;</tr>&ndash;%&gt;--%>
-        <%--&lt;%&ndash;</table>&ndash;%&gt;--%>
-    <%--&lt;%&ndash;</form><br>&ndash;%&gt;--%>
-    <%--&lt;%&ndash;<%@include file="footer.jsp" %>&ndash;%&gt;--%>
-
-    <%--<div class="container">--%>
-
-        <%--<form:form method="POST" modelAttribute="userForm" class="form-signin">--%>
-            <%--<h2 class="form-signin-heading">Create your account</h2>--%>
-            <%--<spring:bind path="username">--%>
-                <%--<div class="form-group ${status.error ? 'has-error' : ''}">--%>
-                    <%--<form:input type="text" path="username" class="form-control" placeholder="Username"--%>
-                                <%--autofocus="true"></form:input>--%>
-                    <%--<form:errors path="username"></form:errors>--%>
-                <%--</div>--%>
-            <%--</spring:bind>--%>
-
-            <%--<spring:bind path="password">--%>
-                <%--<div class="form-group ${status.error ? 'has-error' : ''}">--%>
-                    <%--<form:input type="password" path="password" class="form-control" placeholder="Password"></form:input>--%>
-                    <%--<form:errors path="password"></form:errors>--%>
-                <%--</div>--%>
-            <%--</spring:bind>--%>
-
-            <%--<spring:bind path="passwordConfirm">--%>
-                <%--<div class="form-group ${status.error ? 'has-error' : ''}">--%>
-                    <%--<form:input type="password" path="passwordConfirm" class="form-control"--%>
-                                <%--placeholder="Confirm your password"></form:input>--%>
-                    <%--<form:errors path="passwordConfirm"></form:errors>--%>
-                <%--</div>--%>
-            <%--</spring:bind>--%>
-
-            <%--<button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>--%>
-        <%--</form:form>--%>
-
-    <%--</div>--%>
-    <%--<!-- /container -->--%>
-    <%--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>--%>
-    <%--<script src="${contextPath}/resources/js/bootstrap.min.js"></script>--%>
-
-
-<%--</body>--%>
-<%--</html>--%>
-

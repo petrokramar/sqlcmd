@@ -13,11 +13,11 @@
 <div class="container">
     <h2>Delete user</h2><br>
     <form action="deleteuser" method="post" class="form-horizontal">
-        <input type="hidden" name = "name" value="${user.name}">
+        <input type="hidden" name = "username" value="${user.username}">
         <div class="form-group">
             <label for="name" class="col-sm-2 control-label">Name</label>
             <div class="col-sm-10">
-                <input class="form-control" id="name" name="name" type="text" value="${user.name}" disabled>
+                <input class="form-control" id="username" name="username" type="text" value="${user.username}" disabled>
             </div>
         </div>
         <div class="form-group">

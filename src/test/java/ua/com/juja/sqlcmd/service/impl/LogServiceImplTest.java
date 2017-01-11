@@ -29,7 +29,7 @@ public class LogServiceImplTest {
     @Before
     public void setup(){
         user = new User();
-        user.setName("test user333");
+        user.setUsername("test user333");
         user.setEmail("test_email333@test.com");
         user.setPassword("123456");
         user.setEnabled(true);

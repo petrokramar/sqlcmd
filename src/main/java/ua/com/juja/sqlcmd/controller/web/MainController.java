@@ -7,8 +7,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import ua.com.juja.sqlcmd.controller.validator.UserValidator;
 import ua.com.juja.sqlcmd.model.Role;
 import ua.com.juja.sqlcmd.model.User;
 import ua.com.juja.sqlcmd.model.UserAction;
@@ -29,6 +31,9 @@ public class MainController {
 
     @Autowired
     private LogService logService;
+
+    @Autowired
+    private UserValidator userValidator;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String start() {
@@ -72,9 +77,21 @@ public class MainController {
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String registration() {
+    public String registration(@ModelAttribute("userForm") User user, BindingResult bindingResult, Model model) {
+        userValidator.validate(user, bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            return "registration";
+        }
+
+        logService.saveUser(user);
+
+     //TODO
+     //   securityService.autologin(user.getName(), user.getPasswordConfirm());
+
         return "redirect:menu";
     }
+
 
     @RequestMapping(value = "/connect", method = RequestMethod.GET)
     public String connect() {
@@ -335,7 +352,7 @@ public class MainController {
     @RequestMapping(value = "/adduser", method = RequestMethod.POST)
     public String creatingUser(User user) {
         logService.saveUser(user);
-        logService.saveUserAction("add user " + user.getName());
+        logService.saveUserAction("add user " + user.getUsername());
         return "redirect:users";
     }
 
@@ -382,14 +399,14 @@ public class MainController {
 //        hobbies.add("c");
 //        model.addObject("availableHobbies", hobbies);
 
-        logService.saveUserAction("get update user " + user.getName());
+        logService.saveUserAction("get update user " + user.getUsername());
         return model;
     }
 
     @RequestMapping(value = "/updateuser", method = RequestMethod.POST)
     public String updatingUser(User user){
         logService.saveUser(user);
-        logService.saveUserAction("update user " + user.getName());
+        logService.saveUserAction("update user " + user.getUsername());
         return "redirect:users";
     }
 
@@ -399,14 +416,14 @@ public class MainController {
         User user = logService.getUser(name);
         ModelAndView model = new ModelAndView("deleteUser");
         model.addObject("user", user);
-        logService.saveUserAction("get delete user " + user.getName());
+        logService.saveUserAction("get delete user " + user.getUsername());
         return model;
     }
 
     @RequestMapping(value = "/deleteuser", method = RequestMethod.POST)
     public String deletingUser(User user) {
         logService.deleteUser(user);
-        logService.saveUserAction("delete user " + user.getName());
+        logService.saveUserAction("delete user " + user.getUsername());
         return "redirect:users";
     }
 

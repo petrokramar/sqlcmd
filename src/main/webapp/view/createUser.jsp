@@ -14,9 +14,9 @@
         <h2>New user.</h2><br>
         <form action="adduser" method="post" class="form-horizontal">
             <div class="form-group">
-                <label for="name" class="col-sm-2 control-label">Name</label>
+                <label for="username" class="col-sm-2 control-label">Name</label>
                 <div class="col-sm-10">
-                    <input class="form-control" id="name" type="text" name="name">
+                    <input class="form-control" id="username" type="text" name="username">
                 </div>
             </div>
             <div class="form-group">

@@ -12,7 +12,7 @@ public class User {
     @Id
     @Column(name = "username", unique = true,
             nullable = false, length = 45)
-    private String name;
+    private String username;
 
     @Column(name = "password",
             nullable = false, length = 45)
@@ -37,12 +37,12 @@ public class User {
     @Transient
     private List<String> roleNames;
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -96,7 +96,7 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "name='" + name + '\'' +
+                "name='" + username + '\'' +
                 '}';
     }
 }

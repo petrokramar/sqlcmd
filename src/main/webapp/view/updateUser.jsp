@@ -15,14 +15,15 @@
     <h2>Edit user</h2><br>
     <form:form action="updateuser" method="post" commandName="user" class="form-horizontal">
         <div class="form-group">
-            <label for="name" class="col-sm-2 control-label">Name</label>
+            <label for="username" class="col-sm-2 control-label">Name</label>
             <div class="col-sm-10">
                 <c:choose>
-                    <c:when test="${user.name==null}">
-                        <input class="form-control" id="name" name="name" type="text" value="${user.name}">
+                    <c:when test="${user.username==null}">
+                        <input class="form-control" id="username" name="username" type="text" value="${user.username}">
                     </c:when>
                     <c:otherwise>
-                        <input class="form-control" id="name" name="name" type="text" value="${user.name}" disabled>
+                        <input class="form-control" id="username" name="username" type="text" value="${user.username}"
+                               disabled>
                     </c:otherwise>
                 </c:choose>
             </div>

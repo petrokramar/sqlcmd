@@ -24,12 +24,12 @@
         <tbody>
             <c:forEach items="${users}" var="user">
                 <tr>
-                    <td>${user.name}</td>
+                    <td>${user.username}</td>
                     <td>${user.password}</td>
                     <td>${user.email}</td>
                     <td>${user.enabled}</td>
-                    <td><a href="updateuser?name=${user.name}">update</a><br></td>
-                    <td><a href="deleteuser?name=${user.name}">delete</a><br></td>
+                    <td><a href="updateuser?name=${user.username}">update</a><br></td>
+                    <td><a href="deleteuser?name=${user.username}">delete</a><br></td>
                 </tr>
             </c:forEach>
         </tbody>

@@ -42,10 +42,12 @@ public class LogServiceImpl implements LogService {
     UserActionDao userActionDao;
 
     @Override
-    public User getUser(String name) {
-        User user = userRepository.findByName(name);
-        for (UserRole role: user.getUserRoles()) {
-            role.setUser(null);
+    public User getUser(String username) {
+        User user = userRepository.findByUsername(username);
+        if (user != null) {
+            for (UserRole role: user.getUserRoles()) {
+                role.setUser(null);
+            }
         }
         return user;
     }
@@ -112,15 +114,15 @@ public class LogServiceImpl implements LogService {
         User user;
         if (auth == null) {
             user = new User();
-            user.setName("empty");
+            user.setUsername("empty");
             user.setPassword("empty");
             user.setEmail("empty");
         } else {
             String username = auth.getName();
-            user = userRepository.findByName(username);
+            user = userRepository.findByUsername(username);
             if (user == null) {
                 user = new User();
-                user.setName("empty");
+                user.setUsername("empty");
                 user.setPassword("empty");
                 user.setEmail("empty");
             }

@@ -1,42 +1,102 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-<html>
+
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>SQLCmd</title>
-    <link rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Log in with your account</title>
+
+    <%--<link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">--%>
+    <%--<link href="${contextPath}/resources/css/common.css" rel="stylesheet">--%>
+
+    <style>
+        <%@include file='../resources/css/bootstrap.min.css' %>
+        <%@include file='../resources/css/common.css' %>
+    </style>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
 </head>
+
 <body>
 <%@include file="header.jsp" %>
 <div class="container">
-    <h2>Login</h2><br>
-    <c:if test="${not empty error}">
-        <h3><div class="col-sm-offset-2 col-sm-10 label label-danger">${error}</div></h3>
-    </c:if>
-    <form action="login" method="post" class="form-horizontal">
-        <div class="form-group">
-            <label for="username" class="col-sm-2 control-label">Username</label>
-            <div class="col-sm-10">
-                <input class="form-control" id="username" type="text" name="username">
-            </div>
+    <form method="POST" action="${contextPath}/login" class="form-signin">
+        <h2 class="form-heading">Log in</h2>
+
+        <div class="form-group ${error != null ? 'has-error' : ''}">
+            <span>${message}</span>
+            <input name="username" type="text" class="form-control" placeholder="Username"
+                   autofocus="true"/>
+            <input name="password" type="password" class="form-control" placeholder="Password"/>
+            <span>${error}</span>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Log In</button>
+            <h4 class="text-center"><a href="${contextPath}/registration">Create an account</a></h4>
         </div>
-        <div class="form-group">
-            <label for="password" class="col-sm-2 control-label">Password</label>
-            <div class="col-sm-10">
-                <input class="form-control" id="password" type="password" name="password">
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-2 control-label" for="btn_login"></label>
-            <div class="col-sm-10">
-                <button id="btn_login" class="btn btn-default">Login</button>
-            </div>
-        </div>
+
     </form>
-    <%@include file="footer.jsp" %>
+
 </div>
+<!-- /container -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+<%--<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>--%>
+<%--<c:set var="contextPath" value="${pageContext.request.contextPath}"/>--%>
+<%--<html>--%>
+<%--<head>--%>
+    <%--<title>SQLCmd</title>--%>
+    <%--<link rel="stylesheet"--%>
+          <%--href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">--%>
+    <%--<link rel="stylesheet"--%>
+          <%--href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">--%>
+<%--</head>--%>
+<%--<body>--%>
+<%--<%@include file="header.jsp" %>--%>
+<%--<div class="container">--%>
+    <%--<h2>Login</h2><br>--%>
+    <%--<c:if test="${not empty error}">--%>
+        <%--<h3><div class="col-sm-offset-2 col-sm-10 label label-danger">${error}</div></h3>--%>
+    <%--</c:if>--%>
+    <%--<form action="login" method="post" class="form-horizontal">--%>
+        <%--<div class="form-group">--%>
+            <%--<label for="username" class="col-sm-2 control-label">Username</label>--%>
+            <%--<div class="col-sm-10">--%>
+                <%--<input class="form-control" id="username" type="text" name="username">--%>
+            <%--</div>--%>
+        <%--</div>--%>
+        <%--<div class="form-group">--%>
+            <%--<label for="password" class="col-sm-2 control-label">Password</label>--%>
+            <%--<div class="col-sm-10">--%>
+                <%--<input class="form-control" id="password" type="password" name="password">--%>
+            <%--</div>--%>
+        <%--</div>--%>
+        <%--<div class="form-group">--%>
+            <%--<label class="col-sm-2 control-label" for="btn_login"></label>--%>
+            <%--<div class="col-sm-10">--%>
+                <%--<button id="btn_login" class="btn btn-default">Login</button>--%>
+            <%--</div>--%>
+        <%--</div>--%>
+    <%--</form>--%>
+    <%--<%@include file="footer.jsp" %>--%>
+<%--</div>--%>
 <%--<div class="container">--%>
     <%--<div class="row">--%>
         <%--<div class="col-md-6 col-md-offset-3">--%>
