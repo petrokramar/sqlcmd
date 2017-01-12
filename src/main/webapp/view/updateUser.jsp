@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+
 <html>
 <head>
     <title>SQLCmd</title>
@@ -35,10 +37,22 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="email" class="col-sm-2 control-label">E-mail</label>
-            <div class="col-sm-10">
-                <input class="form-control" id="email" name="email" type="text" value="${user.email}">
-            </div>
+
+            <%--<label for="email" class="col-sm-2 control-label">E-mail</label>--%>
+            <%--<div class="col-sm-10">--%>
+                <%--<input class="form-control" id="email" name="email" type="text" value="${user.email}">--%>
+            <%--</div>--%>
+
+            <spring:bind path="email">
+                <div class="form-group ${status.error ? 'has-error' : ''}">
+                    <form:input type="text" path="email" class="form-control" placeholder="E-mail"
+                                autofocus="true"></form:input>
+                    <form:errors path="email"></form:errors>
+                </div>
+            </spring:bind>
+
+
+
         </div>
         <div class="form-group">
             <div class="check-box-table-cell col-sm-offset-2 col-sm-10">
