@@ -1,6 +1,7 @@
 <%--TODO delete this page--%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,7 +16,7 @@
 <jsp:include page="header.jsp"/>
 <div class="container">
     <div class="row">
-        <h1>Welcome to SQL Commander!</h1>
+        <h1><spring:message code="Welcome.title"/></h1>
     </div>
 </div>
 </body>
