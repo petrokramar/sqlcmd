@@ -11,10 +11,10 @@
 <body>
 <%@include file="header.jsp" %>
 <div class="container">
-    <h2>Query</h2><br>
+    <h2><spring:message code="Query"/></h2><br>
     <form action="query" method="post" class="form-horizontal">
         <div class="form-group">
-            <label for="query" class="col-sm-2 control-label">Query</label>
+            <label for="query" class="col-sm-2 control-label"><spring:message code="Query"/></label>
             <div class="col-sm-10">
                 <input class="form-control" id="query" name="query" type="text">
             </div>
@@ -22,7 +22,7 @@
         <div class="form-group">
             <label class="col-sm-2 control-label" for="btn_query"></label>
             <div class="col-sm-10">
-                <button id="btn_query" class="btn btn-default">Query</button>
+                <button id="btn_query" class="btn btn-default"><spring:message code="Query"/></button>
             </div>
         </div>
     </form>
