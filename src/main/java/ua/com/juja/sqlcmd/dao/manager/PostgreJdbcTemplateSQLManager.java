@@ -130,7 +130,8 @@ public class PostgreJdbcTemplateSQLManager implements DatabaseManager {
     @Override
     //TODO tables without id
     public List<DataSet> getTableData(String tableName) {
-        return template.query(String.format("SELECT * FROM %s ORDER BY id", tableName),
+//        return template.query(String.format("SELECT * FROM %s ORDER BY id", tableName),
+        return template.query(String.format("SELECT * FROM %s", tableName),
             new RowMapper<DataSet>() {
                 public DataSet mapRow(ResultSet rs, int rowNum) throws SQLException {
                     ResultSetMetaData rsmd = rs.getMetaData();
