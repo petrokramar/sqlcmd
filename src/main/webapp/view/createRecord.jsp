@@ -11,7 +11,7 @@
 <body>
     <%@include file="header.jsp" %>
     <div class="container">
-        <h2>Table '${table}'. New record.</h2><br>
+        <h2><spring:message code="Table"/> '${table}'. <spring:message code="New.record"/>.</h2><br>
         <form action="createrecord" method="post" class="form-horizontal">
             <input type="hidden" name = "tableName" value="${table}">
            <table class="table">
@@ -25,12 +25,12 @@
                 </c:forEach>
                <div class="form-group">
                    <div class="col-sm-offset-2 col-sm-10">
-                       <button id="btn_create_record" class="btn btn-default">Create</button>
+                       <button id="btn_create_record" class="btn btn-default"><spring:message code="Create"/></button>
                    </div>
                </div>
             </table>
         </form>
-        <a href="table?name=${table}">Back to ${table}</a>
+        <a href="table?name=${table}"><spring:message code="Back.to.table"/> ${table}</a>
         <%@include file="footer.jsp" %>
     </div>
 </body>

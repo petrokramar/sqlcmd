@@ -11,7 +11,7 @@
 <body>
 <%@include file="header.jsp" %>
 <div class="container">
-    <h2>Users<br></h2>
+    <h2><spring:message code="Users"/></h2>
     <table class="table">
         <thead>
             <tr>
@@ -28,13 +28,13 @@
                     <td>${user.password}</td>
                     <td>${user.email}</td>
                     <td>${user.enabled}</td>
-                    <td><a href="updateuser?name=${user.username}">update</a><br></td>
-                    <td><a href="deleteuser?name=${user.username}">delete</a><br></td>
+                    <td><a href="updateuser?name=${user.username}"><spring:message code="Update"/></a><br></td>
+                    <td><a href="deleteuser?name=${user.username}"><spring:message code="Delete"/></a><br></td>
                 </tr>
             </c:forEach>
         </tbody>
     </table>
-    <a href="adduser">add</a>
+    <a href="adduser"><spring:message code="Create.user"/></a>
     <%@include file="footer.jsp" %>
 </div>
 </body>

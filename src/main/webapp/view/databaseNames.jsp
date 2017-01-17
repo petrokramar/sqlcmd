@@ -12,20 +12,20 @@
 <body>
 <%@include file="header.jsp" %>
 <div class="container">
-    <h2>List of databases</h2>
+    <h2><spring:message code="Databases"/></h2>
     <table class="table">
         <c:forEach items="${databases}" var="database">
             <tr>
                 <c:choose>
                     <c:when test ="${database == current}">
                         <td><a href="tables?name=${database}">${database}</a><br></td>
-                        <td>Connected</td>
+                        <td><spring:message code="Connected"/></td>
                         <td></td>
                     </c:when>
                     <c:otherwise>
                         <td>${database}<br></td>
                         <td></td>
-                        <td><a href="dropdatabase?name=${database}">drop</a><br></td>
+                        <td><a href="dropdatabase?name=${database}"><spring:message code="Drop"/></a><br></td>
                     </c:otherwise>
                 </c:choose>
             </tr>
@@ -33,8 +33,8 @@
     </table>
     <table class="table">
         <tr>
-            <td><a href="connect">Connect database</a></td>
-            <td><a href="createdatabase">Create database</a></td>
+            <td><a href="connect"><spring:message code="Connect"/></a></td>
+            <td><a href="createdatabase"><spring:message code="Create.database"/></a></td>
         </tr>
     </table>
     <%@include file="footer.jsp" %>

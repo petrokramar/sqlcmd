@@ -11,7 +11,7 @@
 <body>
 <%@include file="header.jsp" %>
 <div class="container">
-    <h2>Error</h2><br>
+    <h2><spring:message code="Error"/>Error</h2><br>
     ${message}
     <br>
     <%@include file="footer.jsp" %>

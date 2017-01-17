@@ -11,7 +11,7 @@
 <body>
 <%@include file="header.jsp" %>
 <div class="container">
-    <h2>Table '${table}'. Delete record.</h2><br>
+    <h2>Table '${table}'. <spring:message code="Delete.record"/>.</h2><br>
     <form action="deleterecord" method="post" class="form-horizontal">
         <input type="hidden" name = "tableName" value="${table}">
         <input type="hidden" name = "id" value="${id}">
@@ -34,10 +34,10 @@
         </table>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button id="btn_delete_record" class="btn btn-default">Delete</button>
+                <button id="btn_delete_record" class="btn btn-default"><spring:message code="Delete"/></button>
             </div>
         </div>
-        <a href="table?name=${table}">Back to ${table}</a>
+        <a href="table?name=${table}"><spring:message code="Back.to.table"/> ${table}</a>
     </form>
     <%@include file="footer.jsp" %>
 </div>

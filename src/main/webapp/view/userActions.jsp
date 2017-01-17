@@ -18,7 +18,7 @@
 <body>
 <%@include file="header.jsp" %>
 <div class="container">
-    <h2>User actions<br></h2>
+    <h2><spring:message code="User.actions"/><br></h2>
     <table id="actions" class="display" cellspacing="0" width="100%">
         <thead>
             <tr>
@@ -46,11 +46,12 @@
     <form action="deleteactions" method="post">
         <div class="form-group">
             <div class="col-sm-10">
-                <button id="btn_delete_actions" class="btn btn-default">Delete actions</button>
+                <button id="btn_delete_actions" class="btn btn-default">
+                    <spring:message code="Delete.user.actions"/></button>
             </div>
         </div>
     </form>
-    <a href="menu">Back to main menu</a>
+    <%--<a href="menu">Back to main menu</a>--%>
     <%@include file="footer.jsp" %>
 </div>
 <script type="text/javascript">

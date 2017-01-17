@@ -11,7 +11,7 @@
 <body>
 <%@include file="header.jsp" %>
 <div class="container">
-    <h2>Tables</h2>
+    <h2><spring:message code="Tables"/></h2>
     <table class = "table">
         <c:forEach items="${tables}" var="table">
             <tr>
@@ -19,7 +19,7 @@
             </tr>
         </c:forEach>
     </table>
-    <a href="createtable">Create table</a><br>
+    <a href="createtable"><spring:message code="Create.table"/></a><br>
     <%@include file="footer.jsp" %>
 </div>
 </body>

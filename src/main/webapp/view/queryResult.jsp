@@ -11,7 +11,7 @@
 <body>
 <%@include file="header.jsp" %>
 <div class="container">
-    <h2>Query : ${query}<br></h2>
+    <h2><spring:message code="Query"/> : ${query}<br></h2>
     <table class="table">
         <tr>
             <c:forEach items="${querydata}" var="row">
@@ -23,7 +23,7 @@
         </c:forEach>
         </tr>
     </table>
-    <a href="menu">Back to menu</a>
+    <%--<a href="menu">Back to menu</a>--%>
     <%@include file="footer.jsp" %>
 </div>
 </body>

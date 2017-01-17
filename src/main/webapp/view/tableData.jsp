@@ -11,7 +11,7 @@
 <body>
 <%@include file="header.jsp" %>
 <div class="container">
-    <h2>Table: ${table}<br></h2>
+    <h2><spring:message code="Table"/>: ${table}<br></h2>
     <table class="table">
         <thead>
             <tr>
@@ -29,18 +29,20 @@
                     <c:forEach items="${row}" var="column">
                         <td>${column}</td>
                     </c:forEach>
-                    <td><a href="updaterecord?table=${table}&id=${row[idindex]}">update</a></td>
-                    <td><a href="deleterecord?table=${table}&id=${row[idindex]}">delete</a></td>
+                    <td><a href="updaterecord?table=${table}&id=${row[idindex]}">
+                        <spring:message code="Update"/></a></td>
+                    <td><a href="deleterecord?table=${table}&id=${row[idindex]}">
+                        <spring:message code="Delete"/></a></td>
                 </tr>
             </c:forEach>
         </tbody>
     </table>
     <table class="table">
         <tr>
-            <td><a href="createrecord?table=${table}">Create record</a></td>
-            <td><a href="cleartable?name=${table}">Clear table</a></td>
-            <td><a href="droptable?name=${table}">Drop table</a></td>
-            <td><a href="tables">Back to list of tables</a></td>
+            <td><a href="createrecord?table=${table}"><spring:message code="Create.record"/></a></td>
+            <td><a href="cleartable?name=${table}"><spring:message code="Clear.table"/></a></td>
+            <td><a href="droptable?name=${table}"><spring:message code="Drop.table"/></a></td>
+            <td><a href="tables"><spring:message code="Back.to.tables"/></a></td>
         </tr>
     </table>
     <%@include file="footer.jsp" %>

@@ -11,32 +11,32 @@
 <body>
 <%@include file="header.jsp" %>
 <div class="container">
-    <h2>Create table</h2><br>
+    <h2><spring:message code="Create.table"/></h2><br>
     <form action="createtable" method="post" class="form-horizontal">
         <div class="form-group">
-            <label for="name" class="col-sm-2 control-label">Table name</label>
+            <label for="name" class="col-sm-2 control-label"><spring:message code="Table.name"/></label>
             <div class="col-sm-10">
                 <input class="form-control" id="name" type="text" name="name">
             </div>
         </div>
         <div class="form-group">
-            <label for="query" class="col-sm-2 control-label">Query</label>
+            <label for="query" class="col-sm-2 control-label"><spring:message code="Query"/></label>
             <div class="col-sm-10">
                 <input class="form-control" id="query" type="text" name="query">
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-offset-2 col-sm-10 control-label">
-                Example query: id SERIAL PRIMARY KEY, name varchar(45) NOT NULL
+                <spring:message code="Query.example"/>: id SERIAL PRIMARY KEY, name varchar(45) NOT NULL
             </label>
         </div>
         <div class="form-group">
             <label class="col-sm-2 control-label" for="btn_create_table"></label>
             <div class="col-sm-10">
-                <button id="btn_create_table" class="btn btn-default">Create</button>
+                <button id="btn_create_table" class="btn btn-default"><spring:message code="Create"/></button>
             </div>
         </div>
-        <a href="tables">Back to tables</a>
+        <a href="tables"><spring:message code="Back.to.tables"/></a>
     </form>
     <%@include file="footer.jsp" %>
 </div>

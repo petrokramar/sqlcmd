@@ -11,7 +11,7 @@
 <body>
 <%@include file="header.jsp" %>
 <div class="container">
-    <h2>Table '${table}'. Update record.</h2><br>
+    <h2><spring:message code="Table"/> '${table}'. <spring:message code="Update.record"/>.</h2><br>
     <form action="updaterecord" method="post" class="form-horizontal">
         <input type="hidden" name = "tableName" value="${table}">
         <input type="hidden" name = "id" value="${id}">
@@ -33,10 +33,10 @@
         </table>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button id="btn_save_record" class="btn btn-default">Save</button>
+                <button id="btn_save_record" class="btn btn-default"><spring:message code="Update"/></button>
             </div>
         </div>
-        <a href="table?name=${table}">Back to ${table}</a>
+        <a href="table?name=${table}"><spring:message code="Back.to.table"/> ${table}</a>
         <%@include file="footer.jsp" %>
     </form>
 </div>

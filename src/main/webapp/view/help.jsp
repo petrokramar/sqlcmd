@@ -10,6 +10,7 @@
 </head>
 <body>
 <%@include file="header.jsp" %>
+<%--TODO Help--%>
 <div class="container">
     Help<br>
     <%@include file="footer.jsp" %>
