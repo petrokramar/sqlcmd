@@ -35,7 +35,7 @@
                 <tr>
                     <td>${action.id}</td>
                     <td>${action.date}</td>
-                    <td>${action.user.name}</td>
+                    <td>${action.user.username}</td>
                     <td>${action.databaseConnection.databaseName}</td>
                     <td>${action.databaseConnection.userName}</td>
                     <td>${action.action}</td>

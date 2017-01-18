@@ -11,7 +11,7 @@
     <script type="text/javascript" src="https://cdn.datatables.net/r/bs-3.3.5/jqc-1.11.3,dt-1.10.8/datatables.min.js"></script>
     <script type="text/javascript" charset="utf-8">
         $(document).ready(function() {
-            $('#querydata').DataTable();
+            $('#result').DataTable();
         } );
     </script>
 </head>
@@ -22,22 +22,41 @@
 <%--
     TODO where is header?
 --%>
-    <table id="querydata" class="display" cellspacing="0" width="100%">
-        <%--<tr>--%>
-            <c:forEach items="${querydata}" var="row">
-                <tr>
-                <c:forEach items="${row}" var="column">
-                    <td>${column}</td>
-                </c:forEach>
-                </tr>
-            </c:forEach>
-        <%--</tr>--%>
+    <table id="result" class="display" cellspacing="0" width="100%">
+        <c:set var="tbodystart" scope="page" value="true"/>
+        <c:forEach items="${querydata}" var="row" varStatus="status">
+            <c:choose>
+                <c:when test ="${status.index==0}">
+                    <thead>
+                        <tr>
+                            <c:forEach items="${row}" var="column">
+                                <td>${column}</td>
+                            </c:forEach>
+                        </tr>
+                    </thead>
+                </c:when>
+                <c:otherwise>
+                    <c:if test="${tbodystart==true}">
+                        <tbody>
+                    </c:if>
+                    <tr>
+                        <c:forEach items="${row}" var="column">
+                            <td>${column}</td>
+                        </c:forEach>
+                    </tr>
+                    <c:if test="${tbodystart==true}">
+                        </tbody>
+                        <c:set var="tbodystart" scope="page" value="false"/>
+                    </c:if>
+                </c:otherwise>
+            </c:choose>
+        </c:forEach>
     </table>
     <%--<a href="menu">Back to menu</a>--%>
     <%@include file="footer.jsp" %>
 </div>
 <script type="text/javascript">
-    $('#querydata')
+    $('#result')
             .removeClass( 'display' )
             .addClass('table table-striped table-bordered');
 </script>
