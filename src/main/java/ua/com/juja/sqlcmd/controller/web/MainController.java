@@ -1,6 +1,7 @@
 package ua.com.juja.sqlcmd.controller.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -10,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.NoHandlerFoundException;
 import ua.com.juja.sqlcmd.controller.validator.UserValidator;
 import ua.com.juja.sqlcmd.model.Role;
 import ua.com.juja.sqlcmd.model.User;
@@ -459,6 +461,14 @@ public class MainController {
     public ModelAndView handleCustomException(Exception e) {
         ModelAndView model = new ModelAndView("error");
         model.addObject("message", e.getMessage());
+        return model;
+    }
+
+    @ExceptionHandler(NoHandlerFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ModelAndView pageNotFound() {
+        ModelAndView model = new ModelAndView();
+        model.setViewName("404");
         return model;
     }
 }
