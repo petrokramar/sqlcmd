@@ -24,9 +24,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 @Controller
+//@ControllerAdvice
 public class MainController {
-
-    //TODO Catch exceptions
     //TODO Replace all with ModelAndView
     @Autowired
     private DatabaseService service;
@@ -72,6 +71,7 @@ public class MainController {
 //        return "registration";
 //    }
 
+    //    Thank to https://hellokoding.com/registration-and-login-example-with-spring-xml-configuration-maven-jsp-and-mysql/
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(Model model) {
         model.addAttribute("userForm", new User());
@@ -86,10 +86,18 @@ public class MainController {
             return "registration";
         }
 
+        UserRole role = new UserRole();
+        role.setRole(Role.ROLE_USER);
+        role.setUser(user);
+        List<String> roles = new ArrayList<>();
+        roles.add(Role.ROLE_USER.name());
+        user.setRoleNames(roles);
+        //TODO don't write automatically
+        user.setEnabled(true);
         logService.saveUser(user);
 
      //TODO
-     //   securityService.autologin(user.getName(), user.getPasswordConfirm());
+//        securityService.autologin(user.getName(), user.getPasswordConfirm());
 
         return "redirect:menu";
     }
@@ -464,6 +472,7 @@ public class MainController {
         return model;
     }
 
+    //TODO not work
     @ExceptionHandler(NoHandlerFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ModelAndView pageNotFound() {
