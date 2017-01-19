@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
+import ua.com.juja.sqlcmd.controller.form.UserForm;
 import ua.com.juja.sqlcmd.controller.validator.UserValidator;
 import ua.com.juja.sqlcmd.model.Role;
 import ua.com.juja.sqlcmd.model.User;
@@ -19,6 +20,7 @@ import ua.com.juja.sqlcmd.model.UserAction;
 import ua.com.juja.sqlcmd.model.UserRole;
 import ua.com.juja.sqlcmd.service.DatabaseService;
 import ua.com.juja.sqlcmd.service.LogService;
+import ua.com.juja.sqlcmd.service.SecurityService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
@@ -32,6 +34,9 @@ public class MainController {
 
     @Autowired
     private LogService logService;
+
+    @Autowired
+    private SecurityService securityService;
 
     @Autowired
     private UserValidator userValidator;
@@ -97,7 +102,7 @@ public class MainController {
         logService.saveUser(user);
 
      //TODO
-//        securityService.autologin(user.getName(), user.getPasswordConfirm());
+        securityService.autologin(user.getUsername(), user.getPasswordConfirm());
 
         return "redirect:menu";
     }
@@ -386,9 +391,23 @@ public class MainController {
         for (UserRole role: user.getUserRoles()) {
             roleNames.add(role.getRole().toString());
         }
-        user.setRoleNames(roleNames);
+//        user.setRoleNames(roleNames);
+
+        UserForm userForm = new UserForm();
+        userForm.setUser(user);
+        userForm.setUsername(user.getUsername());
+        userForm.setPassword(user.getPassword());
+        userForm.setPasswordConfirm(user.getPassword());
+        userForm.setEmail(user.getEmail());
+        userForm.setUserRoles(user.getUserRoles());
+        userForm.setRoleNames(roleNames);
+
+
         ModelAndView model = new ModelAndView("updateUser");
-        model.addObject("user", user);
+
+
+//        model.addObject("user", user);
+        model.addObject("user", userForm);
 //        Map<String, Boolean> roles = new HashMap<>();
 //        roles.put(Role.ROLE_USER.toString(), false);
 //        roles.put(Role.ROLE_ADMIN.toString(), false);
@@ -414,9 +433,11 @@ public class MainController {
     }
 
     @RequestMapping(value = "/updateuser", method = RequestMethod.POST)
-    public String updatingUser(User user){
-        logService.saveUser(user);
-        logService.saveUserAction("update user " + user.getUsername());
+    public String updatingUser(UserForm userForm){
+//        public String updatingUser(User user){
+//        logService.saveUser(user);
+//        logService.saveUserAction("update user " + user.getUsername());
+        logService.saveUserAction("update user ");
         return "redirect:users";
     }
 
@@ -465,12 +486,12 @@ public class MainController {
         return "databases_t";
     }
 
-    @ExceptionHandler(Exception.class)
-    public ModelAndView handleCustomException(Exception e) {
-        ModelAndView model = new ModelAndView("error");
-        model.addObject("message", e.getMessage());
-        return model;
-    }
+//    @ExceptionHandler(Exception.class)
+//    public ModelAndView handleCustomException(Exception e) {
+//        ModelAndView model = new ModelAndView("error");
+//        model.addObject("message", e.getMessage());
+//        return model;
+//    }
 
     //TODO not work
     @ExceptionHandler(NoHandlerFoundException.class)
