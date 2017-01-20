@@ -15,17 +15,17 @@
 <%@include file="header.jsp" %>
 <div class="container">
     <h2><spring:message code="Update.user"/></h2><br>
-    <form:form action="updateuser" method="post" commandName="user" class="form-horizontal">
+    <form:form action="updateuser" method="post" commandName="userForm" class="form-horizontal">
         <div class="form-group">
             ${user.user.username}
             <label for="username" class="col-sm-2 control-label"><spring:message code="Name"/></label>
             <div class="col-sm-10">
                 <c:choose>
                     <c:when test="${user.username==null}">
-                        <input class="form-control" id="username" name="user.username" type="text" value="${user.user.username}">
+                        <input class="form-control" id="username" name="username" type="text" value="${userForm.username}">
                     </c:when>
                     <c:otherwise>
-                        <input class="form-control" id="username" name="user.username" type="text" value="${user.user.username}"
+                        <input class="form-control" id="username" name="username" type="text" value="${userForm.username}"
                                disabled>
                     </c:otherwise>
                 </c:choose>
@@ -34,7 +34,14 @@
         <div class="form-group">
             <label for="password" class="col-sm-2 control-label"><spring:message code="Password"/></label>
             <div class="col-sm-10">
-                <input class="form-control" id="password" name="password" type="text" value="${user.password}">
+                <input class="form-control" id="password" name="password" type="password" value="${userForm.password}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="confirmpassword" class="col-sm-2 control-label"><spring:message code="Password.confirm"/></label>
+            <div class="col-sm-10">
+                <input class="form-control" id="confirmpassword" name="confirmpassword" type="password"
+                       value="${userForm.confirmPassword}">
             </div>
         </div>
         <div class="form-group">

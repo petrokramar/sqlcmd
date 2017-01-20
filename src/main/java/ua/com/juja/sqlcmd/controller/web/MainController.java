@@ -7,6 +7,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -96,7 +97,6 @@ public class MainController {
         role.setUser(user);
         List<String> roles = new ArrayList<>();
         roles.add(Role.ROLE_USER.name());
-        user.setRoleNames(roles);
         //TODO don't write automatically
         user.setEnabled(true);
         logService.saveUser(user);
@@ -391,53 +391,43 @@ public class MainController {
         for (UserRole role: user.getUserRoles()) {
             roleNames.add(role.getRole().toString());
         }
-//        user.setRoleNames(roleNames);
-
         UserForm userForm = new UserForm();
-        userForm.setUser(user);
         userForm.setUsername(user.getUsername());
         userForm.setPassword(user.getPassword());
-        userForm.setPasswordConfirm(user.getPassword());
+        userForm.setConfirmPassword(user.getPassword());
         userForm.setEmail(user.getEmail());
+        userForm.setEnabled(user.isEnabled());
         userForm.setUserRoles(user.getUserRoles());
         userForm.setRoleNames(roleNames);
-
-
         ModelAndView model = new ModelAndView("updateUser");
-
-
-//        model.addObject("user", user);
-        model.addObject("user", userForm);
-//        Map<String, Boolean> roles = new HashMap<>();
-//        roles.put(Role.ROLE_USER.toString(), false);
-//        roles.put(Role.ROLE_ADMIN.toString(), false);
-//        for (UserRole role: user.getUserRoles()) {
-//            roles.put(role.getRole().toString(), true);
-//        }
-//        model.addObject("roles", roles);
-
-//        List<String> roleNames = new ArrayList<>();
-//        roleNames.add(Role.ROLE_USER.toString());
-//        roleNames.add(Role.ROLE_ADMIN.toString());
-////        user.setRoleNames(roleNames);
-//        model.addObject("roles", roleNames);
-
-//        List<String> hobbies = new ArrayList<>();
-//        hobbies.add("z");
-//        hobbies.add("x");
-//        hobbies.add("c");
-//        model.addObject("availableHobbies", hobbies);
-
+        model.addObject("userForm", userForm);
         logService.saveUserAction("get update user " + user.getUsername());
         return model;
     }
 
     @RequestMapping(value = "/updateuser", method = RequestMethod.POST)
+    @Transactional
     public String updatingUser(UserForm userForm){
+        User user = new User();
+        user.setUsername(userForm.getUsername());
+        user.setPassword(userForm.getPassword());
+        user.setEmail(userForm.getEmail());
+        user.setEnabled(userForm.isEnabled());
+        Set<UserRole> roles = new HashSet<>();
+
+        logService.saveUser(user);
+        for (String roleName: userForm.getRoleNames()) {
+            UserRole role = new UserRole();
+            role.setUser(user);
+            role.setRole(Role.valueOf(roleName));
+            roles.add(role);
+        }
+        user.setUserRoles(roles);
 //        public String updatingUser(User user){
-//        logService.saveUser(user);
+
+        logService.saveUser(user);
+
 //        logService.saveUserAction("update user " + user.getUsername());
-        logService.saveUserAction("update user ");
         return "redirect:users";
     }
 

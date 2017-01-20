@@ -34,9 +34,6 @@ public class User {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user",cascade = CascadeType.ALL)
     private Set<UserRole> userRoles;
 
-    @Transient
-    private List<String> roleNames;
-
     public String getUsername() {
         return username;
     }
@@ -83,14 +80,6 @@ public class User {
 
     public void setUserRoles(Set<UserRole> userRoles) {
         this.userRoles = userRoles;
-    }
-
-    public List<String> getRoleNames() {
-        return roleNames;
-    }
-
-    public void setRoleNames(List<String> roleNames) {
-        this.roleNames = roleNames;
     }
 
     @Override

@@ -16,9 +16,11 @@ public interface LogService {
 
     List<User> getUsers();
 
+    void deleteUserRoles(User user);
+
 //    DatabaseConnection saveDatabaseConnection(DatabaseConnection connection);
 
-    User setUserRoles(User user);
+//    User setUserRoles(User user);
 
     UserAction saveUserAction(String description);
 

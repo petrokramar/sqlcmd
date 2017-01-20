@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.com.juja.sqlcmd.dao.jpa.UserRepository;
 import ua.com.juja.sqlcmd.model.Role;
 import ua.com.juja.sqlcmd.model.User;
+import ua.com.juja.sqlcmd.model.UserRole;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -26,8 +27,8 @@ public class UserDetailsServiceImpl implements UserDetailsService{
         User user = userRepository.findByUsername(username);
 
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-        for (String role : user.getRoleNames()){
-            grantedAuthorities.add(new SimpleGrantedAuthority(role));
+        for (UserRole role : user.getUserRoles()){
+            grantedAuthorities.add(new SimpleGrantedAuthority(role.toString()));
         }
 
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), grantedAuthorities);

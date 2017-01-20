@@ -7,22 +7,13 @@ import java.util.List;
 import java.util.Set;
 
 public class UserForm {
-    private User user;
     private String username;
     private String password;
-    private String passwordConfirm;
+    private String confirmPassword;
     private String email;
     private boolean enabled;
     private Set<UserRole> userRoles;
     private List<String> roleNames;
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 
     public String getUsername() {
         return username;
@@ -40,12 +31,12 @@ public class UserForm {
         this.password = password;
     }
 
-    public String getPasswordConfirm() {
-        return passwordConfirm;
+    public String getConfirmPassword() {
+        return confirmPassword;
     }
 
-    public void setPasswordConfirm(String passwordConfirm) {
-        this.passwordConfirm = passwordConfirm;
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 
     public String getEmail() {

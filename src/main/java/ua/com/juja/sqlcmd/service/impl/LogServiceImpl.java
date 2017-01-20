@@ -55,7 +55,8 @@ public class LogServiceImpl implements LogService {
     @Override
     @Transactional
     public User saveUser(User user) {
-        setUserRoles(user);
+//        setUserRoles(user);
+//        userRoleRepository.deleteByUser(user);
         return userRepository.save(user);
     }
 
@@ -70,21 +71,26 @@ public class LogServiceImpl implements LogService {
     }
 
     @Override
-    public User setUserRoles(User user) {
+    public void deleteUserRoles(User user) {
         userRoleRepository.deleteByUser(user);
-        //TODO remove null
-        if (user.getRoleNames() != null) {
-            Set<UserRole> userRoles = new HashSet<>();
-            for (String name: user.getRoleNames()) {
-                UserRole role = new UserRole();
-                role.setUser(user);
-                role.setRole(Role.valueOf(name));
-                userRoles.add(role);
-            }
-            user.setUserRoles(userRoles);
-        }
-        return user;
     }
+
+//    @Override
+//    public User setUserRoles(User user) {
+//        userRoleRepository.deleteByUser(user);
+//        //TODO remove null
+//        if (user.getRoleNames() != null) {
+//            Set<UserRole> userRoles = new HashSet<>();
+//            for (String name: user.getRoleNames()) {
+//                UserRole role = new UserRole();
+//                role.setUser(user);
+//                role.setRole(Role.valueOf(name));
+//                userRoles.add(role);
+//            }
+//            user.setUserRoles(userRoles);
+//        }
+//        return user;
+//    }
 
 //    @Override
 //    public DatabaseConnection saveDatabaseConnection(DatabaseConnection connection) {
