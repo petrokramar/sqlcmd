@@ -56,7 +56,7 @@ public class LogServiceImpl implements LogService {
     @Transactional
     public User saveUser(User user) {
 //        setUserRoles(user);
-//        userRoleRepository.deleteByUser(user);
+        userRoleRepository.deleteByUser(user);
         return userRepository.save(user);
     }
 

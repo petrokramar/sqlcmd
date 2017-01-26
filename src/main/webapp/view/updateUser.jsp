@@ -17,7 +17,7 @@
     <h2><spring:message code="Update.user"/></h2><br>
     <form:form action="updateuser" method="post" commandName="userForm" class="form-horizontal">
         <div class="form-group">
-            ${user.user.username}
+            ${userForm.username}
             <label for="username" class="col-sm-2 control-label"><spring:message code="Name"/></label>
             <div class="col-sm-10">
                 <c:choose>
@@ -46,18 +46,18 @@
         </div>
         <div class="form-group">
 
-            <%--<label for="email" class="col-sm-2 control-label">E-mail</label>--%>
-            <%--<div class="col-sm-10">--%>
-                <%--<input class="form-control" id="email" name="email" type="text" value="${user.email}">--%>
-            <%--</div>--%>
+            <label for="email" class="col-sm-2 control-label">E-mail</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="email" name="email" type="text" value="${user.email}">
+            </div>
 
-            <spring:bind path="email">
-                <div class="form-group ${status.error ? 'has-error' : ''}">
-                    <form:input type="text" path="email" class="form-control" placeholder="E-mail"
-                                autofocus="true"></form:input>
-                    <form:errors path="email"></form:errors>
-                </div>
-            </spring:bind>
+            <%--<spring:bind path="email">--%>
+                <%--<div class="form-group ${status.error ? 'has-error' : ''}">--%>
+                    <%--<form:input type="text" path="email" class="form-control" placeholder="E-mail"--%>
+                                <%--autofocus="true"></form:input>--%>
+                    <%--<form:errors path="email"></form:errors>--%>
+                <%--</div>--%>
+            <%--</spring:bind>--%>
 
 
 
