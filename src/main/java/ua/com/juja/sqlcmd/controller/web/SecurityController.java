@@ -15,6 +15,7 @@ import ua.com.juja.sqlcmd.model.User;
 import ua.com.juja.sqlcmd.model.UserRole;
 import ua.com.juja.sqlcmd.service.LogService;
 import ua.com.juja.sqlcmd.service.SecurityService;
+import ua.com.juja.sqlcmd.service.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,9 @@ import java.util.List;
 public class SecurityController {
     @Autowired
     private LogService logService;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private SecurityService securityService;
@@ -75,7 +79,7 @@ public class SecurityController {
         roles.add(Role.ROLE_USER.name());
         //TODO don't write automatically
         user.setEnabled(true);
-        logService.saveUser(user);
+        userService.saveUser(user);
 
         //TODO
         securityService.autologin(user.getUsername(), user.getPasswordConfirm());

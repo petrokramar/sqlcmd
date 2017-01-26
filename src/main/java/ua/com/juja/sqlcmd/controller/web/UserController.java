@@ -12,6 +12,7 @@ import ua.com.juja.sqlcmd.model.Role;
 import ua.com.juja.sqlcmd.model.User;
 import ua.com.juja.sqlcmd.model.UserRole;
 import ua.com.juja.sqlcmd.service.LogService;
+import ua.com.juja.sqlcmd.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -24,9 +25,12 @@ public class UserController {
     @Autowired
     private LogService logService;
 
+    @Autowired
+    private UserService userService;
+
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public ModelAndView users() {
-        List<User> users = logService.getUsers();
+        List<User> users = userService.getUsers();
         ModelAndView model = new ModelAndView("users");
         model.addObject("users", users);
         logService.saveUserAction("get users");
@@ -47,7 +51,7 @@ public class UserController {
 
 
 
-        logService.saveUser(user);
+        userService.saveUser(user);
         logService.saveUserAction("add user " + user.getUsername());
         return "redirect:users";
     }
@@ -66,7 +70,7 @@ public class UserController {
     //TODO validate email
     public ModelAndView updateUser(HttpServletRequest req) {
         String name = req.getParameter("name");
-        User user = logService.getUser(name);
+        User user = userService.getUser(name);
         List<String> roleNames = new ArrayList<>();
         for (UserRole role: user.getUserRoles()) {
             roleNames.add(role.getRole().toString());
@@ -95,7 +99,7 @@ public class UserController {
         user.setEnabled(userForm.isEnabled());
         Set<UserRole> roles = new HashSet<>();
 
-        logService.saveUser(user);
+        userService.saveUser(user);
         for (String roleName: userForm.getRoleNames()) {
             UserRole role = new UserRole();
             role.setUser(user);
@@ -105,7 +109,7 @@ public class UserController {
         user.setUserRoles(roles);
 //        public String updatingUser(User user){
 
-        logService.saveUser(user);
+        userService.saveUser(user);
 
 //        logService.saveUserAction("update user " + user.getUsername());
         return "redirect:users";
@@ -114,7 +118,7 @@ public class UserController {
     @RequestMapping(value = "/deleteuser", method = RequestMethod.GET)
     public ModelAndView deleteUser(HttpServletRequest req) {
         String name = req.getParameter("name");
-        User user = logService.getUser(name);
+        User user = userService.getUser(name);
         ModelAndView model = new ModelAndView("deleteUser");
         model.addObject("user", user);
         logService.saveUserAction("get delete user " + user.getUsername());
@@ -123,7 +127,7 @@ public class UserController {
 
     @RequestMapping(value = "/deleteuser", method = RequestMethod.POST)
     public String deletingUser(User user) {
-        logService.deleteUser(user);
+        userService.deleteUser(user);
         logService.saveUserAction("delete user " + user.getUsername());
         return "redirect:users";
     }

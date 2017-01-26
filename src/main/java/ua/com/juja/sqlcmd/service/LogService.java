@@ -8,20 +8,6 @@ import java.util.List;
 
 public interface LogService {
 
-    User getUser(String name);
-
-    User saveUser(User user);
-
-    void deleteUser(User user);
-
-    List<User> getUsers();
-
-    void deleteUserRoles(User user);
-
-//    DatabaseConnection saveDatabaseConnection(DatabaseConnection connection);
-
-//    User setUserRoles(User user);
-
     UserAction saveUserAction(String description);
 
     List<UserAction> getUserActions();

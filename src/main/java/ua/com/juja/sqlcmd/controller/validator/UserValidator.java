@@ -7,17 +7,19 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 import ua.com.juja.sqlcmd.model.User;
 import ua.com.juja.sqlcmd.service.LogService;
+import ua.com.juja.sqlcmd.service.UserService;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Component
 public class UserValidator implements Validator {
+    //TODO Spring validation
     private static final Pattern pattern = Pattern.compile(
             "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
 
     @Autowired
-    private LogService logService;
+    private UserService userService;
 
     @Override
     public boolean supports(Class<?> aClass) {
@@ -32,7 +34,7 @@ public class UserValidator implements Validator {
         if (user.getUsername().length() < 6 || user.getUsername().length() > 32) {
             errors.rejectValue("username", "Size.userForm.username");
         }
-        if (logService.getUser(user.getUsername()) != null) {
+        if (userService.getUser(user.getUsername()) != null) {
             errors.rejectValue("username", "Duplicate.userForm.username");
         }
 

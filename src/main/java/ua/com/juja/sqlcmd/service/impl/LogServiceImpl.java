@@ -27,9 +27,6 @@ public class LogServiceImpl implements LogService {
     private UserRepository userRepository;
 
     @Autowired
-    private UserRoleRepository userRoleRepository;
-
-    @Autowired
     private ConnectionRepository connectionRepository;
 
     @Autowired
@@ -41,63 +38,7 @@ public class LogServiceImpl implements LogService {
     @Autowired
     UserActionDao userActionDao;
 
-    @Override
-    public User getUser(String username) {
-        User user = userRepository.findByUsername(username);
-        if (user != null) {
-            for (UserRole role: user.getUserRoles()) {
-                role.setUser(null);
-            }
-        }
-        return user;
-    }
-
-    @Override
-    @Transactional
-    public User saveUser(User user) {
-//        setUserRoles(user);
-        userRoleRepository.deleteByUser(user);
-        return userRepository.save(user);
-    }
-
-    @Override
-    public void deleteUser(User user) {
-        userRepository.delete(user);
-    }
-
-    @Override
-    public List<User> getUsers() {
-        return (List<User>) userRepository.findAll();
-    }
-
-    @Override
-    public void deleteUserRoles(User user) {
-        userRoleRepository.deleteByUser(user);
-    }
-
-//    @Override
-//    public User setUserRoles(User user) {
-//        userRoleRepository.deleteByUser(user);
-//        //TODO remove null
-//        if (user.getRoleNames() != null) {
-//            Set<UserRole> userRoles = new HashSet<>();
-//            for (String name: user.getRoleNames()) {
-//                UserRole role = new UserRole();
-//                role.setUser(user);
-//                role.setRole(Role.valueOf(name));
-//                userRoles.add(role);
-//            }
-//            user.setUserRoles(userRoles);
-//        }
-//        return user;
-//    }
-
-//    @Override
-//    public DatabaseConnection saveDatabaseConnection(DatabaseConnection connection) {
-//        return connectionRepository.save(connection);
-//    }
-
-    @Override
+  @Override
     @Transactional
     public UserAction saveUserAction(String description) {
         User user = getActiveUser();

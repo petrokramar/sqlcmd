@@ -8,6 +8,7 @@ import ua.com.juja.sqlcmd.model.UserAction;
 import ua.com.juja.sqlcmd.model.UserRole;
 import ua.com.juja.sqlcmd.service.DatabaseService;
 import ua.com.juja.sqlcmd.service.LogService;
+import ua.com.juja.sqlcmd.service.UserService;
 
 import java.util.HashSet;
 import java.util.List;
@@ -15,9 +16,11 @@ import java.util.Set;
 
 @RestController
 public class AppRestController {
-
     @Autowired
     LogService logService;
+
+    @Autowired
+    UserService userService;
 
     @Autowired
     private DatabaseService databaseService;
@@ -49,7 +52,7 @@ public class AppRestController {
 
     @RequestMapping(value = "/rest/user/{name}", method = RequestMethod.GET)
     public User user(@PathVariable String name){
-        User user = logService.getUser(name);
+        User user = userService.getUser(name);
         return user;
     }
 

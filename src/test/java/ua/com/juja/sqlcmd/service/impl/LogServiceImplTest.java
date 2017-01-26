@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.com.juja.sqlcmd.config.TestAppConfig;
 import ua.com.juja.sqlcmd.model.*;
 import ua.com.juja.sqlcmd.service.LogService;
+import ua.com.juja.sqlcmd.service.UserService;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -23,8 +24,12 @@ import static org.junit.Assert.*;
 @WebAppConfiguration
 public class LogServiceImplTest {
     private User user;
+
     @Autowired
     LogService service;
+
+    @Autowired
+    UserService userService;
 
     @Before
     public void setup(){
@@ -52,7 +57,7 @@ public class LogServiceImplTest {
 //        Set<UserRole> userRoles = new HashSet<>();
 //        userRoles.add(role);
 //        user.setUserRoles(userRoles);
-        service.saveUser(user);
+        userService.saveUser(user);
 //        service.deleteUserRoles(user);
 //        user.setEmail("test_email888@test.com");
 //        service.saveUser(user);
@@ -64,11 +69,11 @@ public class LogServiceImplTest {
 
     @Test
     public void testUser() throws Exception {
-        int beginUserSize = service.getUsers().size();
-        service.saveUser(user);
-        int endUserSize = service.getUsers().size();
+        int beginUserSize = userService.getUsers().size();
+        userService.saveUser(user);
+        int endUserSize = userService.getUsers().size();
         assertEquals(1, endUserSize-beginUserSize);
-        service.deleteUser(user);
+        userService.deleteUser(user);
     }
 
     @Test
