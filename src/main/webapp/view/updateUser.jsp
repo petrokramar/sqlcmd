@@ -17,16 +17,16 @@
     <h2><spring:message code="Update.user"/></h2><br>
     <form:form action="updateuser" method="post" commandName="userForm" class="form-horizontal">
         <div class="form-group">
-            ${userForm.username}
             <label for="username" class="col-sm-2 control-label"><spring:message code="Name"/></label>
             <div class="col-sm-10">
                 <c:choose>
                     <c:when test="${user.username==null}">
-                        <input class="form-control" id="username" name="username" type="text" value="${userForm.username}">
+                        <input class="form-control" id="username" name="username" type="text"
+                               value="${userForm.username}">
                     </c:when>
                     <c:otherwise>
-                        <input class="form-control" id="username" name="username" type="text" value="${userForm.username}"
-                               disabled>
+                        <input class="form-control" id="username" name="username" type="text"
+                               value="${userForm.username}" disabled>
                     </c:otherwise>
                 </c:choose>
             </div>
