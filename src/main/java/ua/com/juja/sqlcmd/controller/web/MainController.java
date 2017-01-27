@@ -27,23 +27,15 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 @Controller
-//@ControllerAdvice
 public class MainController {
     //TODO Replace all with ModelAndView
     @Autowired
     private LogService logService;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = {"/", "menu"}, method = RequestMethod.GET)
     public String start() {
-//        service.saveUserAction("get menu");
         return "home";
     }
-
-//    @RequestMapping(value = "/menu", method = RequestMethod.GET)
-//    public String menu() {
-////        service.saveUserAction("get menu");
-//        return "home";
-//    }
 
     @RequestMapping(value = "/help", method = RequestMethod.GET)
     public String help() {

@@ -38,12 +38,12 @@ public class UserController {
     }
 
     @ModelAttribute("roleNames")
-    //TODO Delete hardcode
     public List getAllRoles()
     {
         List<String> roleNames = new ArrayList<>();
-        roleNames.add(Role.ROLE_USER.toString());
-        roleNames.add(Role.ROLE_ADMIN.toString());
+        for (Role role : Role.values()) {
+            roleNames.add(role.toString());
+        }
         return roleNames;
     }
 
@@ -53,7 +53,6 @@ public class UserController {
         userForm.setActionType("add");
         ModelAndView model = new ModelAndView("updateUser");
         model.addObject("userForm", userForm);
-//        logService.saveUserAction("get add user");
         return model;
     }
 
@@ -84,7 +83,6 @@ public class UserController {
         userForm.setActionType("update");
         ModelAndView model = new ModelAndView("updateUser");
         model.addObject("userForm", userForm);
-//        logService.saveUserAction("get update user " + user.getUsername());
         return model;
     }
 
@@ -97,7 +95,6 @@ public class UserController {
         user.setEmail(userForm.getEmail());
         user.setEnabled(userForm.isEnabled());
         Set<UserRole> roles = new HashSet<>();
-
         userService.saveUser(user);
         for (String roleName: userForm.getRoleNames()) {
             UserRole role = new UserRole();
@@ -117,7 +114,6 @@ public class UserController {
         User user = userService.getUser(name);
         ModelAndView model = new ModelAndView("deleteUser");
         model.addObject("user", user);
-//        logService.saveUserAction("get delete user " + user.getUsername());
         return model;
     }
 
