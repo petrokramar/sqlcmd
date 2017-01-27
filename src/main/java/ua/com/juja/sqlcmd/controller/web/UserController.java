@@ -37,25 +37,6 @@ public class UserController {
         return model;
     }
 
-    @RequestMapping(value = "/adduser", method = RequestMethod.GET)
-    public ModelAndView createUser() {
-        UserForm userForm = new UserForm();
-        ModelAndView model = new ModelAndView("updateUser");
-        model.addObject("userForm", userForm);
-        logService.saveUserAction("get add user");
-        return model;
-    }
-
-    @RequestMapping(value = "/adduser", method = RequestMethod.POST)
-    public String creatingUser(User user) {
-
-
-
-        userService.saveUser(user);
-        logService.saveUserAction("add user " + user.getUsername());
-        return "redirect:users";
-    }
-
     @ModelAttribute("roleNames")
     //TODO Delete hardcode
     public List getAllRoles()
@@ -64,6 +45,23 @@ public class UserController {
         roleNames.add(Role.ROLE_USER.toString());
         roleNames.add(Role.ROLE_ADMIN.toString());
         return roleNames;
+    }
+
+    @RequestMapping(value = "/adduser", method = RequestMethod.GET)
+    public ModelAndView createUser() {
+        UserForm userForm = new UserForm();
+        userForm.setActionType("add");
+        ModelAndView model = new ModelAndView("updateUser");
+        model.addObject("userForm", userForm);
+//        logService.saveUserAction("get add user");
+        return model;
+    }
+
+    @RequestMapping(value = "/adduser", method = RequestMethod.POST)
+    public String creatingUser(User user) {
+        userService.saveUser(user);
+        logService.saveUserAction("add user " + user.getUsername());
+        return "redirect:users";
     }
 
     @RequestMapping(value = "/updateuser", method = RequestMethod.GET)
@@ -83,9 +81,10 @@ public class UserController {
         userForm.setEnabled(user.isEnabled());
         userForm.setUserRoles(user.getUserRoles());
         userForm.setRoleNames(roleNames);
+        userForm.setActionType("update");
         ModelAndView model = new ModelAndView("updateUser");
         model.addObject("userForm", userForm);
-        logService.saveUserAction("get update user " + user.getUsername());
+//        logService.saveUserAction("get update user " + user.getUsername());
         return model;
     }
 
@@ -107,11 +106,8 @@ public class UserController {
             roles.add(role);
         }
         user.setUserRoles(roles);
-//        public String updatingUser(User user){
-
         userService.saveUser(user);
-
-//        logService.saveUserAction("update user " + user.getUsername());
+        logService.saveUserAction(userForm.getActionType() + " user " + user.getUsername());
         return "redirect:users";
     }
 
@@ -121,7 +117,7 @@ public class UserController {
         User user = userService.getUser(name);
         ModelAndView model = new ModelAndView("deleteUser");
         model.addObject("user", user);
-        logService.saveUserAction("get delete user " + user.getUsername());
+//        logService.saveUserAction("get delete user " + user.getUsername());
         return model;
     }
 

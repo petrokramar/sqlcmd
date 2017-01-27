@@ -16,6 +16,7 @@
 <div class="container">
     <h2><spring:message code="Update.user"/></h2><br>
     <form:form action="updateuser" method="post" commandName="userForm" class="form-horizontal">
+        <input type="hidden" name = "actionType" value="${userForm.actionType}">
         <div class="form-group">
             <label for="username" class="col-sm-2 control-label"><spring:message code="Name"/></label>
             <div class="col-sm-10">

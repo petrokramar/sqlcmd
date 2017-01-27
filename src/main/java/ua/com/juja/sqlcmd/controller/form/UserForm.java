@@ -1,6 +1,5 @@
 package ua.com.juja.sqlcmd.controller.form;
 
-import ua.com.juja.sqlcmd.model.User;
 import ua.com.juja.sqlcmd.model.UserRole;
 
 import java.util.List;
@@ -14,6 +13,7 @@ public class UserForm {
     private boolean enabled;
     private Set<UserRole> userRoles;
     private List<String> roleNames;
+    private String actionType;
 
     public String getUsername() {
         return username;
@@ -69,5 +69,13 @@ public class UserForm {
 
     public void setRoleNames(List<String> roleNames) {
         this.roleNames = roleNames;
+    }
+
+    public String getActionType() {
+        return actionType;
+    }
+
+    public void setActionType(String actionType) {
+        this.actionType = actionType;
     }
 }

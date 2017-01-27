@@ -26,7 +26,7 @@ public class RecordController {
         columns.remove("id");
         req.setAttribute("table", tableName);
         req.setAttribute("columns", columns);
-        logService.saveUserAction("get create record. table - " + tableName);
+//        logService.saveUserAction("get create record. table - " + tableName);
         return "createRecord";
     }
 
@@ -47,7 +47,7 @@ public class RecordController {
         req.setAttribute("table", tableName);
         req.setAttribute("id", id);
         req.setAttribute("record", record);
-        logService.saveUserAction("get delete record. table - " + tableName);
+//        logService.saveUserAction("get delete record. table - " + tableName);
         return "deleteRecord";
     }
 
@@ -68,7 +68,7 @@ public class RecordController {
         req.setAttribute("table", tableName);
         req.setAttribute("id", id);
         req.setAttribute("record", record);
-        logService.saveUserAction("get update record. table - " + tableName);
+//        logService.saveUserAction("get update record. table - " + tableName);
         return "updateRecord";
     }
 

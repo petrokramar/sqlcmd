@@ -23,13 +23,13 @@ public class TableController {
     public String tables(HttpServletRequest req) {
         Set<String> tables = service.getTableNames();
         req.setAttribute("tables", tables);
-        logService.saveUserAction("get tables");
+//        logService.saveUserAction("get tables");
         return "tableNames";
     }
 
     @RequestMapping(value = "/createtable", method = RequestMethod.GET)
     public String createTable() {
-        logService.saveUserAction("get create table");
+//        logService.saveUserAction("get create table");
         return "createTable";
     }
 
@@ -46,7 +46,7 @@ public class TableController {
     public String clearTable(HttpServletRequest req) {
         String tableName = req.getParameter("name");
         req.setAttribute("table", tableName);
-        logService.saveUserAction("clear table " + tableName);
+//        logService.saveUserAction("clear table " + tableName);
         return "clearTable";
     }
 
@@ -62,7 +62,7 @@ public class TableController {
     public String dropTable(HttpServletRequest req) {
         String tableName = req.getParameter("name");
         req.setAttribute("table", tableName);
-        logService.saveUserAction("drop table " + tableName);
+//        logService.saveUserAction("drop table " + tableName);
         return "dropTable";
     }
 

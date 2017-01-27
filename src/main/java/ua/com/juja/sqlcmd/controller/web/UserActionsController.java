@@ -22,7 +22,7 @@ public class UserActionsController {
         List<UserAction> userActions = logService.getUserActions();
         ModelAndView model = new ModelAndView("userActions");
         model.addObject("actions", userActions);
-        logService.saveUserAction("get user actions");
+//        logService.saveUserAction("get user actions");
         return model;
     }
 

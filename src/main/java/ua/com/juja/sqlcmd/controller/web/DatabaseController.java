@@ -22,7 +22,7 @@ public class DatabaseController {
 
     @RequestMapping(value = "/connect", method = RequestMethod.GET)
     public String connect() {
-        logService.saveUserAction("get connect");
+//        logService.saveUserAction("get connect");
         return "connect";
     }
 
@@ -46,13 +46,13 @@ public class DatabaseController {
         Set<String> databases = service.getDatabaseNames();
         model.addAttribute("databases", databases);
         model.addAttribute("current", currentDatabase);
-        logService.saveUserAction("get databases");
+//        logService.saveUserAction("get databases");
         return "databaseNames";
     }
 
     @RequestMapping(value = "/createdatabase", method = RequestMethod.GET)
     public String createDatabase() {
-        logService.saveUserAction("get createdatabase");
+//        logService.saveUserAction("get createdatabase");
         return "createDatabase";
     }
 
@@ -68,7 +68,7 @@ public class DatabaseController {
     public String dropDatabase(HttpServletRequest req) {
         String databaseName = req.getParameter("name");
         req.setAttribute("database", databaseName);
-        logService.saveUserAction("get dropdatabase " + databaseName);
+//        logService.saveUserAction("get dropdatabase " + databaseName);
         return "dropDatabase";
     }
 
@@ -86,7 +86,7 @@ public class DatabaseController {
         if (!service.isConnected()) {
             return "connect";
         }
-        logService.saveUserAction("get query");
+//        logService.saveUserAction("get query");
         return "query";
     }
 
