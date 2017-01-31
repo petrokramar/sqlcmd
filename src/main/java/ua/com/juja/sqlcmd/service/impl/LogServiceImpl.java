@@ -86,8 +86,7 @@ public class LogServiceImpl implements LogService {
                 connection = new DatabaseConnection();
                 connection.setDatabaseName("empty");
                 connection.setUserName("empty");
-                //TODO remove next line
-            connectionRepository.save(connection);
+                connectionRepository.save(connection);
             }
         } else {
             String databaseName = connection.getDatabaseName();
@@ -98,7 +97,6 @@ public class LogServiceImpl implements LogService {
                 connection = new DatabaseConnection();
                 connection.setDatabaseName(databaseName);
                 connection.setUserName(databaseUserName);
-                //TODO remove next line
                 connectionRepository.save(connection);
             }
         }

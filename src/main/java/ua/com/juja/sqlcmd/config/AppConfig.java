@@ -83,7 +83,6 @@ public class AppConfig {
 //        return localSessionFactoryBean;
 //    }
 
-    //TODO move to properties
     private Properties getHibernateProperties() {
         Properties prop = new Properties();
         prop.put("hibernate.hbm2ddl.auto", settings.getProperty("hibernate.hbm2ddl.auto"));

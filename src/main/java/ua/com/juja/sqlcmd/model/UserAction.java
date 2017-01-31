@@ -24,7 +24,6 @@ public class UserAction {
     @ManyToOne(fetch = FetchType.EAGER)
     private DatabaseConnection databaseConnection;
 
-    //TODO Rename to description
     @Column(name = "action")
     private String action;
 

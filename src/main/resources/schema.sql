@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS connections;
 
 CREATE  TABLE users (
   username VARCHAR(45) NOT NULL PRIMARY KEY,
-  password VARCHAR(45) NOT NULL ,
+  password VARCHAR(100) NOT NULL ,
   email VARCHAR(45) NOT NULL ,
   enabled BOOLEAN NOT NULL DEFAULT 'true'
 );

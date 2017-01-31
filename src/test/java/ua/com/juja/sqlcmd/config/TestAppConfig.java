@@ -29,7 +29,6 @@ import java.util.Properties;
 public class TestAppConfig {
 //    @Bean
 //    public DataSource logDataSource(){
-//        //TODO Move to properties
 //        DriverManagerDataSource dataSource = new DriverManagerDataSource();
 //        dataSource.setDriverClassName("org.postgresql.Driver");
 //        dataSource.setUrl("jdbc:postgresql://localhost:8757/sqlcmd_log");
@@ -61,10 +60,8 @@ public class TestAppConfig {
 //        return builder.buildSessionFactory();
 //    }
 //
-//    //TODO move to properties
 //    private Properties getHibernateProperties() {
 //        Properties prop = new Properties();
-//        //TODO replace create with validate
 //        prop.put("hibernate.hbm2ddl.auto", "validate");
 //        prop.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
 //        prop.put("hibernate.format_sql", "true");

@@ -15,7 +15,7 @@ public class User {
     private String username;
 
     @Column(name = "password",
-            nullable = false, length = 45)
+            nullable = false, length = 100)
     private String password;
 
     @Transient
