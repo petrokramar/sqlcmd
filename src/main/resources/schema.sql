@@ -6,15 +6,15 @@ DROP TABLE IF EXISTS connections;
 
 CREATE  TABLE users (
   username VARCHAR(45) NOT NULL PRIMARY KEY,
-  password VARCHAR(100) NOT NULL ,
+  password VARCHAR(60) NOT NULL ,
   email VARCHAR(45) NOT NULL ,
   enabled BOOLEAN NOT NULL DEFAULT 'true'
 );
-
+-- Password 1234
 INSERT INTO users(username,password, email)
-VALUES ('admin','1234', 'admin@zzz.com');
+VALUES ('admin','$2a$10$vu70icFlcjTqw7ch3/ndpu35nSZNSuzIDO.T5XKaKL7AWAKhusYr2', 'admin@zzz.com');
 INSERT INTO users(username,password, email)
-VALUES ('user','1234', 'user@zzz.com');
+VALUES ('user','$2a$10$vu70icFlcjTqw7ch3/ndpu35nSZNSuzIDO.T5XKaKL7AWAKhusYr2', 'user@zzz.com');
 
 CREATE TABLE user_roles (
   user_role_id SERIAL PRIMARY KEY,

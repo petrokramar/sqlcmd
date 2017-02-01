@@ -37,14 +37,14 @@
             <label for="password" class="col-sm-2 control-label"><spring:message code="Password"/></label>
             <div class="col-sm-10">
                 <input class="form-control" id="password" name="password" type="password" value="${userForm.password}"
-                       placeholder="Not changed">
+                       placeholder="<spring:message code="Not.changed"/>">
             </div>
         </div>
         <div class="form-group">
             <label for="confirmpassword" class="col-sm-2 control-label"><spring:message code="Password.confirm"/></label>
             <div class="col-sm-10">
                 <input class="form-control" id="confirmpassword" name="confirmpassword" type="password"
-                       value="${userForm.confirmPassword}" placeholder="Not changed">
+                       value="${userForm.confirmPassword}" placeholder="<spring:message code="Not.changed"/>">
             </div>
         </div>
         <div class="form-group">
