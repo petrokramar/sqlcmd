@@ -74,8 +74,9 @@ public class UserController {
         }
         UserForm userForm = new UserForm();
         userForm.setUsername(user.getUsername());
-        userForm.setPassword(user.getPassword());
-        userForm.setConfirmPassword(user.getPassword());
+        userForm.setOldPassword(user.getPassword());
+//        userForm.setPassword(user.getPassword());
+//        userForm.setConfirmPassword(user.getPassword());
         userForm.setEmail(user.getEmail());
         userForm.setEnabled(user.isEnabled());
         userForm.setUserRoles(user.getUserRoles());
@@ -95,7 +96,13 @@ public class UserController {
         user.setEmail(userForm.getEmail());
         user.setEnabled(userForm.isEnabled());
         Set<UserRole> roles = new HashSet<>();
+        //TODO how to delete this line???
         userService.saveUser(user);
+        if ("".equals(userForm.getPassword())) {
+            user.setPassword(userForm.getOldPassword());
+        } else {
+            user.setPassword(userForm.getPassword());
+        }
         for (String roleName: userForm.getRoleNames()) {
             UserRole role = new UserRole();
             role.setUser(user);

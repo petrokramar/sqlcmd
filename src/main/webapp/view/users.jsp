@@ -35,7 +35,7 @@
         <thead>
             <tr>
                 <td>Name</td>
-                <td>Password</td>
+                <%--<td>Password</td>--%>
                 <td>E-mail</td>
                 <td>Enabled</td>
                 <td></td>
@@ -46,7 +46,7 @@
             <c:forEach items="${users}" var="user">
                 <tr>
                     <td>${user.username}</td>
-                    <td>${user.password}</td>
+                    <%--<td>${user.password}</td>--%>
                     <td>${user.email}</td>
                     <td>${user.enabled}</td>
                     <td><a href="updateuser?name=${user.username}"><spring:message code="Update"/></a><br></td>

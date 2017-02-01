@@ -17,6 +17,7 @@
     <h2><spring:message code="Update.user"/></h2><br>
     <form:form action="updateuser" method="post" commandName="userForm" class="form-horizontal">
         <input type="hidden" name = "actionType" value="${userForm.actionType}">
+        <input type="hidden" name = "oldPassword" value="${userForm.oldPassword}">
         <div class="form-group">
             <label for="username" class="col-sm-2 control-label"><spring:message code="Name"/></label>
             <div class="col-sm-10">
@@ -35,21 +36,22 @@
         <div class="form-group">
             <label for="password" class="col-sm-2 control-label"><spring:message code="Password"/></label>
             <div class="col-sm-10">
-                <input class="form-control" id="password" name="password" type="password" value="${userForm.password}">
+                <input class="form-control" id="password" name="password" type="password" value="${userForm.password}"
+                       placeholder="Not changed">
             </div>
         </div>
         <div class="form-group">
             <label for="confirmpassword" class="col-sm-2 control-label"><spring:message code="Password.confirm"/></label>
             <div class="col-sm-10">
                 <input class="form-control" id="confirmpassword" name="confirmpassword" type="password"
-                       value="${userForm.confirmPassword}">
+                       value="${userForm.confirmPassword}" placeholder="Not changed">
             </div>
         </div>
         <div class="form-group">
 
             <label for="email" class="col-sm-2 control-label">E-mail</label>
             <div class="col-sm-10">
-                <input class="form-control" id="email" name="email" type="text" value="${user.email}">
+                <input class="form-control" id="email" name="email" type="text" value="${userForm.email}">
             </div>
 
             <%--<spring:bind path="email">--%>

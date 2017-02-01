@@ -7,6 +7,7 @@ import java.util.Set;
 
 public class UserForm {
     private String username;
+    private String oldPassword;
     private String password;
     private String confirmPassword;
     private String email;
@@ -21,6 +22,14 @@ public class UserForm {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getOldPassword() {
+        return oldPassword;
+    }
+
+    public void setOldPassword(String oldPassword) {
+        this.oldPassword = oldPassword;
     }
 
     public String getPassword() {
