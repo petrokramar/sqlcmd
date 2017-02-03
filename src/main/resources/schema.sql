@@ -32,6 +32,8 @@ VALUES ('user', 'ROLE_USER');
 
 CREATE  TABLE connections (
   id SERIAL PRIMARY KEY,
+  server VARCHAR (45),
+  port VARCHAR (5),
   db_name VARCHAR (45),
   db_user_name VARCHAR (45)
 );

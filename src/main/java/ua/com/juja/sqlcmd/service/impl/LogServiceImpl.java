@@ -80,21 +80,27 @@ public class LogServiceImpl implements LogService {
     private DatabaseConnection getDatabaseConnection() {
         DatabaseConnection connection = manager.getDatabaseConnection();
         if (connection == null) {
-            connection =  connectionRepository.findByDatabaseNameAndUserName(
-                    "empty", "empty");
+            connection =  connectionRepository.findByServerAndPortAndDatabaseNameAndUserName(
+                    "empty", "empty", "empty", "empty");
             if (connection == null) {
                 connection = new DatabaseConnection();
+                connection.setServer("empty");
+                connection.setPort("empty");
                 connection.setDatabaseName("empty");
                 connection.setUserName("empty");
                 connectionRepository.save(connection);
             }
         } else {
+            String server = connection.getServer();
+            String port = connection.getPort();
             String databaseName = connection.getDatabaseName();
             String databaseUserName = connection.getUserName();
-            connection =  connectionRepository.findByDatabaseNameAndUserName(
-                    databaseName, databaseUserName);
+            connection =  connectionRepository.findByServerAndPortAndDatabaseNameAndUserName(
+                    server, port, databaseName, databaseUserName);
             if (connection == null) {
                 connection = new DatabaseConnection();
+                connection.setServer(server);
+                connection.setPort(port);
                 connection.setDatabaseName(databaseName);
                 connection.setUserName(databaseUserName);
                 connectionRepository.save(connection);

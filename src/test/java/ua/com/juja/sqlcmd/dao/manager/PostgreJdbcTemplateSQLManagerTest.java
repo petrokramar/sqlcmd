@@ -18,8 +18,9 @@ public class PostgreJdbcTemplateSQLManagerTest extends DatabaseManagerTest{
     public void setup() throws SQLException {
         manager = getDatabaseManager();
         final PropertyHandler settings = PropertyHandler.getInstance();
-        manager.connect(settings.getProperty("database.name"), settings.getProperty("database.user.name"),
-                settings.getProperty("database.user.password"));
+        manager.connect(settings.getProperty("test.server.address"), settings.getProperty("test.server.port"),
+                settings.getProperty("test.database.name"), settings.getProperty("test.database.user.name"),
+                settings.getProperty("test.database.user.password"));
         manager.dropTable(TEST_TABLE_NAME);
         manager.createTable(
                 TEST_TABLE_NAME,

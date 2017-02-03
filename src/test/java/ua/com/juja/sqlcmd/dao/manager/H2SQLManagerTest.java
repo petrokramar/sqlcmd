@@ -18,7 +18,7 @@ public class H2SQLManagerTest extends DatabaseManagerTest{
     @Before
     public void setup() throws SQLException {
         manager = getDatabaseManager();
-        manager.connect("test", "sa", "");
+        manager.connect("localhost", "5432", "test", "sa", "");
         manager.dropTable(TEST_TABLE_NAME);
         manager.createTable(
                 TEST_TABLE_NAME,

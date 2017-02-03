@@ -19,7 +19,7 @@ public class H2SQLManager implements DatabaseManager {
     }
 
     @Override
-    public void connect(String databaseName, String userName, String password) {
+    public void connect(String server, String port, String databaseName, String userName, String password) {
         try {
             Class.forName("org.h2.Driver");
         } catch (ClassNotFoundException e) {

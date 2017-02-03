@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 public interface DatabaseService {
-    void connect(String databaseName, String userName, String password);
+    void connect(String server, String port, String databaseName, String userName, String password);
 
     boolean isConnected();
     String currentDatabase();

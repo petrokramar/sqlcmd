@@ -25,6 +25,8 @@
                 <td>Id</td>
                 <td>Date</td>
                 <td>User</td>
+                <td>Server</td>
+                <td>Port</td>
                 <td>Database</td>
                 <td>Database user</td>
                 <td>Action</td>
@@ -36,6 +38,8 @@
                     <td>${action.id}</td>
                     <td>${action.date}</td>
                     <td>${action.user.username}</td>
+                    <td>${action.databaseConnection.server}</td>
+                    <td>${action.databaseConnection.port}</td>
                     <td>${action.databaseConnection.databaseName}</td>
                     <td>${action.databaseConnection.userName}</td>
                     <td>${action.action}</td>

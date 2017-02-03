@@ -10,6 +10,7 @@ import java.util.Date;
 
 //@Component
 public class PostgreSQLManager implements DatabaseManager {
+    //TODO need not only Postgres
     private final String DATABASE_JDBC_DRIVER = "jdbc:postgresql://";
     private Connection connection;
     //TODO Duplicate code
@@ -21,7 +22,7 @@ public class PostgreSQLManager implements DatabaseManager {
     }
 
     @Override
-    public void connect(String databaseName, String userName, String password) {
+    public void connect(String server, String port, String databaseName, String userName, String password) {
         try {
             Class.forName("org.postgresql.Driver");
         } catch (ClassNotFoundException e) {
@@ -31,8 +32,11 @@ public class PostgreSQLManager implements DatabaseManager {
             if (connection != null) {
                 connection.close();
             }
-            connection = DriverManager.getConnection(getJdbcUrl() + databaseName, userName, password);
+            connection = DriverManager.getConnection(
+                    String.format("%s%s:%s/", DATABASE_JDBC_DRIVER, server, port) + databaseName, userName, password);
             databaseConnection = new DatabaseConnection();
+            databaseConnection.setServer(server);
+            databaseConnection.setPort(port);
             databaseConnection.setDatabaseName(databaseName);
             databaseConnection.setUserName(userName);
         } catch (SQLException e) {
@@ -41,13 +45,6 @@ public class PostgreSQLManager implements DatabaseManager {
             throw new DatabaseManagerException(
                     String.format("Failed to connect to database: %s, user: %s", databaseName, userName), e);
         }
-    }
-
-    private String getJdbcUrl(){
-        PropertyHandler settings = PropertyHandler.getInstance();
-        return String.format("%s%s:%s/", DATABASE_JDBC_DRIVER,
-                settings.getProperty("database.server.name"),
-                settings.getProperty("database.port"));
     }
 
     @Override

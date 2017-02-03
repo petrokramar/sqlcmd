@@ -14,6 +14,18 @@
         <h2><spring:message code="Connect.to.database"/></h2><br>
         <form action="connect" method="post" class="form-horizontal">
             <div class="form-group">
+                <label for="server" class="col-sm-2 control-label"><spring:message code="Server"/></label>
+                <div class="col-sm-10">
+                    <input class="form-control" id="server" name="server" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="port" class="col-sm-2 control-label"><spring:message code="Port"/></label>
+                <div class="col-sm-10">
+                    <input class="form-control" id="port" name="port" type="text">
+                </div>
+            </div>
+            <div class="form-group">
                 <label for="dbname" class="col-sm-2 control-label"><spring:message code="Database.name"/></label>
                 <div class="col-sm-10">
                     <input class="form-control" id="dbname" name="dbname" type="text">

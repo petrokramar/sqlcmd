@@ -9,6 +9,12 @@ public class DatabaseConnection {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
+    @Column(name = "server")
+    private String server;
+
+    @Column(name = "port")
+    private String port;
+
     @Column(name = "db_name")
     private String databaseName;
 
@@ -21,6 +27,22 @@ public class DatabaseConnection {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getServer() {
+        return server;
+    }
+
+    public void setServer(String server) {
+        this.server = server;
+    }
+
+    public String getPort() {
+        return port;
+    }
+
+    public void setPort(String port) {
+        this.port = port;
     }
 
     public String getDatabaseName() {

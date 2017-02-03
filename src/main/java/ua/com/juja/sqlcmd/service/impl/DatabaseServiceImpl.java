@@ -15,8 +15,8 @@ public class DatabaseServiceImpl implements DatabaseService {
     private DatabaseManager manager;
 
     @Override
-    public void connect(String databaseName, String userName, String password) {
-        manager.connect(databaseName, userName, password);
+    public void connect(String server, String port, String databaseName, String userName, String password) {
+        manager.connect(server, port, databaseName, userName, password);
     }
 
     @Override

@@ -10,6 +10,7 @@ public class PropertyHandler {
 
     private PropertyHandler() {
         String resourceName = "sqlcmd.properties";
+//        String resourceName = "../resources/sqlcmd.properties";
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
         properties = new Properties();
         try (InputStream resourceStream = loader.getResourceAsStream(resourceName)) {

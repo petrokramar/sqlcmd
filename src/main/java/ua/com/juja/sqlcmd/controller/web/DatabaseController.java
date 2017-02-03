@@ -28,11 +28,14 @@ public class DatabaseController {
 
     @RequestMapping(value = "/connect", method = RequestMethod.POST)
     public String connecting(HttpServletRequest req) {
+        String server = req.getParameter("server");
+        String port = req.getParameter("port");
         String databaseName = req.getParameter("dbname");
         String userName = req.getParameter("username");
         String password = req.getParameter("password");
-        service.connect(databaseName, userName, password);
-        logService.saveUserAction("connected. database name - " + databaseName + ". username - " + userName);
+        service.connect(server, port, databaseName, userName, password);
+        logService.saveUserAction("connected. server - " + server + ". port - " + port +
+                ". database name - " + databaseName + ". username - " + userName + ".");
         return "redirect:databases";
     }
 

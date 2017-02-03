@@ -44,6 +44,7 @@ public class AppConfig {
     @Bean
     public DataSource logDataSource(){
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
+//        System.getenv();
         dataSource.setDriverClassName(settings.getProperty("log.database.driver"));
         dataSource.setUrl(settings.getProperty("log.database.url"));
         dataSource.setUsername(settings.getProperty("log.database.user.name"));

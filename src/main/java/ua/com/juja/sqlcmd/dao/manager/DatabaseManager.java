@@ -9,7 +9,7 @@ import java.util.Set;
 
 public interface DatabaseManager {
 
-    void connect(String database, String userName, String password);
+    void connect(String server, String port, String database, String userName, String password);
 
     void disconnect();
 
