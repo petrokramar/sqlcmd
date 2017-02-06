@@ -31,6 +31,8 @@ import ua.com.juja.sqlcmd.controller.PropertyHandler;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Locale;
 import java.util.Properties;
 
@@ -43,12 +45,26 @@ public class AppConfig {
 
     @Bean
     public DataSource logDataSource(){
+        //TODO Change DriverManagerDataSource to BasicDataSource
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-//        System.getenv();
-        dataSource.setDriverClassName(settings.getProperty("log.database.driver"));
-        dataSource.setUrl(settings.getProperty("log.database.url"));
-        dataSource.setUsername(settings.getProperty("log.database.user.name"));
-        dataSource.setPassword(settings.getProperty("log.database.user.password"));
+        if (System.getenv("DATABASE_URL") != null) {
+            URI dbUri;
+            try {
+                dbUri = new URI(System.getenv("DATABASE_URL"));
+            } catch (URISyntaxException e) {
+                throw new RuntimeException("Error creating database URI");
+            }
+            dataSource.setDriverClassName("org.postgresql.Driver");
+            dataSource.setUrl("jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath());
+            dataSource.setUsername(dbUri.getUserInfo().split(":")[0]);
+            dataSource.setPassword(dbUri.getUserInfo().split(":")[1]);
+        } else {
+            dataSource.setDriverClassName(settings.getProperty("log.database.driver"));
+            dataSource.setUrl(settings.getProperty("log.database.url"));
+            dataSource.setUsername(settings.getProperty("log.database.user.name"));
+            dataSource.setPassword(settings.getProperty("log.database.user.password"));
+        }
+
         return dataSource;
     }
 
@@ -86,10 +102,15 @@ public class AppConfig {
 
     private Properties getHibernateProperties() {
         Properties prop = new Properties();
-        prop.put("hibernate.hbm2ddl.auto", settings.getProperty("hibernate.hbm2ddl.auto"));
-        prop.put("hibernate.dialect", settings.getProperty("hibernate.dialect"));
-        prop.put("hibernate.format_sql", settings.getProperty("hibernate.format_sql"));
-        prop.put("hibernate.show_sql", settings.getProperty("hibernate.show_sql"));
+        //TODO remove hardcode
+//        prop.put("hibernate.hbm2ddl.auto", settings.getProperty("hibernate.hbm2ddl.auto"));
+//        prop.put("hibernate.dialect", settings.getProperty("hibernate.dialect"));
+//        prop.put("hibernate.format_sql", settings.getProperty("hibernate.format_sql"));
+//        prop.put("hibernate.show_sql", settings.getProperty("hibernate.show_sql"));
+        prop.put("hibernate.hbm2ddl.auto", "validate");
+        prop.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQL9Dialect");
+        prop.put("hibernate.format_sql", "true");
+        prop.put("hibernate.show_sql", "true");
         return prop;
     }
 
