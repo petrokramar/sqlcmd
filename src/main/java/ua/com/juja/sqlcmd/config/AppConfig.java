@@ -55,7 +55,8 @@ public class AppConfig {
                 throw new RuntimeException("Error creating database URI");
             }
             dataSource.setDriverClassName("org.postgresql.Driver");
-            dataSource.setUrl("jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath());
+            dataSource.setUrl("jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath() +
+            "?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory");
             dataSource.setUsername(dbUri.getUserInfo().split(":")[0]);
             dataSource.setPassword(dbUri.getUserInfo().split(":")[1]);
         } else {
@@ -107,7 +108,7 @@ public class AppConfig {
 //        prop.put("hibernate.dialect", settings.getProperty("hibernate.dialect"));
 //        prop.put("hibernate.format_sql", settings.getProperty("hibernate.format_sql"));
 //        prop.put("hibernate.show_sql", settings.getProperty("hibernate.show_sql"));
-        prop.put("hibernate.hbm2ddl.auto", "validate");
+        prop.put("hibernate.hbm2ddl.auto", "create");
         prop.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQL9Dialect");
         prop.put("hibernate.format_sql", "true");
         prop.put("hibernate.show_sql", "true");
