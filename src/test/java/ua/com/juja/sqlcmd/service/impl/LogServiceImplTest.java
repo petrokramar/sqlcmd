@@ -1,5 +1,6 @@
 package ua.com.juja.sqlcmd.service.impl;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,6 +24,26 @@ import static org.junit.Assert.*;
 @ContextConfiguration(classes = TestAppConfig.class)
 @WebAppConfiguration
 public class LogServiceImplTest {
+    @After
+    public void tearDown() throws Exception {
+
+    }
+
+    @Test
+    public void saveUserAction() throws Exception {
+
+    }
+
+    @Test
+    public void getUserActions() throws Exception {
+
+    }
+
+    @Test
+    public void deleteUserActions1() throws Exception {
+
+    }
+
     private User user;
 
     @Autowired
